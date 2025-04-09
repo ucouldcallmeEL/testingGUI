@@ -204,6 +204,14 @@ public class User {
 
         return UserID;
     }
+    public String getUserByID(String UserID){
+        String Username= fm.getUser(UserID).getName();
+        return Username;
+    }
+    public User GetUserByID(String UserID){
+        User user = fm.getUser(UserID);
+        return user;
+    }
 
     public void ChangePassword(String UserID, String Password, String CurrentPassword) throws PasswordChangeException, AuthException {
         boolean ValidUserID = false;

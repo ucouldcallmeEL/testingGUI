@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 public class FireBaseManager {
-    private static FireBaseManager instance = new FireBaseManager();;
+    private static FireBaseManager instance = new FireBaseManager();
     private Firestore db;
 
 
@@ -23,7 +23,6 @@ public class FireBaseManager {
 
     public FireBaseManager() {
         try {
-            
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
 
             FirestoreOptions firestoreOptions = FirestoreOptions.newBuilder()
@@ -97,6 +96,24 @@ public class FireBaseManager {
                 return result.get().toObject(Vendor.class);
             } else {
                 return null; // User not found
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public User getUser(String userID) {
+        DocumentReference userRef = db.collection("Clients").document(userID);
+        ApiFuture<DocumentSnapshot> result = userRef.get();
+        DocumentReference userRef2 = db.collection("Vendors").document(userID);
+        ApiFuture<DocumentSnapshot> result2 = userRef.get();
+        try {
+            if (result.get().exists()) {
+                return result.get().toObject(Client.class);
+            } else if(result2.get().exists()) {
+                return result2.get().toObject(Vendor.class); // User not found
+            } else {
+                return null;
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
