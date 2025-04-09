@@ -132,7 +132,7 @@ public class FireBaseManager {
         DocumentReference userRef = db.collection("Clients").document(userID);
         ApiFuture<DocumentSnapshot> result = userRef.get();
         DocumentReference userRef2 = db.collection("Vendors").document(userID);
-        ApiFuture<DocumentSnapshot> result2 = userRef.get();
+        ApiFuture<DocumentSnapshot> result2 = userRef2.get();
         try {
             if (result.get().exists()) {
                 return result.get().toObject(Client.class);

@@ -13,34 +13,35 @@ public class VendorProfileController {
     
     public void initialize(){
         User user = new User();
-        user.setUserID(LogInController.username);
+        user.setUserID(GlobalData.getCurrentlyLoggedIN());
 
-        NameLabel.setText(user.getName());
+        NameLabel.setText(user.getUserByID(GlobalData.getCurrentlyLoggedIN()));
     }
 
     @FXML
     private void handleAddProductButton(ActionEvent event) throws IOException {
-        SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/ProductAdd.fxml", "Add Product");
+        SceneController.switchScene(event, "ProductAdd.fxml", "Add Product");
     }
 
     @FXML
     private void handleViewProductsButton(ActionEvent event) throws IOException {
-        SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/MainVendorPage.fxml", "Products");
+        SceneController.switchScene(event, "MainVendorPage.fxml", "Products");
     }
 
     @FXML
     private void handleEditProfileButton(ActionEvent event) throws IOException {
-        SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/EditProfile.fxml", "Edit Profile");
+        SceneController.switchScene(event, "EditProfile.fxml", "Edit Profile");
     }
 
     @FXML
     private void handleSignOutButton(ActionEvent event) throws IOException {
-        SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/Login.fxml", "Login");
+        User.SignOut();
+        SceneController.switchScene(event, "Login.fxml", "Login");
     }
 
     @FXML
     private void handleHomeButton(ActionEvent event) throws IOException {
-        SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/MainVendorPage.fxml", "Products");
+        SceneController.switchScene(event, "MainVendorPage.fxml", "Products");
     }
 
 }

@@ -28,14 +28,14 @@ public class MainVendorPageController {
     }
 
     public void addProductCards(List<Item> products) {
-        String absolutePath = "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/MainVendorPage.fxml";
+//        String absolutePath = "MainVendorPage.fxml";
 
         productContainer.getChildren().clear(); // Clear existing nodes
 
         for (Item product : products) {
             try {
                 // Load the VendorProductCard.fxml
-                FXMLLoader loader = new FXMLLoader(new java.io.File("D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/VendorProductCard.fxml").toURI().toURL());
+                FXMLLoader loader = new FXMLLoader(new java.io.File(GlobalData.path + "VendorProductCard.fxml").toURI().toURL());
                 Node productCard = loader.load();
 
                 // Get the controller and set product data
@@ -52,11 +52,11 @@ public class MainVendorPageController {
 
     @FXML
     private void handleAddProductButton(ActionEvent event) throws IOException {
-        SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/ProductAdd.fxml", "Add Product");
+        SceneController.switchScene(event, "ProductAdd.fxml", "Add Product");
     }
 
     @FXML
     private void handleVendorProfileButton(ActionEvent event) throws IOException {
-        SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/VendorProfile.fxml", "Profile");
+        SceneController.switchScene(event, "VendorProfile.fxml", "Profile");
     }
 }

@@ -207,7 +207,7 @@ public class User {
         GlobalData.setCurrentlyLoggedIN(UserID);
     }
 //
-    public void SignOut(){
+    public static void SignOut(){
         GlobalData.setCurrentlyLoggedIN(null);
     }
     public String getUserByID(String UserID){

@@ -43,14 +43,14 @@ public class SignUpController {
 //            alert.setHeaderText(null);
 //            alert.setContentText("You have successfully registered!");
 //            alert.showAndWait();
-//            SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/MainPageClient.fxml", "Homepage");
+//            SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
             SignUpError.setStyle("-fx-text-fill: green;");
             SignUpError.setText("Registration Successful!");
             // Create a PauseTransition with a delay of 2 seconds
             PauseTransition delay = new PauseTransition(Duration.seconds(2));
             delay.setOnFinished(e -> {
                 try {
-                    SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/MainPageClient.fxml", "Homepage");
+                    SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }

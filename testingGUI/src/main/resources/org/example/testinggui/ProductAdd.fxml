@@ -25,6 +25,6 @@
       <TextField fx:id="ProductCategoryField" prefWidth="200.0" promptText="Product Category" />
       <TextArea fx:id="ProductDescriptionField" prefHeight="200.0" prefWidth="200.0" promptText="Product Description" />
       <Label fx:id="ProductAddError" textFill="#b40000" />
-      <Button fx:id="PostButton" mnemonicParsing="false" text="Post" />
+      <Button fx:id="PostButton" mnemonicParsing="false" onAction="#handlePostButton" text="Post" />
    </children>
 </VBox>

@@ -12,10 +12,10 @@ public class Application extends javafx.application.Application {
         // Replace with your actual absolute path
 
 
-        String absolutePath = "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/LogIn.fxml";
+//        String absolutePath = GlobalData.path + "LogIn.fxml";
 
         // Convert to URL and load
-        FXMLLoader fxmlLoader = new FXMLLoader(new java.io.File(absolutePath).toURI().toURL());
+        FXMLLoader fxmlLoader = new FXMLLoader(new java.io.File(GlobalData.path + "LogIn.fxml").toURI().toURL());
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Log In");
         stage.setScene(scene);

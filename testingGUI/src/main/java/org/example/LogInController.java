@@ -13,7 +13,6 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class LogInController {
-    String absolutePath = "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/SignUp.fxml";
     static String username;
     static boolean isVendor= false;
 
@@ -42,7 +41,7 @@ public class LogInController {
             if(isVendor){
                 delay.setOnFinished(e -> {
                     try {
-                        SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/MainVendorPage.fxml", "Homepage");
+                        SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
 //                        MainVendorPageController.initialize();
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -53,14 +52,14 @@ public class LogInController {
 
                 delay.setOnFinished(e -> {
                     try {
-                        SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/MainPageClient.fxml", "Homepage");
+                        SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 });
             }
             delay.play();
-//            SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/MainPageClient.fxml", "Homepage");
+//            SceneController.switchScene(event, GlobalData.path + "MainPageClient.fxml", "Homepage");
 
         } catch (LogInException e) {
             // Show error dialog
@@ -70,7 +69,7 @@ public class LogInController {
 
     @FXML
     private void handleSignUpButton(ActionEvent event) throws IOException {
-        SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/SignUp.fxml", "Sign Up");
+        SceneController.switchScene(event, "SignUp.fxml", "Sign Up");
     }
 
 }

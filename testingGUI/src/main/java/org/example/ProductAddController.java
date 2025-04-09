@@ -30,14 +30,14 @@ public class ProductAddController {
             Vendor vendor = new Vendor();
 
             try{
-                  vendor.addItem(name, description, category, price, imageURL, Integer.valueOf(stock), LogInController.username);
+                  vendor.addItem(name, description, category, price, imageURL, Integer.valueOf(stock), GlobalData.getCurrentlyLoggedIN());
                   ProductAddError.setStyle("-fx-text-fill: green;");
                   ProductAddError.setText("Registration Successful!");
                   // Create a PauseTransition with a delay of 2 seconds
                   PauseTransition delay = new PauseTransition(Duration.seconds(2));
                   delay.setOnFinished(e -> {
                         try {
-                              SceneController.switchScene(event, "D:/UNI/Junior Year/Semester 6/Software Testing/Project/testingGUI/testingGUI/src/main/resources/org/example/testinggui/MainVendorPage.fxml", "Homepage");
+                              SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
                         } catch (IOException ex) {
                               ex.printStackTrace();
                         }

@@ -77,7 +77,7 @@ public class Vendor extends User {
             }
         }
 
-        Item item = new Item(ItemName, ItemDescription, ItemCategory, ItemPrice,ImageURL, Stock, this.getUserID());
+        Item item = new Item(ItemName, ItemDescription, ItemCategory, ItemPrice,ImageURL, Stock, GlobalData.getCurrentlyLoggedIN());
         String itemID = fm.addItem(item);
 
         if(itemID != null){

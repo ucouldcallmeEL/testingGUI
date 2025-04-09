@@ -10,8 +10,9 @@ import javafx.scene.Node;
 import java.io.IOException;
 
 public class SceneController {
-    public static void switchScene(ActionEvent event, String absolutePath, String title) throws IOException {
+    public static void switchScene(ActionEvent event, String fileName, String title) throws IOException {
         // Convert to URL and load
+        String absolutePath = GlobalData.path + fileName;
         FXMLLoader fxmlLoader = new FXMLLoader(new java.io.File(absolutePath).toURI().toURL());
         Parent root = fxmlLoader.load();
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();

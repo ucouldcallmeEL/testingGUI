@@ -20,5 +20,8 @@ public class Main {
         for(Item item:items){
             System.out.println(item.getItemName());
         }
+//        User user = new User();
+//        user = fm.getUser("vend");
+//        System.out.println(user.getName());
     }
 }
