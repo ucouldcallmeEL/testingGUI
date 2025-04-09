@@ -13,10 +13,10 @@
       <ImageView fx:id="ProductImage" fitHeight="150.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Hyperlink fx:id="ProductNameHyperlink" text="Product Name" />
+            <Hyperlink fx:id="ProductNameHyperlink" onAction="#handleProductNameHyperlink" text="Product Name" />
             <Label fx:id="ProductPriceLabel" alignment="CENTER" prefHeight="29.0" prefWidth="125.0" text="Price" />
             <Label fx:id="ProductStockLabel" text="Stock" />
-            <Button fx:id="EditProductButton" mnemonicParsing="false" text="Edit Product">
+            <Button fx:id="EditProductButton" mnemonicParsing="false" onAction="#handleEditProductButton" text="Edit Product">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>

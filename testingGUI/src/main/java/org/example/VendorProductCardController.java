@@ -6,6 +6,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.event.ActionEvent;
+import java.io.IOException;
 
 public class VendorProductCardController {
 
@@ -19,9 +21,6 @@ public class VendorProductCardController {
     private Label ProductStockLabel;
 
     @FXML
-    private Button EditProductButton;
-
-    @FXML
     private ImageView ProductImage;
 
     public void setProductData(String name, String image, String price, Integer stock) {
@@ -29,6 +28,19 @@ public class VendorProductCardController {
         ProductPriceLabel.setText(price);
         ProductStockLabel.setText(stock.toString());
         ProductImage.setImage(new Image(image));
+    }
+
+    @FXML
+    public void handleEditProductButton(ActionEvent event) throws IOException {
+        System.out.println("Edit Product Button Clicked");
+        SceneController.switchScene(event, "ProductEdit.fxml", "Edit Product");
+
+    }
+
+    @FXML
+    public void handleProductNameHyperlink(ActionEvent event) throws IOException {
+        System.out.println("Product Name Hyperlink Clicked");
+        SceneController.switchScene(event, "ProductDetails.fxml", "Product Details");
 
     }
 }
