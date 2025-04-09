@@ -56,7 +56,7 @@ public class Order {
         this.current = current;
     }
 
-
+//
     static FireBaseManager fm = FireBaseManager.getInstance();
 
     public String GetOrderDetails() {

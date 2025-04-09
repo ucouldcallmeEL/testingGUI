@@ -29,7 +29,7 @@ public class Vendor extends User {
     public void setItemsID(ArrayList<String> itemsID) {
         ItemsID = itemsID;
     }
-
+//
 
     public void addItem( String ItemName, String ItemDescription, String ItemCategory, String ItemPrice,String ImageURL, int Stock, String Vendor) throws AddItemException {
         //Item item = new Item(ItemName, ItemDescription, ItemCategory, ItemPrice,ImageURL, Stock, this.getUserID());

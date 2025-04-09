@@ -23,7 +23,6 @@ public class FireBaseManager {
 
     public FireBaseManager() {
         try {
-
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
 
             FirestoreOptions firestoreOptions = FirestoreOptions.newBuilder()

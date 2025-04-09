@@ -25,7 +25,7 @@ public class LogInController {
     private void handleSignInButton(ActionEvent event) throws IOException {
         String userID = usernameField.getText();
         String password = passwordField.getText();
-
+//
         try {
             user.LogIn(userID, password);
             username = GlobalData.getCurrentlyLoggedIN();

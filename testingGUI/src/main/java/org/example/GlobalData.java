@@ -11,3 +11,4 @@ public class GlobalData {
         GlobalData.currentlyLoggedIN = currentlyLoggedIN;
     }
 }
+//
