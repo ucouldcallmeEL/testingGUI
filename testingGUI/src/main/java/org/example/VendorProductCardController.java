@@ -11,6 +11,8 @@ import java.io.IOException;
 
 public class VendorProductCardController {
 
+    private String itemID;
+
     @FXML
     private Hyperlink ProductNameHyperlink;
 
@@ -23,7 +25,8 @@ public class VendorProductCardController {
     @FXML
     private ImageView ProductImage;
 
-    public void setProductData(String name, String image, String price, Integer stock) {
+    public void setProductData(String name, String image, String price, Integer stock, String itemId) {
+        this.itemID = itemId;
         ProductNameHyperlink.setText(name);
         ProductPriceLabel.setText(price);
         ProductStockLabel.setText(stock.toString());
@@ -33,8 +36,11 @@ public class VendorProductCardController {
     @FXML
     public void handleEditProductButton(ActionEvent event) throws IOException {
         System.out.println("Edit Product Button Clicked");
-        SceneController.switchScene(event, "ProductEdit.fxml", "Edit Product");
 
+        // Set global item ID before switching scene
+        GlobalData.setCurrentEditingProductId(this.itemID);
+
+        SceneController.switchScene(event, "EditProduct.fxml", "Edit Product");
     }
 
     @FXML

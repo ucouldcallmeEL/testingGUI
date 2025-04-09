@@ -40,7 +40,7 @@ public class MainVendorPageController {
 
                 // Get the controller and set product data
                 VendorProductCardController controller = loader.getController();
-                controller.setProductData(product.getItemName(), product.getImageURL(), product.getItemPrice(), product.getStock());
+                controller.setProductData(product.getItemName(), product.getImageURL(), product.getItemPrice(), product.getStock(), product.getItemID());
 
                 // Add the product card to the VBox
                 productContainer.getChildren().add(productCard);

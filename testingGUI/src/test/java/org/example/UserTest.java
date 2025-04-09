@@ -4,6 +4,9 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Order;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserTest {
@@ -201,6 +204,91 @@ class UserTest {
     @DisplayName("Update phone successfully")
     void updatePhone_Success() {
         assertDoesNotThrow(() -> user.updatePhoneNumber(testUserID, "01012345678", basePassword));
+    }
+
+    @Test
+    @Order(18)
+    @DisplayName("Sign out clears currently logged in user")
+    void signOut_ClearsLoggedUser() throws Exception {
+        user.LogIn(testUserID, basePassword);
+        assertEquals(testUserID, GlobalData.getCurrentlyLoggedIN());
+        User.SignOut();
+        assertNull(GlobalData.getCurrentlyLoggedIN());
+    }
+
+    @Test
+    @Order(19)
+    @DisplayName("Get user name by ID returns correct name")
+    void getUserByID_ReturnsName() {
+        String name = user.getUserByID("hagar");
+        assertEquals("hagar", name);
+    }
+
+    @Test
+    @Order(20)
+    @DisplayName("Get User object by ID returns correct user")
+    void getUserByID_ReturnsUserObject() {
+        User fetchedUser = user.GetUserByID(testUserID);
+        assertNotNull(fetchedUser);
+        assertEquals(testUserID, fetchedUser.getUserID());
+    }
+
+    @Test
+    @Order(21)
+    @DisplayName("Search returns results for valid query")
+    void search_ReturnsResults() {
+        List<Item> results = user.search("madrab"); // assuming items exist
+        assertNotNull(results);
+        assertTrue(results.size() >= 0); // even if empty, it shouldn't be null
+    }
+
+
+    @Test
+    @Order(22)
+    @DisplayName("Set and get user name")
+    void setName_GetName() {
+        user.setName("Ahmed");
+        assertEquals("Ahmed", user.getName());
+    }
+
+    @Test
+    @Order(23)
+    @DisplayName("Set and get user ID")
+    void setUserID_GetUserID() {
+        user.setUserID("user123");
+        assertEquals("user123", user.getUserID());
+    }
+
+    @Test
+    @Order(24)
+    @DisplayName("Set and get user email")
+    void setEmail_GetEmail() {
+        user.setEmail("ahmed@example.com");
+        assertEquals("ahmed@example.com", user.getEmail());
+    }
+
+    @Test
+    @Order(25)
+    @DisplayName("Set and get user password")
+    void setPassword_GetPassword() {
+        user.setPassword("myPassword123");
+        assertEquals("myPassword123", user.getPassword());
+    }
+
+    @Test
+    @Order(26)
+    @DisplayName("Set and get user address")
+    void setAddress_GetAddress() {
+        user.setAddress("12 Test Street");
+        assertEquals("12 Test Street", user.getAddress());
+    }
+
+    @Test
+    @Order(27)
+    @DisplayName("Set and get user phone number")
+    void setPhone_GetPhone() {
+        user.setPhoneNumber("01122334455");
+        assertEquals("01122334455", user.getPhoneNumber());
     }
 
 

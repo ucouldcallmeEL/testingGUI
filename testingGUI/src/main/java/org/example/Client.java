@@ -10,6 +10,7 @@ public class Client extends User {
     private List<String> reviewHistory;
     private String cart=getUserID();
 
+    FireBaseManager fm = new FireBaseManager();
     //static FireBaseManager fm = FireBaseManager.getInstance();
 
 
@@ -85,6 +86,9 @@ public class Client extends User {
         //UI Function NOT FINAL
     }
 
+    public void AddToCart(){
+
+    }
     public void addReview(String itemID, int rating, String comment){
 
         //create review object

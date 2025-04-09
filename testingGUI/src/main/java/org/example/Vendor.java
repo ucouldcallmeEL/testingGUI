@@ -99,50 +99,28 @@ public class Vendor extends User {
         return items ;
     }
 
-    public void updateStock(String itemID, int quantityChange, boolean isRestock) {
-        // Verify the vendor owns this item
+    public void updateStock(String itemID, int newQuantity) throws UpdateException {
+
         if (this.ItemsID == null || !this.ItemsID.contains(itemID)) {
             System.out.println("Error: Item not found in vendor's inventory");
             return;
         }
 
-        try {
-            // Get current stock from Firebase
-            Item currentItem = fm.getItem(itemID);
-            if (currentItem == null) {
-                System.out.println("Error: Item not found in database");
-                return;
-            }
-
-            int currentStock = currentItem.getStock();
-            int newStock;
-
-            if (isRestock) {
-                // Addition for restocking
-                newStock = currentStock + quantityChange;
-            } else {
-                // Subtraction for using up stock
-                newStock = currentStock - quantityChange;
-
-                // Prevent negative stock
-                if (newStock < 0) {
-                    throw new UpdateException("Error: Stock is Negative");
-                    //System.out.println("Warning: Cannot reduce stock below 0. Setting to 0.");
-                    //newStock = 0;
-                }
-            }
-
-            // Update stock in Firebase
-            fm.updateStock(itemID, newStock);
-            System.out.println("Stock updated for item: " + itemID +
-                    " | Previous: " + currentStock +
-                    " | Change: " + (isRestock ? "+" : "-") + Math.abs(quantityChange) +
-                    " | New: " + newStock);
-
-        } catch (UpdateException e) {
-            System.out.println("Error updating stock: " + e.getMessage());
-            e.printStackTrace();
+        Item currentItem = fm.getItem(itemID);
+        if (currentItem == null) {
+            System.out.println("Error: Item not found in database");
+            return;
         }
+
+        int currentStock = currentItem.getStock();
+
+        // Prevent negative stock
+        if (newQuantity < 0) {
+            throw new UpdateException("Error: Stock cannot be negative");
+        }
+
+
+        fm.updateStock(itemID, newQuantity);
     }
 }
 class UpdateException extends Exception {

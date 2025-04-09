@@ -5,6 +5,7 @@ import java.util.List;
 
 
 public class Item {
+
     private String ItemID;
     private String ItemName;
     private String ItemDescription;
@@ -30,8 +31,10 @@ public class Item {
         this.ReviewsID = null;
     }
     static FireBaseManager fm = FireBaseManager.getInstance();
-    public Item getItembyID(int ItemId) {
-        return null;
+
+
+    public Item getItembyID(String ItemId) {
+        return fm.getItem(ItemID);
     }
 
     public String getImageURL() {

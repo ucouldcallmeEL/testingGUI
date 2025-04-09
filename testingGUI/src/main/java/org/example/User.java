@@ -206,7 +206,8 @@ public class User {
         }
         GlobalData.setCurrentlyLoggedIN(UserID);
     }
-//
+
+//Signout function
     public static void SignOut(){
         GlobalData.setCurrentlyLoggedIN(null);
     }
