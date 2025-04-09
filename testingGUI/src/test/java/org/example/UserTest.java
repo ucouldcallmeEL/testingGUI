@@ -131,7 +131,8 @@ class UserTest {
     @Order(10)
     @DisplayName("Login successful with existing DB user")
     void login_ExistingDBUser_ReturnsUserID() throws Exception {
-        String result = user.LogIn("hagar", "hagar2005");
+        user.LogIn("hagar", "hagar2005");
+        String result = GlobalData.getCurrentlyLoggedIN();
         assertEquals("hagar", result);
     }
 

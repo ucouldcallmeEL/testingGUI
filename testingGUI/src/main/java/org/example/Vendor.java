@@ -31,52 +31,64 @@ public class Vendor extends User {
     }
 
 
-    public void addItem(String ItemName, String ItemDescription, String ItemCategory,
-                        String ItemPrice, String ImageURL, int Stock, String Vendor)
-            throws AddItemException {
+    public void addItem( String ItemName, String ItemDescription, String ItemCategory, String ItemPrice,String ImageURL, int Stock, String Vendor) throws AddItemException {
+        //Item item = new Item(ItemName, ItemDescription, ItemCategory, ItemPrice,ImageURL, Stock, this.getUserID());
+        //String itemID = fm.addItem(item);
 
-        // Validate ItemName
-        if(ItemName == null || ItemName.trim().isEmpty()) {
-            throw new AddItemException("Please add a name for your item.");
+        boolean ValidName = false;
+        boolean ValidPrice = false;
+        boolean ValidCategory = false;
+        boolean ValidImageURL = false;
+        boolean ValidStock = false;
+
+        if(!ValidName){
+            if(ItemName == null){
+                throw new AddItemException("Please add a name for your item.");
+            }else{
+                ValidName = true;
+            }
+        }
+        if(!ValidPrice){
+            if(ItemPrice.length() == 0){
+                throw new AddItemException("Please add a price for your item.");
+            }else{
+                ValidPrice = true;
+            }
+        }
+        if(!ValidCategory){
+            if(ItemCategory.length() == 0){
+                throw new AddItemException("Please add a category for your item.");
+            }else{
+                ValidCategory = true;
+            }
+        }
+        if(!ValidImageURL){
+            if(ImageURL.length() == 0){
+                throw new AddItemException("Please add an image for your item.");
+            }else{
+                ValidImageURL = true;
+            }
+        }
+        if(!ValidStock){
+            if(Stock >= 0){
+                ValidStock = true;
+            }else{
+                throw new AddItemException("Please add your item's stock.");
+            }
         }
 
-        // Validate ItemPrice
-        if(ItemPrice == null || ItemPrice.trim().isEmpty()) {
-            throw new AddItemException("Please add a price for your item.");
-        }
-        try {
-            // Try to parse the price to ensure it's a valid number
-            Double.parseDouble(ItemPrice);
-        } catch (NumberFormatException e) {
-            throw new AddItemException("Please enter a valid price for your item.");
-        }
-
-        // Validate ItemCategory
-        if(ItemCategory == null || ItemCategory.trim().isEmpty()) {
-            throw new AddItemException("Please add a category for your item.");
-        }
-
-        // Validate ImageURL
-        if(ImageURL == null || ImageURL.trim().isEmpty()) {
-            throw new AddItemException("Please add an image for your item.");
-        }
-
-        // Validate Stock
-        if(Stock < 0) {
-            throw new AddItemException("Please add your item's stock.");
-        }
-
-        // If all validations pass, create and add the item
-        Item item = new Item(ItemName, ItemDescription, ItemCategory, ItemPrice,
-                ImageURL, Stock, this.getUserID());
+        Item item = new Item(ItemName, ItemDescription, ItemCategory, ItemPrice,ImageURL, Stock, this.getUserID());
         String itemID = fm.addItem(item);
 
-        if(itemID != null) {
-            if(this.ItemsID == null) {
+        if(itemID != null){
+            if(this.ItemsID == null){
                 this.ItemsID = new ArrayList<>();
             }
             this.ItemsID.add(itemID);
         }
+
+        //String itemID = fm.addItem(item);
+
     }
     public void removeItem(Item Item) {
         fm.deleteItem(Item.getItemID(),this.getUserID());

@@ -59,6 +59,32 @@ public class FireBaseManager {
 
     );
 
+    public List<Item> searchBar(String query) {
+        List<Item> matchingItems = new ArrayList<>();
+
+        try {
+            ApiFuture<QuerySnapshot> future = db.collection("Items").get();
+            QuerySnapshot querySnapshot = future.get();
+
+            for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                Item item = document.toObject(Item.class);
+                if (item != null && item.getItemName() != null) {
+                    String itemNameLower = item.getItemName().toLowerCase();
+                    String queryLower = query.toLowerCase();
+
+                    if (itemNameLower.contains(queryLower)) {
+                        item.setItemID(document.getId()); // Ensure ID is included
+                        matchingItems.add(item);
+                    }
+                }
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return matchingItems;
+    }
+
     public String uploadimage(String url) {
         String publicurl;
         try {

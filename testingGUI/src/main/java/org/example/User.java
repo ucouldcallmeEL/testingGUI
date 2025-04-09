@@ -3,6 +3,9 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class User {
     private String name;
@@ -174,7 +177,7 @@ public class User {
         }
     }
 
-    public String LogIn(String UserID, String Password) throws LogInException {
+    public void LogIn(String UserID, String Password) throws LogInException {
         boolean ValidUserID = false;
         boolean ValidPassword = false;
         User user = fm.getVendor(UserID);
@@ -201,10 +204,12 @@ public class User {
                 throw new LogInException("Password is incorrect.");
             }
         }
-
-        return UserID;
+        GlobalData.setCurrentlyLoggedIN(UserID);
     }
-    //
+
+    public void SignOut(){
+        GlobalData.setCurrentlyLoggedIN(null);
+    }
     public String getUserByID(String UserID){
         String Username= fm.getUser(UserID).getName();
         return Username;
@@ -212,6 +217,10 @@ public class User {
     public User GetUserByID(String UserID){
         User user = fm.getUser(UserID);
         return user;
+    }
+    public List<Item> search(String Query){
+        List<Item> Items=fm.searchBar(Query);
+        return Items;
     }
 
     public void ChangePassword(String UserID, String Password, String CurrentPassword) throws PasswordChangeException, AuthException {

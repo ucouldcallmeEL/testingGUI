@@ -57,6 +57,7 @@ public class Order {
     }
 
 
+    static FireBaseManager fm = FireBaseManager.getInstance();
 
     public String GetOrderDetails() {
         return "Order ID: " + orderID + "\n" +
@@ -64,7 +65,9 @@ public class Order {
                 "Items ID: " + itemsID.toString() + "\n" +
                 "Current: " + (current? "Yes" : "No");
     }
-
+    public void ConfirmOrder(String OrderID, String UserID){
+        fm.makeHistory(OrderID, UserID);
+    }
     //this shit is for testing purposes only, take it to a separate compiler or project or whatever,
     // until we start performing junit testing
 //    public static void main(String[] args) {

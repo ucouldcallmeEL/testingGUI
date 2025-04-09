@@ -27,7 +27,8 @@ public class LogInController {
         String password = passwordField.getText();
 
         try {
-            username = user.LogIn(userID, password);
+            user.LogIn(userID, password);
+            username = GlobalData.getCurrentlyLoggedIN();
             // Show success dialog
 //            Alert alert = new Alert(Alert.AlertType.INFORMATION);
 //            alert.setTitle("Login Successful");
