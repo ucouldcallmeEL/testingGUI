@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" fillWidth="false" prefHeight="504.0" prefWidth="344.0" spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="204.0" text="E-commerce" textAlignment="CENTER">
+         <font>
+            <Font name="Bangla MN Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label text="Edit  Product">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField prefWidth="200.0" promptText="Product Name" />
+      <TextField prefWidth="200.0" promptText="Product Price" />
+      <TextField prefWidth="200.0" promptText="Image URLs" />
+      <TextField prefWidth="200.0" promptText="Available Stock" />
+      <TextField prefWidth="200.0" promptText="Product Category" />
+      <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Product Description" />
+      <Button mnemonicParsing="false" text="Update" />
+   </children>
+</VBox>
