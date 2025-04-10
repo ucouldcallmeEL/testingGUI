@@ -22,6 +22,32 @@ class ClientTest {
 
     @Test
     @Order(1)
+    @DisplayName("Set and get history")
+    void setGetHistory() {
+        List<String> history = List.of("order1", "order2");
+        client.setHistory(history);
+        assertEquals(history, client.getHistory(), "History should match the set list");
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("Set and get current orders")
+    void setGetCurrentOrders() {
+        List<String> orders = List.of("orderA", "orderB");
+        client.setCurrentOrders(orders);
+        assertEquals(orders, client.getCurrentOrders(), "Current orders should match the set list");
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("Set and get review history")
+    void setGetReviewHistory() {
+        List<String> reviews = List.of("reviewX", "reviewY");
+        client.setReviewHistory(reviews);
+        assertEquals(reviews, client.getReviewHistory(), "Review history should match the set list");
+    }
+    @Test
+    @Order(4)
     @DisplayName("Constructor initializes empty lists")
     void constructor_InitializesList(){
         assertNotNull(client.getWishlist());
@@ -35,7 +61,7 @@ class ClientTest {
     }
 
     @Test
-    @Order(2)
+    @Order(5)
     @DisplayName("Set and get wishlist")
     void setGetWishlist(){
         List<String> wishlist = List.of("item1", "item2");
@@ -43,8 +69,11 @@ class ClientTest {
         assertEquals(wishlist, client.getWishlist());
     }
 
+
+
+
     @Test
-    @Order(3)
+    @Order(6)
     @DisplayName("Get wishlist from existing DB user")
     void getWishlistFromDB() {
         User user = new User();
@@ -56,25 +85,108 @@ class ClientTest {
         Client dbClient = (Client) retrievedUser;
         List<String> wishlist = dbClient.getWishlist();
 
-        List<String> expected = List.of("wedding ring", "gold necklace");
+        List<String> expected = List.of("ring001", "wedding ring","borsh");
         assertEquals(expected, wishlist, "Wishlist does not match expected items");
     }
 
     @Test
-    @Order(4)
+    @Order(7)
     @DisplayName("Add item to wishlist and update DB")
     void addItemToWishlist_Success() {
         User user = new User();
         Client client = (Client) user.GetUserByID("hagar");
         assertNotNull(client, "Client should not be null");
         String testItemID = "ring002"; // use a real itemID that exists in your Items collection
-        assertDoesNotThrow(() -> client.addItemToWishList(testItemID));
+        assertDoesNotThrow(() -> client.addItemToWishlist(testItemID));
         assertTrue(client.getWishlist().contains(testItemID),
                 "Wishlist should contain the newly added item.");
 
     }
 
+    @Test
+    @Order(9)
+    @DisplayName("Remove item from wishlist and update DB")
+    void removeItemFromWishList_Success(){
+        User user = new User();
+        Client client = (Client) user.GetUserByID("hagar");
+        assertNotNull(client, "Client should not be null");
+        String testItemID = "ring002"; // use a real itemID that exists in your Items collection
+        assertDoesNotThrow(() -> client.removeItemFromWishlist(testItemID));
+        assertFalse(client.getWishlist().contains(testItemID), "Item should be removed from wishlist");
+    }
 
+    @Test
+    @Order(10)
+    @DisplayName("Cancel existing order moves it to history")
+    void cancelOrder_MovesToHistory() {
+        User user = new User();
+        Client client = (Client) user.GetUserByID("hagar");
+        assertNotNull(client, "Client should not be null");
+        List<String> currentOrders = client.getCurrentOrders();
+        assertFalse(currentOrders.isEmpty(), "Client must have at least one current order to test cancellation");
+        String orderID = currentOrders.get(0);
+        org.example.Order order = new org.example.Order(); //because junit has an order class
+        order.setOrderID(orderID);
+        assertDoesNotThrow(() -> client.CancelOrder(order, "hagar"));
+        assertFalse(client.getCurrentOrders().contains(orderID), "Order should be removed from current orders");
+    }
+
+
+    @Test
+    @Order(11)
+    @DisplayName("Get history from existing DB user")
+    void getHistoryFromDB() {
+        User user = new User();
+        User retrievedUser = user.GetUserByID("hagar");
+        assertNotNull(retrievedUser, "Retrieved user should not be null");
+        assertInstanceOf(Client.class, retrievedUser, "User must be a Client");
+        Client dbClient = (Client) retrievedUser;
+        List<String> history = dbClient.getHistory();
+        List<String> expectedHistory = List.of("Yunis", "Othman","Andrea","Wa7ed Shish Tawook");
+        assertNotNull(history, "History should not be null");
+        assertEquals(expectedHistory.size(), history.size(), "History size should match expected");
+        assertTrue(history.containsAll(expectedHistory), "History should contain all expected orders");
+    }
+
+
+    @Test
+    @Order(12)
+    @DisplayName("Add item to cart successfully")
+    void addItemToCart_Success() {
+        User user = new User();
+        Client client = (Client) user.GetUserByID("hagar");
+        assertNotNull(client, "Client should not be null");
+        Item item = new Item();
+        item.setItemID("VOAVMMcKVhzBd6Sx5d0I");
+        assertDoesNotThrow(() -> client.AddToCart(item));
+        List<String> cartItems = client.viewCart();
+        assertTrue(cartItems.contains(item.getItemID()), "Cart should contain the added item");
+    }
+    @Test
+    @Order(13)
+    @DisplayName("Submit review for item")
+    void addReview_Success() {
+        User user = new User();
+        Client client = (Client) user.GetUserByID("hagar");
+        assertNotNull(client, "Client should not be null");
+        String testItemID = "ring002"; // this should be a real existing item
+        int rating = 4;
+        String comment = "Great product!";
+        assertDoesNotThrow(() -> client.addReview(testItemID, rating, comment));
+
+    }
+
+    @Test
+    @Order(14)
+    @DisplayName("View cart returns items list")
+    void viewCart_ReturnsItemList() {
+        User user = new User();
+        Client client = (Client) user.GetUserByID("hagar");
+        assertNotNull(client, "Client should not be null");
+        List<String> cartItems = client.viewCart();
+        assertNotNull(cartItems, "Cart should not be null");
+        assertTrue(cartItems instanceof List, "Cart should be a list");
+    }
 
 
 

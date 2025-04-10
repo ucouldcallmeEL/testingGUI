@@ -1,5 +1,7 @@
 package org.example;
 
+import com.google.cloud.firestore.annotation.PropertyName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +12,7 @@ public class Client extends User {
     private List<String> reviewHistory;
     private String cart=getUserID();
 
-    FireBaseManager fm = new FireBaseManager();
-    //static FireBaseManager fm = FireBaseManager.getInstance();
+   FireBaseManager fm = FireBaseManager.getInstance();
 
 
     public Client() {}
@@ -36,48 +37,49 @@ public class Client extends User {
         fm.addCart(cart);
     }
 
+    @PropertyName("Wishlist")
     public List<String> getWishlist() {
         return Wishlist;
     }
-
-    public void setWishlist(List<String> wishlist) {
-        Wishlist = wishlist;
+    @PropertyName("Wishlist")
+    public void setWishlist(List<String> Wishlist) {
+        this.Wishlist = Wishlist;
     }
-
+    @PropertyName("History")
     public List<String> getHistory() {
         return History;
     }
-
-    public void setHistory(List<String> history) {
-        History = history;
+    @PropertyName("History")
+    public void setHistory(List<String> History) {
+        this.History = History;
     }
-
+    @PropertyName("CurrentOrders")
     public List<String> getCurrentOrders() {
 
         return CurrentOrders;
     }
-
-    public void setCurrentOrders(List<String> currentOrders) {
-        CurrentOrders = currentOrders;
+    @PropertyName("CurrentOrders")
+    public void setCurrentOrders(List<String> CurrentOrders) {
+        this.CurrentOrders = CurrentOrders;
     }
-
+    @PropertyName("reviewHistory")
     public List<String> getReviewHistory() {
         return reviewHistory;
     }
-
+    @PropertyName("reviewHistory")
     public void setReviewHistory(List<String> reviewHistory) {
         this.reviewHistory = reviewHistory;
     }
 
 
-    public void addItemToWishList(String itemID){
+    public void addItemToWishlist(String itemID){
         if(!this.Wishlist.contains(itemID)){
             this.Wishlist.add(itemID);
             fm.addItemToWishlist(this.getUserID(), itemID);
         }
     }
 
-    public void removeItemFromWishList(String itemID){
+    public void removeItemFromWishlist(String itemID){
         if(this.Wishlist.contains(itemID)){
             this.Wishlist.remove(itemID);
             fm.removeItemFromWishlist(this.getUserID(), itemID); //updateDB
@@ -101,12 +103,10 @@ public class Client extends User {
         }
 
     }
-
-
     public void AddToCart(Item item) {
         fm.addItemToCart(GlobalData.getCurrentlyLoggedIN(),item,1);
 
-    }
+    }   
     public void addReview(String itemID, int rating, String comment){
 
         //create review object

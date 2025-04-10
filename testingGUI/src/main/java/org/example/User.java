@@ -355,6 +355,8 @@ public class User {
             fm.changeVendorPhoneNumber(userID, newPhoneNumber);
         }
     }
+
+
 }
 
 class AddressChangeException extends Exception {

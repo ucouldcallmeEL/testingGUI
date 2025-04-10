@@ -693,7 +693,7 @@ public class FireBaseManager {
         DocumentReference clientRef = db.collection("Clients").document(userID);
 
         // Add the itemID to the wishlist array
-        ApiFuture<WriteResult> updateWishlist = clientRef.update("wishlist", FieldValue.arrayUnion(itemID));
+        ApiFuture<WriteResult> updateWishlist = clientRef.update("Wishlist", FieldValue.arrayUnion(itemID));
 
         try {
             // Wait for the operation to complete
@@ -708,7 +708,7 @@ public class FireBaseManager {
         try {
             DocumentReference clientRef = db.collection("Clients").document(userID);
 
-            ApiFuture<WriteResult> updateResult = clientRef.update("wishlist", FieldValue.arrayRemove(itemID));
+            ApiFuture<WriteResult> updateResult = clientRef.update("Wishlist", FieldValue.arrayRemove(itemID));
             updateResult.get(); // block until the operation completes
 
             System.out.println("Item removed from wishlist.");
