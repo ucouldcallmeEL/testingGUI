@@ -19,7 +19,7 @@ public class Cart {
         this.CartID = UserID;
         this.UserID = UserID;
         this.itemsID = new ArrayList<>();
-        this.total_price = null;
+        this.total_price = "0.0";
     }
 
     public String getTotalPrice(){
@@ -61,15 +61,26 @@ public class Cart {
         for(int i = 0; i < quantity; i++){
             itemsID.add(item.getItemID());
         }
+        double currentTotal = Double.parseDouble(total_price);
+        double itemPrice = Double.parseDouble(item.getItemPrice());
+        currentTotal += itemPrice * quantity;
+        total_price = String.valueOf(currentTotal);
+
         fm.addItemToCart(UserID, item, quantity);
         System.out.println(quantity + " x item " + item.getItemID() + " added to cart.");
     }
+
 
     public void removeItem(String userID, Item item, int quantity){
         //remove itemID from list once per quantity
         for(int i = 0; i < quantity; i++ ){
             itemsID.remove(item.getItemID());
         }
+
+        double currentTotal = Double.parseDouble(total_price);
+        double itemPrice = Double.parseDouble(item.getItemPrice());
+        currentTotal -= itemPrice * quantity;
+        total_price = String.valueOf(currentTotal);
 
         fm.removeItemFromCart(UserID, item, quantity);
         System.out.println(quantity + " x item " + item.getItemID() + " removed to cart.");
