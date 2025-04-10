@@ -2,36 +2,90 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.MainClientPageController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <content>
-        <VBox prefHeight="399.0" prefWidth="401.0">
+        <GridPane alignment="CENTER" prefHeight="399.0" prefWidth="579.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="332.0" minHeight="10.0" prefHeight="313.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            </rowConstraints>
             <children>
-                <HBox prefHeight="34.0" prefWidth="401.0">
+                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="201.0" GridPane.rowIndex="1">
                     <children>
-                        <Label prefHeight="23.0" prefWidth="131.0" text="E-commerce">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="10.0" />
-                            </HBox.margin>
-                        </Label>
-                        <Button mnemonicParsing="false" text="Cart">
-                            <HBox.margin>
-                                <Insets left="160.0" right="5.0" />
-                            </HBox.margin>
+                        <ImageView fitHeight="200.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink text="Product Name" />
+                        <Button mnemonicParsing="false" text="Add to Cart" />
+                        <Button mnemonicParsing="false" text="Add to WishList">
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Profile" />
+                    </children>
+                </VBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                    <children>
+                        <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="46.0" text="Cart">
+                            <font>
+                                <Font name="Bangla MN" size="12.0" />
+                            </font>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="18.0" prefWidth="67.0" text="Profile">
+                            <font>
+                                <Font name="Bangla MN" size="13.0" />
+                            </font>
+                        </Button>
                     </children>
                 </HBox>
-                <VBox fx:id="productContainer" prefHeight="368.0" prefWidth="401.0" />
+                <Pagination prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <VBox alignment="CENTER" layoutX="10.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <children>
+                        <ImageView fitHeight="200.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink text="Product Name" />
+                        <Button mnemonicParsing="false" text="Add to Cart" />
+                        <Button mnemonicParsing="false" text="Add to WishList">
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" layoutX="10.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <children>
+                        <ImageView fitHeight="200.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink text="Product Name" />
+                        <Button mnemonicParsing="false" text="Add to Cart" />
+                        <Button mnemonicParsing="false" text="Add to WishList">
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="204.0" text="E-commerce" textAlignment="CENTER" GridPane.columnIndex="1">
+                    <font>
+                        <Font name="Bangla MN Bold" size="13.0" />
+                    </font>
+                </Label>
             </children>
-        </VBox>
+        </GridPane>
     </content>
 </ScrollPane>
+

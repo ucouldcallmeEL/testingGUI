@@ -25,17 +25,22 @@ public class EditProductController {
     @FXML
     private Label ProductUpdateError;
 
+    FireBaseManager fm = FireBaseManager.getInstance();
 
     @FXML
     public void initialize() {
         this.itemID = GlobalData.getCurrentEditingProductId();
+        this.item = fm.getItem(GlobalData.getCurrentEditingProductId());
+        loadItemData();
 
-        if (this.itemID != null) {
-            this.item = item.getItembyID(this.itemID);
-            loadItemData();
-        } else {
-            System.out.println("itemID is null in EditProductController");
-        }
+//        this.itemID = GlobalData.getCurrentEditingProductId();
+//
+//        if (this.itemID != null) {
+//            Item itemFetcher = new Item();
+//            this.item = itemFetcher.getItembyID(this.itemID);            loadItemData();
+//        } else {
+//            System.out.println("itemID is null in EditProductController");
+//        }
     }
 
 
@@ -69,17 +74,15 @@ public class EditProductController {
         String category = ProductCategoryField.getText();
         String description = ProductDescriptionField.getText();
 
-        FireBaseManager fm = FireBaseManager.getInstance();
         Vendor vendor = fm.getVendor(GlobalData.getCurrentlyLoggedIN());
-        Item item = new Item();
-
         try {
             vendor.updateStock(this.itemID, Integer.valueOf(stock));
-            item.changeItemName(this.itemID, name);
-            item.changePrice(this.itemID, price);
-            item.changeImageURL(this.itemID, imageURL);
-            item.changeCategory(this.itemID, category);
-            item.changeDescription(this.itemID, description);
+            this.item.changeItemName(this.itemID, name);
+            this.item.changePrice(this.itemID, price);
+            this.item.changeImageURL(this.itemID, imageURL);
+            vendor.updateStock(this.itemID, Integer.valueOf(stock));
+            this.item.changeCategory(this.itemID, category);
+            this.item.changeDescription(this.itemID, description);
 
             ProductUpdateError.setStyle("-fx-text-fill: green;");
             ProductUpdateError.setText("Update Successful!");
