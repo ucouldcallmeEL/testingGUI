@@ -101,12 +101,10 @@ public class Client extends User {
         }
 
     }
-    public String BrowseItems(Item item){
-        return item.getItemID();
-        //UI Function NOT FINAL
-    }
 
-    public void AddToCart(){
+
+    public void AddToCart(Item item) {
+        fm.addItemToCart(GlobalData.getCurrentlyLoggedIN(),item,1);
 
     }
     public void addReview(String itemID, int rating, String comment){
