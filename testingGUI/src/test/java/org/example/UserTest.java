@@ -14,6 +14,10 @@ class UserTest {
     private static final String testUserID = "sharedTestUser";
     private static final String baseEmail = "testuser@gmail.com";
     private static final String basePassword = "password123";
+
+    private static String hagarOriginalPassword = "hagar2005";
+    private static String hagarNewPassword = "gaga2005";
+
     private static User user;
 
     @BeforeAll
@@ -35,7 +39,7 @@ class UserTest {
 
     @BeforeEach
     void setUpEachTest() {
-        user = new User(); // fresh instance for isolation
+//        user = new User(); // fresh instance for isolation
     }
 
     @Test
@@ -194,20 +198,31 @@ class UserTest {
 
     @Test
     @Order(16)
+    @DisplayName("Update Password for DB User")
+    void updatePassword_Success(){
+        assertDoesNotThrow(() -> {
+            user.ChangePassword("hagar", hagarNewPassword, hagarOriginalPassword);
+            hagarOriginalPassword = hagarNewPassword; // now it's updated for reset
+        });
+    }
+
+
+    @Test
+    @Order(17)
     @DisplayName("Update address successfully")
     void updateAddress_Success() {
         assertDoesNotThrow(() -> user.updateAddress(testUserID, "456 Updated St", basePassword));
     }
 
     @Test
-    @Order(17)
+    @Order(18)
     @DisplayName("Update phone successfully")
     void updatePhone_Success() {
         assertDoesNotThrow(() -> user.updatePhoneNumber(testUserID, "01012345678", basePassword));
     }
 
     @Test
-    @Order(18)
+    @Order(19)
     @DisplayName("Sign out clears currently logged in user")
     void signOut_ClearsLoggedUser() throws Exception {
         user.LogIn(testUserID, basePassword);
@@ -217,7 +232,7 @@ class UserTest {
     }
 
     @Test
-    @Order(19)
+    @Order(20)
     @DisplayName("Get user name by ID returns correct name")
     void getUserByID_ReturnsName() {
         String name = user.getUserByID("hagar");
@@ -225,7 +240,7 @@ class UserTest {
     }
 
     @Test
-    @Order(20)
+    @Order(21)
     @DisplayName("Get User object by ID returns correct user")
     void getUserByID_ReturnsUserObject() {
         User fetchedUser = user.GetUserByID(testUserID);
@@ -234,7 +249,7 @@ class UserTest {
     }
 
     @Test
-    @Order(21)
+    @Order(22)
     @DisplayName("Search returns results for valid query")
     void search_ReturnsResults() {
         List<Item> results = user.search("madrab"); // assuming items exist
@@ -244,7 +259,7 @@ class UserTest {
 
 
     @Test
-    @Order(22)
+    @Order(23)
     @DisplayName("Set and get user name")
     void setName_GetName() {
         user.setName("Ahmed");
@@ -252,7 +267,7 @@ class UserTest {
     }
 
     @Test
-    @Order(23)
+    @Order(24)
     @DisplayName("Set and get user ID")
     void setUserID_GetUserID() {
         user.setUserID("user123");
@@ -260,7 +275,7 @@ class UserTest {
     }
 
     @Test
-    @Order(24)
+    @Order(25)
     @DisplayName("Set and get user email")
     void setEmail_GetEmail() {
         user.setEmail("ahmed@example.com");
@@ -268,7 +283,7 @@ class UserTest {
     }
 
     @Test
-    @Order(25)
+    @Order(26)
     @DisplayName("Set and get user password")
     void setPassword_GetPassword() {
         user.setPassword("myPassword123");
@@ -276,7 +291,7 @@ class UserTest {
     }
 
     @Test
-    @Order(26)
+    @Order(27)
     @DisplayName("Set and get user address")
     void setAddress_GetAddress() {
         user.setAddress("12 Test Street");
@@ -284,7 +299,7 @@ class UserTest {
     }
 
     @Test
-    @Order(27)
+    @Order(28)
     @DisplayName("Set and get user phone number")
     void setPhone_GetPhone() {
         user.setPhoneNumber("01122334455");
@@ -293,22 +308,31 @@ class UserTest {
 
 
 
+
+
     @AfterAll
     static void cleanUpTestUsers() {
-        try {
-            // Reset shared test user's credentials
-            user.ChangePassword(testUserID, basePassword, "newPass123");
-            user.updateEmail(testUserID, baseEmail, basePassword);
-            user.updateAddress(testUserID, "123 Abdo Basha", basePassword);
-            user.updatePhoneNumber(testUserID, "01094749270", basePassword);
-        } catch (Exception ignored) {}
+        System.out.println("Resetting user data...");
 
         try {
             // Reset any changes made to 'hagar'
-            user.ChangePassword("hagar", "hagar2005", "hagarNewPass2024");
+            user.ChangePassword("hagar", "hagar2005", hagarOriginalPassword);
             user.updateEmail("hagar", "hagar@original.com", "hagar2005");
-            user.updateAddress("hagar", "Original Address", "hagar2005");
-            user.updatePhoneNumber("hagar", "01000000000", "hagar2005");
-        } catch (Exception ignored) {}
+            user.updateAddress("hagar", "el mokkatam", "hagar2005");
+            user.updatePhoneNumber("hagar", "01025655273", "hagar2005");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            // Reset test user
+            user.ChangePassword(testUserID, basePassword, "clientPass123");
+            user.updateEmail(testUserID, baseEmail, basePassword);
+            user.updateAddress(testUserID, "123 Abdo Basha", basePassword);
+            user.updatePhoneNumber(testUserID, "01094749270", basePassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }
