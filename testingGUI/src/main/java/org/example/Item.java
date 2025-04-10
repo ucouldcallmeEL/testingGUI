@@ -38,11 +38,11 @@ public class Item {
     public Item getItembyID(String ItemId) {
         return fm.getItem(ItemID);
     }
-
+    @PropertyName("ImageURL")
     public String getImageURL() {
         return ImageURL;
     }
-
+    @PropertyName("ImageURL")
     public void setImageURL(String ImageURL) {
         this.ImageURL = ImageURL;
     }
