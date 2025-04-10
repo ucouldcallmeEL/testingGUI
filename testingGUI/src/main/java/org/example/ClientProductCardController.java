@@ -42,7 +42,7 @@ public class ClientProductCardController {
     public void handleCartButton(ActionEvent event) throws IOException {
         try{
             GlobalData.setCurrentEditingProductId(this.itemID);
-            this.item = item.getItembyID(GlobalData.getCurrentEditingProductId());
+            this.item = fm.getItem(this.itemID);
             System.out.println("Cart Product Button Clicked");
             cart = fm.getClientCart(LogInController.username);
             cart.addItem(LogInController.username, this.item, 1);
@@ -58,6 +58,7 @@ public class ClientProductCardController {
     @FXML
     public void handleProductNameHyperlink(ActionEvent event) throws IOException {
         System.out.println("Product Name Hyperlink Clicked");
+        GlobalData.setCurrentEditingProductId(this.itemID);
         SceneController.switchScene(event, "ProductDetails.fxml", "Product Details");
     }
     @FXML

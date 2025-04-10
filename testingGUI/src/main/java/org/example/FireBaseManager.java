@@ -23,6 +23,7 @@ public class FireBaseManager {
 
     public FireBaseManager() {
         try {
+
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirestoreOptions firestoreOptions = FirestoreOptions.newBuilder()
                     .setCredentials(credentials)
@@ -318,7 +319,7 @@ public class FireBaseManager {
 
     public void updateStock(String itemID, int quantity) {
         DocumentReference postRef = db.collection("Items").document(itemID);
-        ApiFuture<WriteResult> updateStockResult = postRef.update("stock", quantity);
+        ApiFuture<WriteResult> updateStockResult = postRef.update("Stock", quantity);
         try {
             System.out.println("Stock updated at: " + updateStockResult.get().getUpdateTime());
         } catch (InterruptedException | ExecutionException e) {
@@ -688,6 +689,21 @@ public class FireBaseManager {
 
         return cart;
     }
+    public void addItemToWishlist(String userID, String itemID) {
+        // Reference to the client document
+        DocumentReference clientRef = db.collection("Clients").document(userID);
+
+        // Add the itemID to the wishlist array
+        ApiFuture<WriteResult> updateWishlist = clientRef.update("wishlist", FieldValue.arrayUnion(itemID));
+
+        try {
+            // Wait for the operation to complete
+            WriteResult result = updateWishlist.get();
+            System.out.println("Item added to wishlist at: " + result.getUpdateTime());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
     public void addItemToCart(String userID, Item item, int quantity) {
         try {
             // Get a reference to the user's cart document
@@ -734,8 +750,10 @@ public class FireBaseManager {
 
             // Set the itemsID field to an empty list
             ApiFuture<WriteResult> updateResult = cartRef.update("itemsID", new ArrayList<String>());
+            ApiFuture<WriteResult> updateResult1 = cartRef.update("totalPrice", null);
             // Wait for the update to complete
             updateResult.get(); // This will block until the write is finished
+            updateResult1.get();
             System.out.println("Cart emptied.");
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
