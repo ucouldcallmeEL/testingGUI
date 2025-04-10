@@ -60,6 +60,20 @@ class ClientTest {
         assertEquals(expected, wishlist, "Wishlist does not match expected items");
     }
 
+    @Test
+    @Order(4)
+    @DisplayName("Add item to wishlist and update DB")
+    void addItemToWishlist_Success() {
+        User user = new User();
+        Client client = (Client) user.GetUserByID("hagar");
+        assertNotNull(client, "Client should not be null");
+        String testItemID = "ring001"; // use a real itemID that exists in your Items collection
+        assertDoesNotThrow(() -> client.addItemToWishList(testItemID));
+
+    }
+
+
+
 
 
 

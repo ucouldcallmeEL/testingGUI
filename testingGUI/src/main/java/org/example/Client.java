@@ -70,6 +70,14 @@ public class Client extends User {
     }
 
 
+    public void addItemToWishList(String itemID){
+        if(!this.Wishlist.contains(itemID)){
+            this.Wishlist.add(itemID);
+            fm.addItemToWishlist(this.getUserID(), itemID);
+        }
+    }
+
+
 
 
     public void CancelOrder(Order order, String userID) {

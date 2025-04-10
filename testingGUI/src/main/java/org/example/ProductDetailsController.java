@@ -74,6 +74,7 @@ public class ProductDetailsController {
     @FXML
     public void handleWishlistButton(ActionEvent event) throws IOException {
         System.out.println("WishList Product Button Clicked");
+        fm.addItemToWishlist(GlobalData.currentlyLoggedIN, this.itemID);
 
     }
 }
