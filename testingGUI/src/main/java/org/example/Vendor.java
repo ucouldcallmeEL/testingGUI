@@ -29,7 +29,7 @@ public class Vendor extends User {
     }
     @PropertyName("ItemsID")
     public void setItemsID(ArrayList<String> ItemsID) {
-        ItemsID = ItemsID;
+        this.ItemsID = ItemsID;
     }
 //
 
