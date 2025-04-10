@@ -76,19 +76,18 @@ public class EditProductController {
 
         Vendor vendor = fm.getVendor(GlobalData.getCurrentlyLoggedIN());
         try {
-            vendor.updateStock(this.itemID, Integer.valueOf(stock));
             this.item.changeItemName(this.itemID, name);
             this.item.changePrice(this.itemID, price);
             this.item.changeImageURL(this.itemID, imageURL);
-            vendor.updateStock(this.itemID, Integer.valueOf(stock));
+            this.item.updateStock(Integer.valueOf(stock));
             this.item.changeCategory(this.itemID, category);
             this.item.changeDescription(this.itemID, description);
 
             ProductUpdateError.setStyle("-fx-text-fill: green;");
             ProductUpdateError.setText("Update Successful!");
             SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
-        } catch (UpdateException e) {
-            ProductUpdateError.setText(e.getMessage());
+//        } catch (UpdateException e) {
+//            ProductUpdateError.setText(e.getMessage());
         } catch (IOException ex) {
             ProductUpdateError.setText(ex.getMessage());
         } catch (Exception ex) {

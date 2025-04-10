@@ -7,19 +7,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" fillWidth="false" prefHeight="388.0" prefWidth="273.0" spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" fillWidth="false" prefHeight="388.0" prefWidth="273.0" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.EditProfileController">
    <children>
       <Label text="Edit Profile">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label text="UserName" />
-      <TextField promptText="Name" />
-      <TextField promptText="Email" />
-      <TextField promptText="Phone Number" />
-      <TextField promptText="Address" />
-      <PasswordField promptText="Password" />
+      <Label fx:id="UsernameLabel" text="UserName" />
+      <Label fx:id="NameLabel" text="Name" />
+      <TextField fx:id="EmailFeild" promptText="Email" />
+      <TextField fx:id="PhoneNumberField" promptText="Phone Number" />
+      <TextField fx:id="AddressField" promptText="Address" />
+      <PasswordField fx:id="PasswordField" promptText="Password" />
       <Label fx:id="EditProfileError" textFill="#b40000" />
-      <Button mnemonicParsing="false" text="Save Changes" />
+      <Button fx:id="SaveChangesButton" mnemonicParsing="false" onAction="#handleSaveChangesButton" text="Save Changes" />
    </children>
 </VBox>
