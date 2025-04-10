@@ -41,8 +41,8 @@ public class Item {
         return ImageURL;
     }
 
-    public void setImageURL(String imageURL) {
-        ImageURL = imageURL;
+    public void setImageURL(String ImageURL) {
+        this.ImageURL = ImageURL;
     }
 
     public int CalculateRating() {
@@ -99,56 +99,56 @@ public class Item {
         return ItemID;
     }
 
-    public void setItemID(String itemId) {
-        ItemID = itemId;
+    public void setItemID(String ItemId) {
+        this.ItemID = ItemId;
     }
 
     public String getItemName() {
         return ItemName;
     }
 
-    public void setItemName(String itemName) {
-        ItemName = itemName;
+    public void setItemName(String ItemName) {
+        this.ItemName = ItemName;
     }
 
     public String getItemDescription() {
         return ItemDescription;
     }
 
-    public void setItemDescription(String itemDescription) {
-        ItemDescription = itemDescription;
+    public void setItemDescription(String ItemDescription) {
+        this.ItemDescription = ItemDescription;
     }
 
     public String getItemCategory() {
         return ItemCategory;
     }
 
-    public void setItemCategory(String itemCategory) {
-        ItemCategory = itemCategory;
+    public void setItemCategory(String ItemCategory) {
+        this.ItemCategory = ItemCategory;
     }
 
     public String getItemPrice() {
         return ItemPrice;
     }
 
-    public void setItemPrice(String itemPrice) {
-        ItemPrice = itemPrice;
+    public void setItemPrice(String ItemPrice) {
+        this.ItemPrice = ItemPrice;
     }
 
     public int getStock() {
         return Stock;
     }
 
-    public void setStock(int stock) {
-        Stock = stock;
+    public void setStock(int Stock) {
+        this.Stock = Stock;
     }
 
     public String getVendor() {
         return Vendor;
     }
 
-    public void setVendor(String vendor) {
-        Vendor = vendor;
+    public void setVendor(String Vendor) {
+        this.Vendor = Vendor;
     }
 
     public int getRating() {
@@ -163,7 +163,7 @@ public class Item {
         return ReviewsID;
     }
 
-    public void setReviewsID(ArrayList <String> reviewsID) {
-        ReviewsID = reviewsID;
+    public void setReviewsID(ArrayList <String> ReviewsID) {
+        this.ReviewsID = ReviewsID;
     }
 }
