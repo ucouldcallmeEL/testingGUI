@@ -47,6 +47,7 @@ public class Item {
         this.ImageURL = ImageURL;
     }
 
+    @PropertyName("rating")
     public int CalculateRating() {
         int sum = 0;
         List<org.example.Review> reviews =fm.getReviewsByItem(this.ItemID);
@@ -64,28 +65,32 @@ public class Item {
         }
         else {return false;}
     }
+    @PropertyName("ItemName")
     public void changeItemName(String ItemID,String ItemName) {
         Item item=fm.getItem(ItemID);
         item.setItemName(ItemName);
         fm.changeItemName(ItemID,ItemName);
     }
+    @PropertyName("ItemDescription")
     public void changeDescription(String ItemID,String Description) {
         Item item=fm.getItem(ItemID);
         item.setItemDescription(Description);
         fm.changeItemDescription(ItemID,Description);
     }
+    @PropertyName("ItemCategory")
     public void changeCategory(String ItemID,String ItemCategory) {
         Item item=fm.getItem(ItemID);
         item.setItemCategory(ItemCategory);
         fm.changeItemCategory(ItemID,ItemCategory);
     }
+    @PropertyName("ItemPrice")
     public void changePrice(String ItemID,String ItemPrice) {
         Item item=fm.getItem(ItemID);
         item.setItemPrice(ItemPrice);
         fm.changeItemPrice(ItemID,ItemPrice);
     }
 
-
+    @PropertyName("Stock")
     public void updateStock(int newStock) {
         this.Stock = newStock; // update local object if needed
         // Assume 'fm' is an instance of FirestoreManager available in scope
