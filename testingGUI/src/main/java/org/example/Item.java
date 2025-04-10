@@ -82,6 +82,14 @@ public class Item {
         item.setItemPrice(ItemPrice);
         fm.changeItemPrice(ItemID,ItemPrice);
     }
+
+
+    public void updateStock(int newStock) {
+        this.Stock = newStock; // update local object if needed
+        // Assume 'fm' is an instance of FirestoreManager available in scope
+        fm.updateStock(this.ItemID, newStock);
+    }
+
     public void changeImageURL(String ItemID,String ImageURL) {
         fm.changeItemPicture(ItemID,ImageURL);
     }

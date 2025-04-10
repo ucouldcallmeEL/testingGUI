@@ -1,5 +1,7 @@
 package org.example;
 
+import com.google.cloud.firestore.annotation.PropertyName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +23,13 @@ public class Vendor extends User {
 
         this.ItemsID = null;
     }
-
+    @PropertyName("ItemsID")
     public ArrayList<String> getItemsID() {
         return ItemsID;
     }
-
-    public void setItemsID(ArrayList<String> itemsID) {
-        ItemsID = itemsID;
+    @PropertyName("ItemsID")
+    public void setItemsID(ArrayList<String> ItemsID) {
+        ItemsID = ItemsID;
     }
 //
 
@@ -99,29 +101,6 @@ public class Vendor extends User {
         return items ;
     }
 
-    public void updateStock(String itemID, int newQuantity) throws UpdateException {
-
-        if (this.ItemsID == null || !this.ItemsID.contains(itemID)) {
-            System.out.println("Error: Item not found in vendor's inventory");
-            return;
-        }
-
-        Item currentItem = fm.getItem(itemID);
-        if (currentItem == null) {
-            System.out.println("Error: Item not found in database");
-            return;
-        }
-
-        int currentStock = currentItem.getStock();
-
-        // Prevent negative stock
-        if (newQuantity < 0) {
-            throw new UpdateException("Error: Stock cannot be negative");
-        }
-
-
-        fm.updateStock(itemID, newQuantity);
-    }
 }
 class UpdateException extends Exception {
     public UpdateException(String message) {

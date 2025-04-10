@@ -24,7 +24,6 @@ public class FireBaseManager {
     public FireBaseManager() {
         try {
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
-
             FirestoreOptions firestoreOptions = FirestoreOptions.newBuilder()
                     .setCredentials(credentials)
                     .build();
@@ -262,13 +261,13 @@ public class FireBaseManager {
             DocumentSnapshot vendorDoc = vendorFuture.get();
 
             if (vendorDoc.exists()) {
-                List<String> itemIds = (List<String>) vendorDoc.get("ItemsID");
+                List<String> ItemIds = (List<String>) vendorDoc.get("ItemsID");
 
-                if (itemIds != null && !itemIds.isEmpty()) {
+                if (ItemIds != null && !ItemIds.isEmpty()) {
                     List<ApiFuture<DocumentSnapshot>> futures = new ArrayList<>();
 
                     // Fetch all item documents in parallel
-                    for (String itemId : itemIds) {
+                    for (String itemId : ItemIds) {
                         DocumentReference itemRef = db.collection("Items").document(itemId);
                         futures.add(itemRef.get());
                     }
@@ -279,7 +278,7 @@ public class FireBaseManager {
                         if (itemDoc.exists()) {
                             Item item = itemDoc.toObject(Item.class);
                             if (item != null) {
-                                item.setItemID(itemIds.get(i)); // Assuming setItemID exists
+                                item.setItemID(ItemIds.get(i)); // Assuming setItemID exists
                                 items.add(item);
                             }
                         }

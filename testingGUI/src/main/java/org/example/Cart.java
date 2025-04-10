@@ -108,6 +108,7 @@ public class Cart {
         fm.addOrder(order);
 
         // Step 2: Process each unique item to update stock
+        // Step 2: Process each unique item to update stock
         processed.clear();
         for (String itemID : itemsID) {
             if (processed.contains(itemID)) {
@@ -118,18 +119,22 @@ public class Cart {
             int quantity = (int) itemsID.stream().filter(id -> id.equals(itemID)).count();
 
             Item item = fm.getItem(itemID);
-            String vendorID = item.getVendor();
-            Vendor vendor = fm.getVendor(vendorID);
-            if (vendor != null) {
-                int stock =  fm.getStock(itemID);
-                stock = stock - quantity;
-                vendor.updateStock(itemID, stock); // false = reduce stock
+            if (item != null) {
+                int currentStock = item.getStock();
+                int newStock = currentStock - quantity;
+
+                if (newStock < 0) {
+                    throw new UpdateException("Calculated negative stock for item: " + itemID);
+                }
+
+                item.updateStock(newStock);
             } else {
-                System.out.println("Vendor not found for item: " + itemID);
+                System.out.println("Item not found in database during stock update: " + itemID);
             }
 
             processed.add(itemID);
         }
+
 
         // Step 3: Empty cart in Firebase and locally
         fm.emptyCart(UserID);
