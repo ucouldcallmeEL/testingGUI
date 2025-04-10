@@ -25,6 +25,9 @@ public class ClientProductCardController {
     private String itemID;
     private Item item;
 
+    private Cart cart = new Cart();
+    FireBaseManager fm = FireBaseManager.getInstance();
+
 
 
     public void setProductData(String name, String image, String price, Integer stock, String itemId) {
@@ -40,7 +43,8 @@ public class ClientProductCardController {
         try{
             GlobalData.setCurrentEditingProductId(this.itemID);
             this.item = item.getItembyID(GlobalData.getCurrentEditingProductId());
-            Cart cart = new Cart();
+            System.out.println("Cart Product Button Clicked");
+            cart = fm.getClientCart(LogInController.username);
             cart.addItem(LogInController.username, this.item, 1);
 
         }
@@ -61,6 +65,7 @@ public class ClientProductCardController {
         System.out.println("WishList Product Button Clicked");
 
     }
+
 
 }
 
