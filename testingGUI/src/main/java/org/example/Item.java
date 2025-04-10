@@ -1,5 +1,7 @@
 package org.example;
 
+import com.google.cloud.firestore.annotation.PropertyName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,75 +96,75 @@ public class Item {
         fm.changeItemPicture(ItemID,ImageURL);
     }
 
-
+    @PropertyName("ItemID")
     public String getItemID() {
         return ItemID;
     }
-
+    @PropertyName("ItemID")
     public void setItemID(String ItemId) {
         this.ItemID = ItemId;
     }
-
+    @PropertyName("ItemName")
     public String getItemName() {
         return ItemName;
     }
-
+    @PropertyName("ItemName")
     public void setItemName(String ItemName) {
         this.ItemName = ItemName;
     }
-
+    @PropertyName("ItemDescription")
     public String getItemDescription() {
         return ItemDescription;
     }
-
+    @PropertyName("ItemDescription")
     public void setItemDescription(String ItemDescription) {
         this.ItemDescription = ItemDescription;
     }
-
+    @PropertyName("ItemCategory")
     public String getItemCategory() {
         return ItemCategory;
     }
-
+    @PropertyName("ItemCategory")
     public void setItemCategory(String ItemCategory) {
         this.ItemCategory = ItemCategory;
     }
-
+    @PropertyName("ItemPrice")
     public String getItemPrice() {
         return ItemPrice;
     }
-
+    @PropertyName("ItemPrice")
     public void setItemPrice(String ItemPrice) {
         this.ItemPrice = ItemPrice;
     }
-
+    @PropertyName("Stock")
     public int getStock() {
         return Stock;
     }
-
+    @PropertyName("Stock")
     public void setStock(int Stock) {
         this.Stock = Stock;
     }
-
+    @PropertyName("Vendor")
     public String getVendor() {
         return Vendor;
     }
-
+    @PropertyName("Vendor")
     public void setVendor(String Vendor) {
         this.Vendor = Vendor;
     }
-
+    @PropertyName("rating")
     public int getRating() {
         return rating;
     }
-
+    @PropertyName("rating")
     public void setRating(int rating) {
         this.rating = rating;
     }
-
+    @PropertyName("ReviewsID")
     public ArrayList <String> getReviewsID() {
         return ReviewsID;
     }
-
+    @PropertyName("ReviewsID")
     public void setReviewsID(ArrayList <String> ReviewsID) {
         this.ReviewsID = ReviewsID;
     }
