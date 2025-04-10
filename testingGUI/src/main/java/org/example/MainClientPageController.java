@@ -15,6 +15,7 @@ public class MainClientPageController {
     @FXML
     private VBox productContainer; // VBox where ProductCards will be added
 
+
     public void initialize() {
         FireBaseManager fm = FireBaseManager.getInstance();
         List<Item> products = fm.getAllItems();
@@ -29,17 +30,24 @@ public class MainClientPageController {
 
         for (Item product : products) {
             try {
-                // Load the VendorProductCard.fxml
-                FXMLLoader loader = new FXMLLoader(new java.io.File(GlobalData.path + "VendorProductCard.fxml").toURI().toURL());
-                Node productCard = loader.load();
 
-                // Get the controller and set product data
-                ClientProductCardController controller = loader.getController();
+                ClientProductCardController controller = new ClientProductCardController();
                 controller.initialize(product.getItemID());
                 controller.setProductData(product.getItemName(), product.getImageURL(), product.getItemPrice(), product.getStock());
-
-                // Add the product card to the VBox
+                Node productCard = FXMLLoader.load(getClass().getResource(GlobalData.path + "ClientProductCard.fxml"));
                 productContainer.getChildren().add(productCard);
+
+//                // Load the VendorProductCard.fxml
+//                FXMLLoader loader = new FXMLLoader(getClass().getResource(GlobalData.path + "ClientProductCard.fxml"));
+//                Node productCard = loader.load();
+//
+//                // Get the controller and set product data
+//                ClientProductCardController controller = loader.getController();
+//                controller.initialize(product.getItemID());
+//                controller.setProductData(product.getItemName(), product.getImageURL(), product.getItemPrice(), product.getStock());
+//
+//                // Add the product card to the VBox
+//                productContainer.getChildren().add(productCard);
             } catch (IOException e) {
                 e.printStackTrace();
             }
