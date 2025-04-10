@@ -77,6 +77,18 @@ public class Client extends User {
         }
     }
 
+    public void removeItemFromWishList(String itemID){
+        if(this.Wishlist.contains(itemID)){
+            this.Wishlist.remove(itemID);
+            fm.removeItemFromWishlist(this.getUserID(), itemID); //updateDB
+        } else {
+
+            System.out.println("Item not found in wishlist.");
+        }
+    }
+
+
+
 
 
 

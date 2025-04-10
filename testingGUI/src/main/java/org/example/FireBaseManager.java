@@ -703,6 +703,21 @@ public class FireBaseManager {
             e.printStackTrace();
         }
     }
+
+    public void removeItemFromWishlist(String userID, String itemID) {
+        try {
+            DocumentReference clientRef = db.collection("Clients").document(userID);
+
+            ApiFuture<WriteResult> updateResult = clientRef.update("wishlist", FieldValue.arrayRemove(itemID));
+            updateResult.get(); // block until the operation completes
+
+            System.out.println("Item removed from wishlist.");
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void addItemToCart(String userID, Item item, int quantity) {
         try {
             // Get a reference to the user's cart document
@@ -749,8 +764,10 @@ public class FireBaseManager {
 
             // Set the itemsID field to an empty list
             ApiFuture<WriteResult> updateResult = cartRef.update("itemsID", new ArrayList<String>());
+            ApiFuture<WriteResult> updateResult1 = cartRef.update("totalPrice", null);
             // Wait for the update to complete
             updateResult.get(); // This will block until the write is finished
+            updateResult1.get();
             System.out.println("Cart emptied.");
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

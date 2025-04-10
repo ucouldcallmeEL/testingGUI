@@ -67,8 +67,10 @@ class ClientTest {
         User user = new User();
         Client client = (Client) user.GetUserByID("hagar");
         assertNotNull(client, "Client should not be null");
-        String testItemID = "ring001"; // use a real itemID that exists in your Items collection
+        String testItemID = "ring002"; // use a real itemID that exists in your Items collection
         assertDoesNotThrow(() -> client.addItemToWishList(testItemID));
+        assertTrue(client.getWishlist().contains(testItemID),
+                "Wishlist should contain the newly added item.");
 
     }
 
