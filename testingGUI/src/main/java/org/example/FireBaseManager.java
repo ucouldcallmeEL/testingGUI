@@ -23,7 +23,6 @@ public class FireBaseManager {
 
     public FireBaseManager() {
         try {
-
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirestoreOptions firestoreOptions = FirestoreOptions.newBuilder()
                     .setCredentials(credentials)
@@ -750,10 +749,8 @@ public class FireBaseManager {
 
             // Set the itemsID field to an empty list
             ApiFuture<WriteResult> updateResult = cartRef.update("itemsID", new ArrayList<String>());
-            ApiFuture<WriteResult> updateResult1 = cartRef.update("totalPrice", null);
             // Wait for the update to complete
             updateResult.get(); // This will block until the write is finished
-            updateResult1.get();
             System.out.println("Cart emptied.");
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
