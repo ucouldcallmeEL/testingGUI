@@ -53,8 +53,11 @@ public class Cart {
         this.itemsID = itemsID;
     }
 
-    public void addItem(String userID, Item item, int quantity){
+    public void addItem(String userID, Item item, int quantity)throws ZeroStockException{
         //add itemID to local list once per quantity
+        if(item.getStock() < quantity){
+            throw new ZeroStockException("Item " + item.getItemID() + " has insufficient stock. Available: " + item.getStock() + ", Requested: " + quantity);
+        }
         for(int i = 0; i < quantity; i++){
             itemsID.add(item.getItemID());
         }
