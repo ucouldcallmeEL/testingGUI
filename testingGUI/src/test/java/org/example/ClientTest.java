@@ -46,9 +46,20 @@ class ClientTest {
     @Test
     @Order(3)
     @DisplayName("Get wishlist from existing DB user")
-    void getWishlistFromDB(){
+    void getWishlistFromDB() {
+        User user = new User();
+        User retrievedUser = user.GetUserByID("hagar");
 
+        assertNotNull(retrievedUser, "Retrieved user should not be null");
+        assertInstanceOf(Client.class, retrievedUser, "User must be a client");
+
+        Client dbClient = (Client) retrievedUser;
+        List<String> wishlist = dbClient.getWishlist();
+
+        List<String> expected = List.of("wedding ring", "gold necklace");
+        assertEquals(expected, wishlist, "Wishlist does not match expected items");
     }
+
 
 
 
