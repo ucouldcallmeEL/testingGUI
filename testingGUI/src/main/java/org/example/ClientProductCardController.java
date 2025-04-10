@@ -1,6 +1,7 @@
 package org.example;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -22,32 +23,45 @@ public class ClientProductCardController {
     @FXML
     private ImageView ProductImage;
     private String itemID;
+    private Item item;
 
-    public void initialize(String itemID){
-        this.itemID = itemID;
 
-    }
-    public void setProductData(String name, String image, String price, Integer stock) {
+
+    public void setProductData(String name, String image, String price, Integer stock, String itemId) {
+        this.itemID = itemId;
         ProductNameHyperlink.setText(name);
         ProductPriceLabel.setText(price);
         ProductStockLabel.setText(stock.toString());
         ProductImage.setImage(new Image(image));
     }
 
-//    public void handleCartButton(ActionEvent event) {
-//        try{
-//            FireBaseManager fm = FireBaseManager.getInstance();
-//            Item item = new Item();
-//            item = item.getItembyID(this.itemID);
-//            Cart cart = new Cart();
-//            cart.addItem(LogInController.username, this.itemID , 1);
-//
-//        }
-//        catch(){
-//
-//        }
-//    }
-//
+    @FXML
+    public void handleCartButton(ActionEvent event) throws IOException {
+        try{
+            GlobalData.setCurrentEditingProductId(this.itemID);
+            this.item = item.getItembyID(GlobalData.getCurrentEditingProductId());
+            Cart cart = new Cart();
+            cart.addItem(LogInController.username, this.item, 1);
+
+        }
+        catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Cannot add to cart. Zero stock");
+
+        }
+    }
+
+    @FXML
+    public void handleProductNameHyperlink(ActionEvent event) throws IOException {
+        System.out.println("Product Name Hyperlink Clicked");
+        SceneController.switchScene(event, "ProductDetails.fxml", "Product Details");
+    }
+    @FXML
+    public void handleWishlistButton(ActionEvent event) throws IOException {
+        System.out.println("WishList Product Button Clicked");
+
+    }
+
 }
 
 

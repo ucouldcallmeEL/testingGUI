@@ -11,49 +11,39 @@ import java.io.IOException;
 import java.util.List;
 
 public class MainClientPageController {
-
     @FXML
     private VBox productContainer; // VBox where ProductCards will be added
 
+    @FXML
+    private ScrollPane scrollPane;
 
     public void initialize() {
         FireBaseManager fm = FireBaseManager.getInstance();
         List<Item> products = fm.getAllItems();
-
         addProductCards(products);
     }
 
     public void addProductCards(List<Item> products) {
-//        String absolutePath = "MainVendorPage.fxml";
-
         productContainer.getChildren().clear(); // Clear existing nodes
 
         for (Item product : products) {
             try {
+                // Load the ClientProductCard.fxml
+                FXMLLoader loader = new FXMLLoader(new java.io.File(GlobalData.path + "ClientProductCard.fxml").toURI().toURL());
+                Node productCard = loader.load();
 
-                ClientProductCardController controller = new ClientProductCardController();
-                controller.initialize(product.getItemID());
-                controller.setProductData(product.getItemName(), product.getImageURL(), product.getItemPrice(), product.getStock());
-                Node productCard = FXMLLoader.load(getClass().getResource(GlobalData.path + "ClientProductCard.fxml"));
+                GlobalData.setCurrentEditingProductId(product.getItemID());
+                // Get the controller and set product data
+                ClientProductCardController controller = loader.getController();
+                controller.setProductData(product.getItemName(), product.getImageURL(), product.getItemPrice(), product.getStock(), product.getItemID());
+
+                // Add the product card to the VBox
                 productContainer.getChildren().add(productCard);
-
-//                // Load the VendorProductCard.fxml
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource(GlobalData.path + "ClientProductCard.fxml"));
-//                Node productCard = loader.load();
-//
-//                // Get the controller and set product data
-//                ClientProductCardController controller = loader.getController();
-//                controller.initialize(product.getItemID());
-//                controller.setProductData(product.getItemName(), product.getImageURL(), product.getItemPrice(), product.getStock());
-//
-//                // Add the product card to the VBox
-//                productContainer.getChildren().add(productCard);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
-
 
 }
 
