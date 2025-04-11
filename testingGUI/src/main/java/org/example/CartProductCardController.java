@@ -43,7 +43,7 @@ public class CartProductCardController {
     public void handleProductNameHyperlink(ActionEvent event) throws IOException {
         System.out.println("Product Name Hyperlink Clicked");
         GlobalData.setCurrentEditingProductId(this.itemID);
-        SceneController.switchScene(event, "ProductDetails.fxml", "Product Details");
+        SceneController.switchScene(event, "ClientProductDetails.fxml", "Product Details");
     }
 
     @FXML

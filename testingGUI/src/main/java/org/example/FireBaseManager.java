@@ -23,6 +23,7 @@ public class FireBaseManager {
 
     public FireBaseManager() {
         try {
+            FileInputStream serviceAccount = new FileInputStream("D:/UNI/Junior Year/Semester 6/Software Testing/Project/GitVersion/testingGUI/e-commerce-571fd-firebase-adminsdk-fbsvc-dceb8c23fe.json");
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirestoreOptions firestoreOptions = FirestoreOptions.newBuilder()
                     .setCredentials(credentials)

@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
-public class ProductDetailsController {
+public class ClientProductDetailsController {
     @FXML
     private Label ProductNameLabel;
 

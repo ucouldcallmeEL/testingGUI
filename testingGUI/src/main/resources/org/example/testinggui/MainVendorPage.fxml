@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="400.0" prefWidth="362.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.MainVendorPageController">
-   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="535.2" minWidth="10.0" prefWidth="272.7999755859375" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.600015258789" minWidth="10.0" prefWidth="88.80002441406253" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints maxHeight="190.79999389648438" minHeight="10.0" prefHeight="44.8" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="367.0" minHeight="10.0" prefHeight="355.2" vgrow="SOMETIMES" />
-   </rowConstraints>
-   <children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+<ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="355.0" prefWidth="289.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.MainVendorPageController">
+   <content>
+      <VBox prefHeight="382.0" prefWidth="281.0" spacing="10.0">
          <children>
-            <Label alignment="CENTER" prefHeight="26.0" prefWidth="90.0" text="Products">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <HBox.margin>
-                  <Insets top="10.0" />
-               </HBox.margin>
-            </Label>
+            <HBox prefHeight="76.0" prefWidth="274.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="26.0" prefWidth="90.0" text="Products">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <VBox alignment="TOP_CENTER" prefHeight="52.0" prefWidth="100.0">
+                     <children>
+                        <Button fx:id="AddProductButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleAddProductButton" prefHeight="26.0" text="Add Product">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin></Button>
+                        <Button fx:id="VendorProfileButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleVendorProfileButton" prefHeight="26.0" prefWidth="58.0" text="Profile">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin></Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="100.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox fx:id="productContainer" prefHeight="300.0" prefWidth="274.0" />
          </children>
-      </HBox>
-       <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="355.0" prefWidth="289.0" GridPane.rowIndex="1">
-           <content>
-               <VBox fx:id="productContainer" prefHeight="382.0" prefWidth="281.0" spacing="10.0" />
-           </content>
-       </ScrollPane>
-      <VBox alignment="TOP_CENTER" prefHeight="51.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1">
-         <children>
-            <Button fx:id="AddProductButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleAddProductButton" prefHeight="26.0" text="Add Product" />
-            <Button fx:id="VendorProfileButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleVendorProfileButton" prefHeight="26.0" prefWidth="58.0" text="Profile" />
-         </children>
-         <GridPane.margin>
-            <Insets right="5.0" top="20.0" />
-         </GridPane.margin>
       </VBox>
-   </children>
-</GridPane>
+   </content>
+</ScrollPane>
