@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Order {
     private String orderID;
@@ -8,6 +9,7 @@ public class Order {
     private ArrayList <String> itemsID;
     private boolean current;
     private String TotalPrice;
+    private Date Date;
 
 
     public Order(){}
@@ -17,7 +19,16 @@ public class Order {
         this.UserID = UserID;
         this.itemsID = itemsID;
         this.current = current;
+        this.Date = new Date();
     }
+    public void setDate(Date Date){
+        this.Date = Date;
+    }
+
+    public Date getDate() {
+        return Date;
+    }
+
     public String getTotalPrice(){
         return TotalPrice;
     }
