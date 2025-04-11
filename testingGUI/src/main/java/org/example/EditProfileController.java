@@ -80,7 +80,13 @@ public class EditProfileController {
 
             EditProfileError.setStyle("-fx-text-fill: green;");
             EditProfileError.setText("Update Successful!");
-            SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
+
+            User type = fm.getVendor(this.userID);
+            if (type != null) {
+                SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
+            } else {
+                SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
+            }
         } catch (PhoneNumberException e) {
             EditProfileError.setText(e.getMessage());
         } catch (AddressChangeException e) {
