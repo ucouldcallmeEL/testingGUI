@@ -26,7 +26,7 @@
                   <Label fx:id="ProductQuantityLabel" alignment="CENTER" text="Quantity" />
                </children>
             </HBox>
-            <Button fx:id="removeFromCartButton" mnemonicParsing="false" onAction="#handleRemoveFromCartButton" prefHeight="29.0" prefWidth="68.0" text="Remove" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="removeButton" mnemonicParsing="false" onAction="#handleRemoveButton" prefHeight="29.0" prefWidth="68.0" text="Remove" textAlignment="CENTER" wrapText="true">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
