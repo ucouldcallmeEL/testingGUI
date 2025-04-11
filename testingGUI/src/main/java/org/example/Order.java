@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
     private String orderID;
@@ -8,6 +9,9 @@ public class Order {
     private ArrayList <String> itemsID;
     private boolean current;
     private String TotalPrice;
+
+    static FireBaseManager fm = FireBaseManager.getInstance();
+
 
 
     public Order(){}
@@ -56,8 +60,16 @@ public class Order {
         this.current = current;
     }
 
+    public List<Order> getCurrentOrders(){
+        return fm.getCurrentOrders();
+    }
+
+    public List<Order> getHistoryOrders(){
+        return fm.getHistoryOrders();
+    }
+
+
 //
-    static FireBaseManager fm = FireBaseManager.getInstance();
 
     public String GetOrderDetails() {
         return "Order ID: " + orderID + "\n" +

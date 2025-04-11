@@ -89,9 +89,17 @@ public class Client extends User {
         }
     }
 
+    public List<String> getWishlistForClientFromDB(){
+        return fm.getWishlist(this.getUserID());
+    }
 
+    public List<Order> getCurrentOrdersForClientsFromDB(){
+        return fm.getCurrentOrdersForClient(this.getUserID());
+    }
 
-
+    public List<Order> getHistoryForClientsFromDB(){
+        return fm.getHistoryForClient(this.getUserID());
+    }
 
 
     public void CancelOrder(Order order, String userID) {
@@ -109,6 +117,11 @@ public class Client extends User {
     }   
     public void addReview(String itemID, int rating, String comment){
 
+        //check if item exists in the database
+        if(fm.getItem(itemID) == null){
+            throw new IllegalArgumentException("Cannot add review to item"+ itemID + "does not exist");
+        }
+
         //create review object
         org.example.Review review = new Review(this.getUserID(), itemID, rating, comment);
 
@@ -117,6 +130,13 @@ public class Client extends User {
         System.out.println("Review submitted for item " + itemID);
 
 
+    }
+
+
+
+
+    public List<Review> getMyReviews(){
+        return fm.getReviewsByClient(this.getUserID());
     }
 
 
