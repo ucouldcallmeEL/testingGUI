@@ -804,6 +804,54 @@ public class FireBaseManager {
         }
     }
 
+    public List<Item> getCartItems(String userID) {
+        List<Item> cartItems = new ArrayList<>();
+
+        try {
+            // Get the user's cart document
+            DocumentReference cartRef = db.collection("Carts").document(userID);
+            DocumentSnapshot cartDoc = cartRef.get().get();
+
+            if (cartDoc.exists()) {
+                List<String> itemIds = (List<String>) cartDoc.get("itemsID");
+
+                if (itemIds != null && !itemIds.isEmpty()) {
+                    List<String> processedItemIds = new ArrayList<>();
+
+                    for (String itemId : itemIds) {
+                        if (processedItemIds.contains(itemId)) {
+                            continue;
+                        }
+
+                        int quantity = 0;
+                        for (String id : itemIds) {
+                            if (id.equals(itemId)) {
+                                quantity++;
+                            }
+                        }
+
+                        processedItemIds.add(itemId);
+
+                        DocumentSnapshot itemDoc = db.collection("Items").document(itemId).get().get();
+
+                        if (itemDoc.exists()) {
+                            Item item = itemDoc.toObject(Item.class);
+                            if (item != null) {
+                                item.setItemID(itemId);
+                                item.setStock(quantity); // Using stock field to store cart quantity
+                                cartItems.add(item);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return cartItems;
+    }
+
     public void changeVendorPassword(String vendorId, String newPassword) {
         // Reference to the vendor document
         DocumentReference vendorRef = db.collection("Vendors").document(vendorId);

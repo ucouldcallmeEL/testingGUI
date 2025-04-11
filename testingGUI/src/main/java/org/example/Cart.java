@@ -122,7 +122,6 @@ public class Cart {
         fm.addOrder(order);
 
         // Step 2: Process each unique item to update stock
-        // Step 2: Process each unique item to update stock
         processed.clear();
         for (String itemID : itemsID) {
             if (processed.contains(itemID)) {
