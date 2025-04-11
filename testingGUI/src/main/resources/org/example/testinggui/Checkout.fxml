@@ -5,28 +5,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="400.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="535.2" minWidth="10.0" prefWidth="321.5" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.600015258789" minWidth="10.0" prefWidth="155.0" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints maxHeight="190.79999389648438" minHeight="10.0" prefHeight="44.8" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="367.0" minHeight="10.0" prefHeight="355.2" vgrow="SOMETIMES" />
-   </rowConstraints>
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.CheckoutController">
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="53.0" prefWidth="600.0">
          <children>
             <Button fx:id="CartButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleCartButton" prefWidth="51.0" text="Cart">
                <HBox.margin>
-                  <Insets left="5.0" top="10.0" />
+                  <Insets left="5.0" />
                </HBox.margin>
             </Button>
             <Label alignment="CENTER" prefHeight="52.0" prefWidth="96.0" text="Checkout">
@@ -36,7 +25,12 @@
             </Label>
          </children>
       </HBox>
-      <VBox prefHeight="197.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <ScrollPane prefHeight="361.0" prefWidth="424.0">
+         <content>
+            <VBox fx:id="ProductContainer" prefHeight="365.0" prefWidth="426.0" />
+         </content>
+      </ScrollPane>
+      <VBox alignment="CENTER" prefHeight="106.0" prefWidth="424.0">
          <children>
             <Label prefHeight="26.0" prefWidth="108.0" text="Payment Method:" />
             <RadioButton fx:id="CODRadioButton" mnemonicParsing="false" onAction="#handleCODRadioButton" text="COD (Cash On Delivery)" />
@@ -45,20 +39,12 @@
                   <Insets />
                </VBox.margin>
             </RadioButton>
-            <Button mnemonicParsing="false" text="Proceed">
+            <Button fx:id="ProceedButton" mnemonicParsing="false" onAction="#handleProceedButton" text="Proceed">
                <VBox.margin>
-                  <Insets left="42.0" top="10.0" />
+                  <Insets top="5.0" />
                </VBox.margin>
             </Button>
          </children>
-         <GridPane.margin>
-            <Insets left="10.0" />
-         </GridPane.margin>
       </VBox>
-      <ScrollPane prefHeight="356.0" prefWidth="207.0" GridPane.rowIndex="1">
-         <content>
-            <VBox fx:id="ProductContainer" prefHeight="389.0" prefWidth="350.0" />
-         </content>
-      </ScrollPane>
    </children>
-</GridPane>
+</VBox>
