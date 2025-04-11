@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.CheckoutController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.CheckoutController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="53.0" prefWidth="600.0">
          <children>
@@ -27,19 +27,19 @@
       </HBox>
       <ScrollPane prefHeight="361.0" prefWidth="424.0">
          <content>
-            <VBox fx:id="ProductContainer" prefHeight="365.0" prefWidth="426.0" />
+            <VBox fx:id="productContainer" prefHeight="365.0" prefWidth="426.0" />
          </content>
       </ScrollPane>
       <VBox alignment="CENTER" prefHeight="106.0" prefWidth="424.0">
          <children>
             <Label prefHeight="26.0" prefWidth="108.0" text="Payment Method:" />
-            <RadioButton fx:id="CODRadioButton" mnemonicParsing="false" onAction="#handleCODRadioButton" text="COD (Cash On Delivery)" />
-            <RadioButton fx:id="CreditButton" mnemonicParsing="false" onAction="#handleCreditButton" text="Credit/Debit Card">
+            <RadioButton fx:id="CODRadioButton" mnemonicParsing="false" text="COD (Cash On Delivery)" />
+            <RadioButton fx:id="CreditCardRadioButton" mnemonicParsing="false" text="Credit/Debit Card">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </RadioButton>
-            <Button fx:id="ProceedButton" mnemonicParsing="false" onAction="#handleProceedButton" text="Proceed">
+            <Button fx:id="ProceedButton" mnemonicParsing="false" onAction="#handleProceedToPaymentButton" text="Proceed">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>

@@ -25,7 +25,7 @@ public class ClientProductCardController {
     private String itemID;
     private Item item;
     private Cart cart = new Cart();
-    FireBaseManager fm = FireBaseManager.getInstance();
+    static FireBaseManager fm = FireBaseManager.getInstance();
 
 
     public void setProductData(String name, String image, String price, Integer stock, String itemId) {

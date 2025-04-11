@@ -16,11 +16,12 @@ public class Order {
 
     public Order(){}
 
-    public Order(String orderID, String UserID, ArrayList<String> itemsID, boolean current){
+    public Order(String orderID, String UserID, ArrayList<String> itemsID, boolean current, String totalPrice){
         this.orderID = orderID;
         this.UserID = UserID;
         this.itemsID = itemsID;
         this.current = current;
+        this.TotalPrice = totalPrice;
     }
     public String getTotalPrice(){
         return TotalPrice;
@@ -60,13 +61,6 @@ public class Order {
         this.current = current;
     }
 
-    public List<Order> getCurrentOrders(){
-        return fm.getCurrentOrders();
-    }
-
-    public List<Order> getHistoryOrders(){
-        return fm.getHistoryOrders();
-    }
 
 
 //

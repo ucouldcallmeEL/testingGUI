@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -25,6 +26,9 @@ public class CheckoutController {
     List<Item> products = new ArrayList<>();
     Cart cart;
 
+    private boolean isCOD;
+    private boolean isCreditCard;
+
     public void initialize() {
         FireBaseManager fm = FireBaseManager.getInstance();
         this.cart = fm.getClientCart(GlobalData.currentlyLoggedIN);
@@ -33,8 +37,17 @@ public class CheckoutController {
             products.add(item);
         }
         addProductCards(products);
-        boolean isCOD = CODRadioButton.isSelected();
-        boolean isCreditCard = CreditCardRadioButton.isSelected();
+        // Create a ToggleGroup
+        ToggleGroup paymentGroup = new ToggleGroup();
+
+        // Add radio buttons to the group
+        CODRadioButton.setToggleGroup(paymentGroup);
+        CreditCardRadioButton.setToggleGroup(paymentGroup);
+
+        // Optionally, set a default selection
+        CODRadioButton.setSelected(true);
+//        this.isCOD = CODRadioButton.isSelected();
+//        this.isCreditCard = CreditCardRadioButton.isSelected();
     }
 
     public void addProductCards(List<Item> products) {
@@ -70,6 +83,16 @@ public class CheckoutController {
         System.out.println("Proceed to Payment Button Clicked");
         if (CODRadioButton.isSelected()) {
             System.out.println("Cash on Delivery selected");
+            try {
+                this.cart.confirmOrder();
+                SceneController.Popup(event, "OrderConfirmed.fxml", "Order Confirmed");
+                SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
+
+            } catch (ZeroStockException e) {
+                throw new RuntimeException(e);
+            } catch (UpdateException e) {
+                throw new RuntimeException(e);
+            }
 
             // Handle Cash on Delivery logic here
         } else if (CreditCardRadioButton.isSelected()) {

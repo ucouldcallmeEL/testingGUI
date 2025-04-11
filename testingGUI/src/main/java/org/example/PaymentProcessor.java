@@ -1,16 +1,16 @@
 package org.example;
 
-public class PaymentController {
+public class PaymentProcessor {
     private String UserID;
     private String CardNumber;
     private String CVV;
 
-    public PaymentController(String UserID, String CardNumber, String CardExpiry) {
+    public PaymentProcessor(String UserID, String CardNumber, String CardExpiry) {
         this.UserID = UserID;
         this.CardNumber = CardNumber;
         this.CVV = CardExpiry;
     }
-    public PaymentController() {
+    public PaymentProcessor() {
 
     }
 

@@ -55,6 +55,7 @@ public class CartProductCardController {
 //        cart.removeItem(GlobalData.currentlyLoggedIN, this.item, 1);
         fm.removeItemFromCart(GlobalData.currentlyLoggedIN, this.item, 1);
 //        SceneController.switchScene(event, "MainPageClient.fxml", "Product Card");
+        SceneController.refreshPage(event, "Cart.fxml");
     }
 
     @FXML
@@ -62,5 +63,6 @@ public class CartProductCardController {
         System.out.println("Move To Wishlist Button Clicked");
         fm.removeItemFromCart(GlobalData.currentlyLoggedIN, this.item, 1);
         fm.addItemToWishlist(GlobalData.currentlyLoggedIN, this.itemID);
+        SceneController.refreshPage(event, "Cart.fxml");
     }
 }

@@ -4,33 +4,42 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.layout.VBox;
+import java.io.IOException;
+
 
 public class PaymentPageController {
-    @FXML private TextField CardNumber;
-    @FXML private TextField CVV;
+    @FXML private TextField CardNumberTextField;
+    @FXML private TextField CVVTextField;
     @FXML private Label PaymentErrorLabel;
 
     @FXML
     public void handleDoneButton(ActionEvent event){
-        String cardNumber = CardNumber.getText();
-        String cvv = CVV.getText();
+        String cardNumber = CardNumberTextField.getText();
+        String cvv = CVVTextField.getText();
         // Assuming you have a method to process the payment
         // processPayment(cardNumber, cvv);
         try{
-            PaymentController paymentController = new PaymentController(LogInController.username, cardNumber, cvv);
+            PaymentProcessor paymentController = new PaymentProcessor(LogInController.username, cardNumber, cvv);
             paymentController.isCardValid();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Payment Successful");
-            alert.setHeaderText(null);
-            alert.setContentText("Payment was successful!");
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Payment Successful");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Payment was successful!");
+//            this.cart.confirmOrder();
+            SceneController.Popup(event, "OrderConfirmed.fxml", "Order Confirmed");
+            SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
 
 
         }catch(PaymentException e){
             PaymentErrorLabel.setText(e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    public void handleBackButton(ActionEvent event) throws IOException {
+        System.out.println("Back Button Clicked");
+        SceneController.switchScene(event, "Checkout.fxml", "Checkout");
     }
 }

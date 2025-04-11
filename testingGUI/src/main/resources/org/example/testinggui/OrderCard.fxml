@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.testinggui.OrderCard"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="188.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Hyperlink fx:id="OrderNumberHyperLink" onAction="#handleOrderNumberHyperLink" text="Order No.">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="10.0" />
+         </VBox.margin>
+      </Hyperlink>
+      <Label fx:id="DateOfPurchaseLabel" onDragDetected="#handleDateOfPurchaseLabel" prefHeight="30.0" prefWidth="115.0" text="Date Of Purchase..?">
+         <VBox.margin>
+            <Insets left="30.0" />
+         </VBox.margin>
+      </Label>
+      <Label fx:id="TotalPrice" onDragDetected="#handleTotalPrice" prefHeight="18.0" prefWidth="65.0" text="Total Price">
+         <VBox.margin>
+            <Insets left="30.0" />
+         </VBox.margin>
+      </Label>
+   </children>
+</VBox>

@@ -23,7 +23,6 @@ public class FireBaseManager {
 
     public FireBaseManager() {
         try {
-            FileInputStream serviceAccount = new FileInputStream("D:/UNI/Junior Year/Semester 6/Software Testing/Project/GitVersion/testingGUI/e-commerce-571fd-firebase-adminsdk-fbsvc-dceb8c23fe.json");
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirestoreOptions firestoreOptions = FirestoreOptions.newBuilder()
                     .setCredentials(credentials)
@@ -458,7 +457,7 @@ public class FireBaseManager {
 
         return reviews;
     }
-    public void addOrder(org.example.Order order) {
+    public void addOrder(Order order) {
 
         // Create a new review document with auto-generated ID
         DocumentReference reviewRef = db.collection("Orders").document();
@@ -750,21 +749,25 @@ public class FireBaseManager {
 
     public void addItemToCart(String userID, Item item, int quantity) {
         try {
-            // Get a reference to the user's cart document
             DocumentReference cartRef = db.collection("Carts").document(userID);
 
-            // Prepare a list of the item to add (repeating the itemID by quantity)
-            List<String> itemsToAdd = new ArrayList<>();
-            for (int i = 0; i < quantity; i++) {
-                itemsToAdd.add(item.getItemID());
+            // Fetch current itemsID array
+            DocumentSnapshot snapshot = cartRef.get().get();
+            List<String> existingItems = (List<String>) snapshot.get("itemsID");
+
+            if (existingItems == null) {
+                existingItems = new ArrayList<>();
             }
 
-            // Use arrayUnion to add the item(s) to the itemsID array without duplicates
-            ApiFuture<WriteResult> updateResult = cartRef.update("itemsID", FieldValue.arrayUnion(itemsToAdd.toArray()));
+            for (int i = 0; i < quantity; i++) {
+                existingItems.add(item.getItemID());
+            }
 
-            // Wait for the update to complete
-            updateResult.get(); // This will block until the write is finished
-            System.out.println("Item(s) added to cart.");
+            // Overwrite the array with the new list
+            ApiFuture<WriteResult> updateResult = cartRef.update("itemsID", existingItems);
+            updateResult.get();
+
+            System.out.println("Item(s) added to cart, duplicates included.");
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -805,8 +808,8 @@ public class FireBaseManager {
     }
 
 
-    public List<cartItem> getCartItemsWithQuantity(String userID) {
-        List<cartItem> cartItems = new ArrayList<>();
+    public List<CartItem> getCartItemsWithQuantity(String userID) {
+        List<CartItem> cartItems = new ArrayList<>();
 
         try {
             DocumentReference cartRef = db.collection("Carts").document(userID);
@@ -838,7 +841,7 @@ public class FireBaseManager {
                             Item item = itemDoc.toObject(Item.class);
                             if (item != null) {
                                 item.setItemID(itemId); // Set the correct item ID
-                                cartItems.add(new cartItem(item, quantity));
+                                cartItems.add(new CartItem(item, quantity));
                             }
                         }
                     }
