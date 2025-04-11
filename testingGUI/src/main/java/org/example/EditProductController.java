@@ -94,4 +94,10 @@ public class EditProductController {
             ProductUpdateError.setText(ex.getMessage());
         }
     }
+
+    @FXML
+    public void handleHomeButton(ActionEvent event) throws IOException {
+        System.out.println("Home Button Clicked");
+        SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
+    }
 }
