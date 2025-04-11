@@ -3,12 +3,12 @@ package org.example;
 public class PaymentController {
     private String UserID;
     private String CardNumber;
-    private String CardExpiry;
+    private String CVV;
 
     public PaymentController(String UserID, String CardNumber, String CardExpiry) {
         this.UserID = UserID;
         this.CardNumber = CardNumber;
-        this.CardExpiry = CardExpiry;
+        this.CVV = CardExpiry;
     }
     public PaymentController() {
 
@@ -26,11 +26,13 @@ public class PaymentController {
     public void setCardNumber(String cardNumber) {
         CardNumber = cardNumber;
     }
-    public String getCardExpiry() {
-        return CardExpiry;
+
+    public String getCVV() {
+        return CVV;
     }
-    public void setCardExpiry(String cardExpiry) {
-        CardExpiry = cardExpiry;
+
+    public void setCVV(String CVV) {
+        this.CVV = CVV;
     }
 
     public boolean isCardValid() throws PaymentException {
