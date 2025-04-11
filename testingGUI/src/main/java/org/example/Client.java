@@ -89,9 +89,17 @@ public class Client extends User {
         }
     }
 
+    public List<String> getWishlistForClientFromDB(){
+        return fm.getWishlist(this.getUserID());
+    }
 
+    public List<Order> getCurrentOrdersForClientsFromDB(){
+        return fm.getCurrentOrdersForClient(this.getUserID());
+    }
 
-
+    public List<Order> getHistoryForClientsFromDB(){
+        return fm.getHistoryForClient(this.getUserID());
+    }
 
 
     public void CancelOrder(Order order, String userID) {
@@ -117,6 +125,13 @@ public class Client extends User {
         System.out.println("Review submitted for item " + itemID);
 
 
+    }
+
+
+
+
+    public List<Review> getMyReviews(){
+        return fm.getReviewsByClient(this.getUserID());
     }
 
 

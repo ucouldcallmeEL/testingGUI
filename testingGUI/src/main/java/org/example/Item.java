@@ -83,6 +83,12 @@ public class Item {
         item.setItemCategory(ItemCategory);
         fm.changeItemCategory(ItemID,ItemCategory);
     }
+
+    @PropertyName("ItemCategory")
+    public List<Item> getItemsByCategory(String category){
+        return fm.getItemsByCategory(category);
+    }
+
     @PropertyName("ItemPrice")
     public void changePrice(String ItemID,String ItemPrice) {
         Item item=fm.getItem(ItemID);
@@ -97,9 +103,17 @@ public class Item {
         fm.updateStock(this.ItemID, newStock);
     }
 
+    @PropertyName("Stock")
+    public int getStockFromDB(){
+        return fm.getStock(this.ItemID);
+    }
+
+
     public void changeImageURL(String ItemID,String ImageURL) {
         fm.changeItemPicture(ItemID,ImageURL);
     }
+
+
 
     @PropertyName("ItemID")
     public String getItemID() {
