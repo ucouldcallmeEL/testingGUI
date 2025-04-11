@@ -104,7 +104,7 @@ public class Item {
     }
 
     @PropertyName("Stock")
-    public int getStockFromDB(){
+    public int fetchStockFromDB(){
         return fm.getStock(this.ItemID);
     }
 

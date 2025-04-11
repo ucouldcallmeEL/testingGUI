@@ -117,6 +117,11 @@ public class Client extends User {
     }   
     public void addReview(String itemID, int rating, String comment){
 
+        //check if item exists in the database
+        if(fm.getItem(itemID) == null){
+            throw new IllegalArgumentException("Cannot add review to item"+ itemID + "does not exist");
+        }
+
         //create review object
         org.example.Review review = new Review(this.getUserID(), itemID, rating, comment);
 
