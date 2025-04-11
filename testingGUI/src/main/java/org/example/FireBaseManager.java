@@ -803,11 +803,11 @@ public class FireBaseManager {
         }
     }
 
-    public List<Item> getCartItems(String userID) {
-        List<Item> cartItems = new ArrayList<>();
+
+    public List<cartItem> getCartItemsWithQuantity(String userID) {
+        List<cartItem> cartItems = new ArrayList<>();
 
         try {
-            // Get the user's cart document
             DocumentReference cartRef = db.collection("Carts").document(userID);
             DocumentSnapshot cartDoc = cartRef.get().get();
 
@@ -836,9 +836,8 @@ public class FireBaseManager {
                         if (itemDoc.exists()) {
                             Item item = itemDoc.toObject(Item.class);
                             if (item != null) {
-                                item.setItemID(itemId);
-                                item.setStock(quantity); // Using stock field to store cart quantity
-                                cartItems.add(item);
+                                item.setItemID(itemId); // Set the correct item ID
+                                cartItems.add(new cartItem(item, quantity));
                             }
                         }
                     }
@@ -847,7 +846,6 @@ public class FireBaseManager {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-
         return cartItems;
     }
 
