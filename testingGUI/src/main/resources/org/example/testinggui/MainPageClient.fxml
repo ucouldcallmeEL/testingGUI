@@ -22,12 +22,12 @@
                                 <Insets left="10.0" top="5.0" />
                             </HBox.margin>
                         </Label>
-                        <Button fx:id="CartButton" mnemonicParsing="false" text="Cart">
+                        <Button fx:id="CartButton" mnemonicParsing="false" onAction="#handleCartButton" text="Cart">
                             <HBox.margin>
                                 <Insets left="160.0" right="5.0" top="5.0" />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="ProfileButton" mnemonicParsing="false" text="Profile">
+                        <Button fx:id="ProfileButton" mnemonicParsing="false" onAction="#handleProfileButton" text="Profile">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin></Button>
