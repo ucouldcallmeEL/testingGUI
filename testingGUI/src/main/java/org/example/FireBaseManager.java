@@ -716,6 +716,35 @@ public class FireBaseManager {
             e.printStackTrace();
         }
     }
+    public List<String> getWishlist(String userID) {
+        List<String> wishlist = new ArrayList<>();
+
+        try {
+            // Reference to the client document
+            DocumentReference clientRef = db.collection("Clients").document(userID);
+
+            // Get the document snapshot
+            ApiFuture<DocumentSnapshot> future = clientRef.get();
+            DocumentSnapshot document = future.get();
+
+            if (document.exists()) {
+                // Retrieve the wishlist field and cast it to a List
+                wishlist = (List<String>) document.get("Wishlist");
+
+                if (wishlist == null) {
+                    wishlist = new ArrayList<>(); // Initialize if wishlist is null
+                }
+
+                System.out.println("Wishlist retrieved: " + wishlist);
+            } else {
+                System.out.println("No such document.");
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return wishlist;
+    }
 
 
     public void addItemToCart(String userID, Item item, int quantity) {
