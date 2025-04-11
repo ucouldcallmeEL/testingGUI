@@ -60,8 +60,8 @@ public class ProductDetailsController {
             GlobalData.setCurrentEditingProductId(this.itemID);
             this.item = fm.getItem(this.itemID);
             System.out.println("Cart Product Button Clicked");
-            cart = fm.getClientCart(LogInController.username);
-            cart.addItem(LogInController.username, this.item, 1);
+            cart = fm.getClientCart(GlobalData.currentlyLoggedIN);
+            fm.addItemToCart(GlobalData.currentlyLoggedIN, this.item, 1);
 
         }
         catch(Exception e){

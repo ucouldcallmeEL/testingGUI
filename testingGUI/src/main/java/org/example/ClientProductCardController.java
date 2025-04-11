@@ -2,7 +2,6 @@ package org.example;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -29,9 +28,10 @@ public class ClientProductCardController {
     FireBaseManager fm = FireBaseManager.getInstance();
 
 
-
     public void setProductData(String name, String image, String price, Integer stock, String itemId) {
         this.itemID = itemId;
+        GlobalData.setCurrentEditingProductId(this.itemID);
+        this.item = fm.getItem(this.itemID);
         ProductNameHyperlink.setText(name);
         ProductPriceLabel.setText(price);
         ProductStockLabel.setText(stock.toString());
@@ -40,15 +40,14 @@ public class ClientProductCardController {
 
     @FXML
     public void handleCartButton(ActionEvent event) throws IOException {
-        try{
-            GlobalData.setCurrentEditingProductId(this.itemID);
-            this.item = fm.getItem(this.itemID);
+        try {
+//            GlobalData.setCurrentEditingProductId(this.itemID);
+//            this.item = fm.getItem(this.itemID);
             System.out.println("Add Product To Cart  Button Clicked");
             cart = fm.getClientCart(GlobalData.currentlyLoggedIN);
             fm.addItemToCart(GlobalData.currentlyLoggedIN, this.item, 1);
 
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Cannot add to cart. Zero stock");
 
@@ -61,6 +60,7 @@ public class ClientProductCardController {
         GlobalData.setCurrentEditingProductId(this.itemID);
         SceneController.switchScene(event, "ProductDetails.fxml", "Product Details");
     }
+
     @FXML
     public void handleWishlistButton(ActionEvent event) throws IOException {
         System.out.println("WishList Product Button Clicked");
@@ -69,18 +69,17 @@ public class ClientProductCardController {
     }
 
     @FXML
-    public void handleRemoveFromCartButton (ActionEvent event) throws IOException {
-        System.out.println("Remove from Cart Button Clicked");
-        cart = fm.getClientCart(GlobalData.currentlyLoggedIN);
-        cart.removeItem(GlobalData.currentlyLoggedIN, this.item, 1);
+    public void handleRemoveFromWishlistButton(ActionEvent event) throws IOException {
+        System.out.println("Remove from Wishlist Button Clicked");
+        fm.removeItemFromWishlist(GlobalData.currentlyLoggedIN, this.itemID);
 //        SceneController.switchScene(event, "MainPageClient.fxml", "Product Card");
     }
 
     @FXML
-    public void handleRemoveFromWishlistButton (ActionEvent event) throws IOException {
-        System.out.println("Remove from Wishlist Button Clicked");
+    public void handleMoveToCartButton(ActionEvent event) throws IOException {
+        System.out.println("Move To Cart Button Clicked");
         fm.removeItemFromWishlist(GlobalData.currentlyLoggedIN, this.itemID);
-//        SceneController.switchScene(event, "MainPageClient.fxml", "Product Card");
+        fm.addItemToCart(GlobalData.currentlyLoggedIN, this.item, 1);
     }
 }
 
