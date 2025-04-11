@@ -93,11 +93,11 @@ public class Vendor extends User {
 
     }
     public void removeItem(Item Item) {
+        fm.deleteItemReviews(Item.getItemID());
         fm.deleteItem(Item.getItemID(),this.getUserID());
     }
     public static  List<Item> getItemsForVendor(String userID) {
         List<Item> items = fm.getItemsForVendor(userID);
-
         return items ;
     }
 

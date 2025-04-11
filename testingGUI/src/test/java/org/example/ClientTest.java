@@ -85,7 +85,7 @@ class ClientTest {
         Client dbClient = (Client) retrievedUser;
         List<String> wishlist = dbClient.getWishlist();
 
-        List<String> expected = List.of("ring001", "wedding ring","borsh");
+        List<String> expected = List.of("aRIDVZDogJyN6ks2NXQS");
         assertEquals(expected, wishlist, "Wishlist does not match expected items");
     }
 
@@ -169,7 +169,7 @@ class ClientTest {
         User user = new User();
         Client client = (Client) user.GetUserByID("hagar");
         assertNotNull(client, "Client should not be null");
-        String testItemID = "VOAVMMcKVhzBd6Sx5d0I"; // this should be a real existing item
+        String testItemID = "Q6yZqgHWoYiwT2GxWZE1"; // this should be a real existing item
         int rating = 4;
         String comment = "Great product!";
         assertDoesNotThrow(() -> client.addReview(testItemID, rating, comment));
@@ -247,10 +247,6 @@ class ClientTest {
         assertNotNull(reviews);
         assertTrue(reviews instanceof List);
     }
-
-
-
-
 
 
 

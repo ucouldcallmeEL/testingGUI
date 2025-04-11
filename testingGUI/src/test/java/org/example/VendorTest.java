@@ -111,6 +111,20 @@ public class VendorTest {
 
     @Test
     @Order(9)
+    @DisplayName("Get items for vendor returns list")
+    void getItemsForVendor_ReturnsList() {
+        List<Item> items = Vendor.getItemsForVendor("vendor123");
+        assertNotNull(items, "Returned item list should not be null");
+        assertTrue(items instanceof List, "Returned object should be a List");
+
+        System.out.println("Items returned for vendor123:");
+        for (Item item : items) {
+            System.out.println(item);
+        }
+    }
+
+    @Test
+    @Order(10)
     @DisplayName("Remove item from vendor (no error)")
     void removeItem_Success() {
         Item item = new Item();
@@ -118,25 +132,25 @@ public class VendorTest {
         item.setVendor("vendor123");
 
         assertDoesNotThrow(() -> vendor.removeItem(item));
-        // Actual DB delete cannot be verified here without mocks
     }
+
 
     @Test
-    @Order(10)
-    @DisplayName("Get items for vendor returns list")
-    void getItemsForVendor_ReturnsList() {
-        List<Item> items = Vendor.getItemsForVendor("vendor123");
-        assertNotNull(items, "Returned item list should not be null");
-        assertTrue(items instanceof List, "Returned object should be a List");
+    @Order(11)
+    @DisplayName("Remove item from vendor DB (no error)")
+    void removeItemFromDB_Success() {
+        List<Item> itemsBefore = Vendor.getItemsForVendor("vendor123");
+        assertFalse(itemsBefore.isEmpty(), "Vendor must have at least one item to remove");
+
+        Item itemToRemove = itemsBefore.get(itemsBefore.size() - 1); // Remove the most recently added item
+
+        assertDoesNotThrow(() -> vendor.removeItem(itemToRemove), "Removing item should not throw");
+
+        List<Item> itemsAfter = Vendor.getItemsForVendor("vendor123");
+        boolean stillExists = itemsAfter.stream()
+                .anyMatch(i -> i.getItemID().equals(itemToRemove.getItemID()));
+
+        assertFalse(stillExists, "Item should be removed from vendor's item list");
     }
 
-    @AfterAll
-    static void cleanUpTestItems() {
-        List<Item> items = Vendor.getItemsForVendor("vendor123");
-        for (Item item : items) {
-            if ("Sample Item".equals(item.getItemName())) {
-                FireBaseManager.getInstance().deleteItem(item.getItemID(), "vendor123");
-            }
-        }
-    }
 }

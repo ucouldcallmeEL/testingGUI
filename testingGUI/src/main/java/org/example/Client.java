@@ -112,9 +112,9 @@ public class Client extends User {
 
     }
     public void AddToCart(Item item) {
-        fm.addItemToCart(GlobalData.getCurrentlyLoggedIN(),item,1);
+        fm.addItemToCart("hagar",item,1);
 
-    }   
+    }
     public void addReview(String itemID, int rating, String comment){
 
         //check if item exists in the database
