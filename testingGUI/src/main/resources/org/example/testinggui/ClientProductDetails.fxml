@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProductDetailsController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ClientProductDetailsController">
     <children>
       <HBox prefHeight="22.0" prefWidth="337.0">
          <children>
@@ -25,9 +25,24 @@
             </font>
         </Label>
         <ImageView fx:id="ProductImage" fitHeight="230.0" fitWidth="194.0" pickOnBounds="true" preserveRatio="true" />
-        <Label fx:id="ProductPriceLabel" text="Price" />
-        <Label fx:id="ProductCategoryLabel" text="Category" />
-        <Label fx:id="ProductDescriptionLabel" text="Product Description" />
+      <HBox alignment="CENTER" prefHeight="34.0" prefWidth="338.0">
+         <children>
+            <Label alignment="CENTER" text="Price: " />
+              <Label fx:id="ProductPriceLabel" text="Price" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="338.0">
+         <children>
+            <Label alignment="CENTER" text="Category: " />
+              <Label fx:id="ProductCategoryLabel" text="Category" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="34.0" prefWidth="338.0">
+         <children>
+            <Label alignment="CENTER" text="Product Description: " />
+              <Label fx:id="ProductDescriptionLabel" text="Product Description" />
+         </children>
+      </HBox>
         <HBox alignment="TOP_CENTER" prefHeight="33.0" prefWidth="337.0">
             <children>
                 <Button fx:id="AddToCartButton" mnemonicParsing="false" onAction="#handleCartButton" text="Add To Cart" />

@@ -41,5 +41,6 @@
       <TextArea fx:id="ProductDescriptionField" prefHeight="200.0" prefWidth="200.0" promptText="Product Description" />
       <Label fx:id="ProductUpdateError" textFill="#b40000" />
       <Button fx:id="UpdateButton" mnemonicParsing="false" onAction="#handleUpdateButton" text="Update" />
+      <Button fx:id="DeleteProductButton" mnemonicParsing="false" onAction="#handleDeleteProductButton" text="Delete Product" />
    </children>
 </VBox>
