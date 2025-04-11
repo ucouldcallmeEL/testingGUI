@@ -169,7 +169,7 @@ class ClientTest {
         User user = new User();
         Client client = (Client) user.GetUserByID("hagar");
         assertNotNull(client, "Client should not be null");
-        String testItemID = "ring002"; // this should be a real existing item
+        String testItemID = "VOAVMMcKVhzBd6Sx5d0I"; // this should be a real existing item
         int rating = 4;
         String comment = "Great product!";
         assertDoesNotThrow(() -> client.addReview(testItemID, rating, comment));
