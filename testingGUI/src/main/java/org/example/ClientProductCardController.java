@@ -22,9 +22,9 @@ public class ClientProductCardController {
 
     @FXML
     private ImageView ProductImage;
+
     private String itemID;
     private Item item;
-
     private Cart cart = new Cart();
     FireBaseManager fm = FireBaseManager.getInstance();
 
@@ -43,9 +43,9 @@ public class ClientProductCardController {
         try{
             GlobalData.setCurrentEditingProductId(this.itemID);
             this.item = fm.getItem(this.itemID);
-            System.out.println("Cart Product Button Clicked");
-            cart = fm.getClientCart(LogInController.username);
-            cart.addItem(LogInController.username, this.item, 1);
+            System.out.println("Add Product To Cart  Button Clicked");
+            cart = fm.getClientCart(GlobalData.currentlyLoggedIN);
+            fm.addItemToCart(GlobalData.currentlyLoggedIN, this.item, 1);
 
         }
         catch(Exception e){
@@ -68,7 +68,20 @@ public class ClientProductCardController {
 
     }
 
+    @FXML
+    public void handleRemoveFromCartButton (ActionEvent event) throws IOException {
+        System.out.println("Remove from Cart Button Clicked");
+        cart = fm.getClientCart(GlobalData.currentlyLoggedIN);
+        cart.removeItem(GlobalData.currentlyLoggedIN, this.item, 1);
+//        SceneController.switchScene(event, "MainPageClient.fxml", "Product Card");
+    }
 
+    @FXML
+    public void handleRemoveFromWishlistButton (ActionEvent event) throws IOException {
+        System.out.println("Remove from Wishlist Button Clicked");
+        fm.removeItemFromWishlist(GlobalData.currentlyLoggedIN, this.itemID);
+//        SceneController.switchScene(event, "MainPageClient.fxml", "Product Card");
+    }
 }
 
 

@@ -81,8 +81,7 @@ public class EditProfileController {
             EditProfileError.setStyle("-fx-text-fill: green;");
             EditProfileError.setText("Update Successful!");
 
-            User type = fm.getVendor(this.userID);
-            if (type != null) {
+            if (LogInController.isVendor) {
                 SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
             } else {
                 SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
@@ -99,6 +98,16 @@ public class EditProfileController {
             EditProfileError.setText(ex.getMessage());
         } catch (Exception ex) {
             EditProfileError.setText(ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleBackButton(ActionEvent event) throws IOException {
+        System.out.println("Back Button Clicked");
+        if (LogInController.isVendor) {
+            SceneController.switchScene(event, "VendorProfile.fxml", "Homepage");
+        } else {
+            SceneController.switchScene(event, "ClientProfile.fxml", "Homepage");
         }
     }
 }

@@ -52,4 +52,9 @@ public class ProductAddController {
                   ex.printStackTrace();
           }
       }
+      @FXML
+      private void handleHomeButton(ActionEvent event) throws IOException {
+            System.out.println("Home Button Clicked");
+            SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
+      }
 }

@@ -1,25 +1,33 @@
 package org.example;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import javafx.event.ActionEvent;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainClientPageController {
+public class CartController {
     @FXML
     private VBox productContainer; // VBox where ProductCards will be added
 
     @FXML
     private ScrollPane scrollPane;
 
+    List<Item> products = new ArrayList<>();
+    Cart cart;
+
     public void initialize() {
         FireBaseManager fm = FireBaseManager.getInstance();
-        List<Item> products = fm.getAllItems();
+        this.cart = fm.getClientCart(GlobalData.currentlyLoggedIN);
+        for (String itemID : cart.getItemsID()) {
+            Item item = fm.getItem(itemID);
+            products.add(item);
+        }
         addProductCards(products);
     }
 
@@ -52,11 +60,14 @@ public class MainClientPageController {
     }
 
     @FXML
-    public void handleCartButton(ActionEvent event) throws IOException {
-        System.out.println("Cart Button Clicked");
-        SceneController.switchScene(event, "Cart.fxml", "Cart");
+    public void handleHomeButton(ActionEvent event) throws IOException {
+        System.out.println("Home Button Clicked");
+        SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
     }
 
+    @FXML
+    public void handleProceedToCheckoutButton(ActionEvent event) throws IOException {
+        System.out.println("Checkout Button Clicked");
+        SceneController.switchScene(event, "Checkout.fxml", "Checkout");
+    }
 }
-
-

@@ -188,6 +188,7 @@ public class User {
                 if (user.getUserID().equals(UserID) && user.getPassword().equals(Password)) {
                     ValidUserID = true;
                     ValidPassword = true;
+                    LogInController.isVendor = false;
 
                 } else {
                     throw new LogInException("Password is incorrect.");

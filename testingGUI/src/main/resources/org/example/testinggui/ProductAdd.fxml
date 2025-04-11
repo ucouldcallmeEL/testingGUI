@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" fillWidth="false" prefHeight="504.0" prefWidth="349.0" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProductAddController">
+<VBox alignment="CENTER" fillWidth="false" prefHeight="504.0" prefWidth="349.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProductAddController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="204.0" text="E-commerce" textAlignment="CENTER">
-         <font>
-            <Font name="Bangla MN Bold" size="13.0" />
-         </font>
-      </Label>
+      <HBox prefHeight="56.0" prefWidth="359.0">
+         <children>
+            <Button fx:id="homeButton" mnemonicParsing="false" onAction="#handleHomeButton" prefHeight="26.0" prefWidth="50.0" text="Home">
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="220.0" text="E-commerce" textAlignment="CENTER">
+               <font>
+                  <Font name="Bangla MN Bold" size="13.0" />
+               </font>
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
       <Label text="Add A New Product!">
          <font>
             <Font size="18.0" />
