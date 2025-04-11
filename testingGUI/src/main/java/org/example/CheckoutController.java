@@ -80,7 +80,6 @@ public class CheckoutController {
 
     @FXML
     public void handleProceedToPaymentButton(ActionEvent event) throws IOException {
-        System.out.println("Proceed to Payment Button Clicked");
         if (CODRadioButton.isSelected()) {
             System.out.println("Cash on Delivery selected");
             try {
@@ -103,6 +102,6 @@ public class CheckoutController {
         } else {
             System.out.println("No payment method selected");
         }
-        SceneController.switchScene(event, "Payment.fxml", "Payment");
+        System.out.println("Proceed to Payment Button Clicked");
     }
 }

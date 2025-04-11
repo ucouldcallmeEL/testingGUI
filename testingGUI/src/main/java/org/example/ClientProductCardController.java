@@ -83,39 +83,3 @@ public class ClientProductCardController {
     }
 }
 
-
-//public class VendorProductCardController {
-//
-//    @FXML
-//    private Hyperlink ProductNameHyperlink;
-//
-//    @FXML
-//    private Label ProductPriceLabel;
-//
-//    @FXML
-//    private Label ProductStockLabel;
-//
-//    @FXML
-//    private ImageView ProductImage;
-//
-//    public void setProductData(String name, String image, String price, Integer stock) {
-//        ProductNameHyperlink.setText(name);
-//        ProductPriceLabel.setText(price);
-//        ProductStockLabel.setText(stock.toString());
-//        ProductImage.setImage(new Image(image));
-//    }
-//
-//    @FXML
-//    public void handleEditProductButton(ActionEvent event) throws IOException {
-//        System.out.println("Edit Product Button Clicked");
-//        SceneController.switchScene(event, "EditProduct.fxml", "Edit Product");
-//
-//    }
-//
-//    @FXML
-//    public void handleProductNameHyperlink(ActionEvent event) throws IOException {
-//        System.out.println("Product Name Hyperlink Clicked");
-//        SceneController.switchScene(event, "ClientProductDetails.fxml", "Product Details");
-//
-//    }
-//}
