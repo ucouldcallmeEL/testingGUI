@@ -155,5 +155,34 @@ public class Cart {
         itemsID.clear();
 
         System.out.println("Order confirmed and stock updated for user: " + UserID);
+
+
+    }
+
+    public void displayCartItems() throws CartException {
+        if (itemsID.isEmpty()) {
+            throw new CartException("No cart items found");
+        }
+
+        List<String> processed = new ArrayList<>();
+        for (String itemID : itemsID) {
+            if (processed.contains(itemID)) {
+                continue;
+            }
+
+            int quantity = (int) itemsID.stream().filter(id -> id.equals(itemID)).count();
+
+            Item item = fm.getItem(itemID);
+            if (item != null) {
+                System.out.println("Item: " + item.getItemName() +
+                        " | ID: " + item.getItemID() +
+                        " | Price: " + item.getItemPrice() +
+                        " | Quantity: " + quantity);
+            } else {
+                System.out.println("Item details not found for ID: " + itemID);
+            }
+
+            processed.add(itemID);
+        }
     }
 }
