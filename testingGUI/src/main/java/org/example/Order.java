@@ -16,11 +16,12 @@ public class Order {
 
     public Order(){}
 
-    public Order(String orderID, String UserID, ArrayList<String> itemsID, boolean current){
+    public Order(String orderID, String UserID, ArrayList<String> itemsID, boolean current,String Price){
         this.orderID = orderID;
         this.UserID = UserID;
         this.itemsID = itemsID;
         this.current = current;
+        this.TotalPrice=Price;
     }
     public String getTotalPrice(){
         return TotalPrice;
@@ -80,6 +81,11 @@ public class Order {
     public void ConfirmOrder(String OrderID, String UserID){
         fm.makeHistory(OrderID, UserID);
     }
+
+
+
+
+
     //this shit is for testing purposes only, take it to a separate compiler or project or whatever,
     // until we start performing junit testing
 //    public static void main(String[] args) {
