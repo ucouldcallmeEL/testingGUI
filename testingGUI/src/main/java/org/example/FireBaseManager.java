@@ -23,6 +23,7 @@ public class FireBaseManager {
 
     public FireBaseManager() {
         try {
+            FileInputStream serviceAccount = new FileInputStream("D:/UNI/Junior Year/Semester 6/Software Testing/Project/GitVersion/testingGUI/e-commerce-571fd-firebase-adminsdk-fbsvc-dceb8c23fe.json");
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirestoreOptions firestoreOptions = FirestoreOptions.newBuilder()
                     .setCredentials(credentials)
@@ -900,8 +901,8 @@ public class FireBaseManager {
     }
 
 
-    public List<cartItem> getCartItemsWithQuantity(String userID) {
-        List<cartItem> cartItems = new ArrayList<>();
+    public List<CartItem> getCartItemsWithQuantity(String userID) {
+        List<CartItem> cartItems = new ArrayList<>();
 
         try {
             DocumentReference cartRef = db.collection("Carts").document(userID);
@@ -933,7 +934,7 @@ public class FireBaseManager {
                             Item item = itemDoc.toObject(Item.class);
                             if (item != null) {
                                 item.setItemID(itemId); // Set the correct item ID
-                                cartItems.add(new cartItem(item, quantity));
+                                cartItems.add(new CartItem(item, quantity));
                             }
                         }
                     }
