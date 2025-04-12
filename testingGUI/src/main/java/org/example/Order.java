@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public class Order {
     private String orderID;
@@ -9,6 +10,7 @@ public class Order {
     private ArrayList <String> itemsID;
     private boolean current;
     private String TotalPrice;
+    private Date Date;
 
     static FireBaseManager fm = FireBaseManager.getInstance();
 
@@ -22,7 +24,17 @@ public class Order {
         this.itemsID = itemsID;
         this.current = current;
         this.TotalPrice = totalPrice;
+        this.Date = new Date();
     }
+
+    public void setDate(Date Date){
+        this.Date = Date;
+    }
+
+    public Date getDate() {
+        return Date;
+    }
+
     public String getTotalPrice(){
         return TotalPrice;
     }
