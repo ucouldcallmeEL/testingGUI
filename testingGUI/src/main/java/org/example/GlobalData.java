@@ -3,6 +3,7 @@ package org.example;
 public class GlobalData {
     public static String currentlyLoggedIN = null;
     public static String currentEditingProductId;
+    public static String currentOrderId;
     public static String path = "D:/UNI/Junior Year/Semester 6/Software Testing/Project/GitVersion/testingGUI/src/main/resources/org/example/testinggui/";
 
     public static String getCurrentlyLoggedIN() {
@@ -20,4 +21,8 @@ public class GlobalData {
     public static void setCurrentEditingProductId(String productId) {
         currentEditingProductId = productId;
     }
+
+    public static void setCurrentOrderId (String orderId) { currentOrderId = orderId; }
+
+    public static String getCurrentOrderId() {return currentOrderId; }
 }

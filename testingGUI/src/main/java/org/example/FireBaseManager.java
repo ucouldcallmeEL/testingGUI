@@ -23,7 +23,6 @@ public class FireBaseManager {
 
     public FireBaseManager() {
         try {
-            FileInputStream serviceAccount = new FileInputStream("D:/UNI/Junior Year/Semester 6/Software Testing/Project/GitVersion/testingGUI/e-commerce-571fd-firebase-adminsdk-fbsvc-dceb8c23fe.json");
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirestoreOptions firestoreOptions = FirestoreOptions.newBuilder()
                     .setCredentials(credentials)
@@ -628,7 +627,6 @@ public class FireBaseManager {
         return orders;
     }
 
-
     public List<org.example.Order> getHistoryOrders() {
         List<org.example.Order> orders = new ArrayList<>();
 
@@ -652,6 +650,21 @@ public class FireBaseManager {
         }
 
         return orders;
+    }
+    public Order getOrder(String OrderID) {
+        DocumentReference itemRef = db.collection("Orders").document(OrderID);
+        ApiFuture<DocumentSnapshot> result = itemRef.get();
+        try {
+            if (result.get().exists()) {
+                return result.get().toObject(Order.class);
+            } else {
+                return null; // User not found
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
     public List<org.example.Order> getCurrentOrdersForClient(String clientId) {
         List<org.example.Order> orders = new ArrayList<>();
