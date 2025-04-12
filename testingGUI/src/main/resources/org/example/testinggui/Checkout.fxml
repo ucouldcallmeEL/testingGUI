@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -30,21 +31,49 @@
             <VBox fx:id="productContainer" prefHeight="365.0" prefWidth="426.0" />
          </content>
       </ScrollPane>
-      <VBox alignment="CENTER" prefHeight="106.0" prefWidth="424.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label prefHeight="26.0" prefWidth="108.0" text="Payment Method:" />
-            <RadioButton fx:id="CODRadioButton" mnemonicParsing="false" text="COD (Cash On Delivery)" />
-            <RadioButton fx:id="CreditCardRadioButton" mnemonicParsing="false" text="Credit/Debit Card">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </RadioButton>
-            <Button fx:id="ProceedButton" mnemonicParsing="false" onAction="#handleProceedToPaymentButton" text="Proceed">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Button>
+            <VBox alignment="CENTER" prefHeight="95.0" prefWidth="219.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="39.0" prefWidth="168.0">
+                     <children>
+                        <Label text="Total: ">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="PriceLabel" prefHeight="20.0" prefWidth="141.0">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label fx:id="CheckoutErrorLabel" textAlignment="CENTER" textFill="#b40000" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox alignment="CENTER_LEFT" prefHeight="96.0" prefWidth="172.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="108.0" text="Payment Method:" />
+                  <RadioButton fx:id="CODRadioButton" mnemonicParsing="false" text="COD (Cash On Delivery)" />
+                  <RadioButton fx:id="CreditCardRadioButton" mnemonicParsing="false" text="Credit/Debit Card">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </RadioButton>
+                  <Button fx:id="ProceedButton" mnemonicParsing="false" onAction="#handleProceedToPaymentButton" text="Proceed">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
          </children>
-      </VBox>
+      </HBox>
    </children>
 </VBox>

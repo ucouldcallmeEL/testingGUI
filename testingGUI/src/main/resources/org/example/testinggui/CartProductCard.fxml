@@ -17,7 +17,7 @@
             <HBox alignment="CENTER" prefHeight="28.0" prefWidth="111.0">
                <children>
                   <Label prefHeight="28.0" prefWidth="34.0" text="Price: " />
-                  <Label fx:id="ProductPriceLabel" prefHeight="28.0" prefWidth="32.0" text="Price" />
+                  <Label fx:id="ProductPriceLabel" prefHeight="28.0" text="Price" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="26.0" prefWidth="111.0">

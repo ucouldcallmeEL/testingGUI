@@ -46,7 +46,10 @@
         <HBox alignment="TOP_CENTER" prefHeight="33.0" prefWidth="337.0">
             <children>
                 <Button fx:id="AddToCartButton" mnemonicParsing="false" onAction="#handleCartButton" text="Add To Cart" />
-                <Button fx:id="AddToWishlistButton" mnemonicParsing="false" onAction="#handleWishlistButton" text="Add To Wishlist" />
+                <Button fx:id="AddToWishlistButton" mnemonicParsing="false" onAction="#handleWishlistButton" text="Add To Wishlist">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin></Button>
             </children>
             <opaqueInsets>
                 <Insets />

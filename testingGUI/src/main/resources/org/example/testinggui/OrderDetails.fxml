@@ -2,123 +2,77 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.OrderDetailsController">
    <content>
-      <GridPane prefHeight="400.0" prefWidth="362.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="535.2" minWidth="10.0" prefWidth="293.60003967285155" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.600015258789" minWidth="10.0" prefWidth="67.99996032714841" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="190.79999389648438" minHeight="10.0" prefHeight="132.00000610351563" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="367.0" minHeight="10.0" prefHeight="260.0000061035156" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <VBox prefHeight="411.0" prefWidth="342.0">
          <children>
-            <Button alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Profile" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets right="5.0" top="10.0" />
-               </GridPane.margin>
-            </Button>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+            <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <VBox prefHeight="122.0" prefWidth="176.0">
                      <children>
-                        <ImageView fitHeight="150.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                        <HBox prefHeight="22.0" prefWidth="294.0">
                            <children>
-                              <Hyperlink text="Product Name" />
-                              <Label alignment="CENTER" prefHeight="29.0" prefWidth="125.0" text="Price" />
-                              <Label text="Quantity" />
+                              <Button fx:id="HomeButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleHomeButton" prefWidth="51.0" text="Home">
+                                 <HBox.margin>
+                                    <Insets left="5.0" top="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Label prefHeight="27.0" text="Order Details">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" top="10.0" />
+                                 </HBox.margin>
+                              </Label>
                            </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Hyperlink text="Product Name" />
-                              <Label alignment="CENTER" prefHeight="29.0" prefWidth="125.0" text="Price" />
-                              <Label text="Quantity" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox prefHeight="43.0" prefWidth="294.0">
-               <children>
-                  <HBox prefHeight="22.0" prefWidth="294.0">
-                     <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" prefWidth="51.0" text="Home">
-                           <HBox.margin>
-                              <Insets left="5.0" top="10.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Label prefHeight="27.0" prefWidth="49.0" text="Order">
+                        </HBox>
+                        <Label prefHeight="28.0" text="Date Of Purchase:">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="14.0" />
                            </font>
-                           <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
-                           </HBox.margin>
+                           <VBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </VBox.margin>
                         </Label>
-                        <Label prefHeight="27.0" prefWidth="55.0" text="No.">
+                        <Label fx:id="DateOfPurchaseLabel" text="(Date)">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Total Price:">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="14.0" />
                            </font>
-                           <HBox.margin>
-                              <Insets top="10.0" />
-                           </HBox.margin>
+                           <VBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="TotalPriceLabel" text="(Price)">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
                         </Label>
                      </children>
-                  </HBox>
-                  <Label text="Total Price:">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="10.0" top="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label text="(Price)">
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label prefHeight="28.0" prefWidth="47.0" text="Status:">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="10.0" top="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label text="(stat)">
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
+                  </VBox>
+                  <Button fx:id="ProfileButton" alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleProfileButton" text="Profile">
+                     <HBox.margin>
+                        <Insets left="110.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </VBox>
+            </HBox>
+            <VBox fx:id="ProductContainer" prefHeight="379.0" prefWidth="342.0" spacing="10.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></VBox>
          </children>
-      </GridPane>
+      </VBox>
    </content>
 </ScrollPane>

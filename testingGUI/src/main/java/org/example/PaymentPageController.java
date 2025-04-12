@@ -12,6 +12,12 @@ public class PaymentPageController {
     @FXML private TextField CVVTextField;
     @FXML private Label PaymentErrorLabel;
 
+    private Cart cart;
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
     @FXML
     public void handleDoneButton(ActionEvent event){
         String cardNumber = CardNumberTextField.getText();
@@ -25,15 +31,19 @@ public class PaymentPageController {
 //            alert.setTitle("Payment Successful");
 //            alert.setHeaderText(null);
 //            alert.setContentText("Payment was successful!");
-//            this.cart.confirmOrder();
+            this.cart.confirmOrder();
             SceneController.Popup(event, "OrderConfirmed.fxml", "Order Confirmed");
             SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
 
 
-        }catch(PaymentException e){
+        } catch(PaymentException e){
             PaymentErrorLabel.setText(e.getMessage());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (ZeroStockException e) {
+            e.printStackTrace();
+        } catch (UpdateException e) {
+            e.printStackTrace();
         }
     }
 

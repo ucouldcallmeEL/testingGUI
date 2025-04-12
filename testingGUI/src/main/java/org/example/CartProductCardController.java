@@ -29,13 +29,13 @@ public class CartProductCardController {
     FireBaseManager fm = FireBaseManager.getInstance();
 
 
-    public void setProductData(String name, String image, String price, Integer stock, String itemId) {
+    public void setProductData(String name, String image, String price, Integer quantity, String itemId) {
         this.itemID = itemId;
         GlobalData.setCurrentEditingProductId(this.itemID);
         this.item = fm.getItem(this.itemID);
         ProductNameHyperlink.setText(name);
         ProductPriceLabel.setText(price);
-        ProductQuantityLabel.setText("1");
+        ProductQuantityLabel.setText(quantity.toString());
         ProductImage.setImage(new Image(image));
     }
 

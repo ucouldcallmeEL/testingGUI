@@ -17,6 +17,9 @@ public class OrdersController {
     @FXML
     private ScrollPane scrollPane;
 
+    private String orderID;
+    private String OrderNumber;
+
     public void initialize() {
         FireBaseManager fm = FireBaseManager.getInstance();
         List<Order> orders = fm.getCurrentOrdersForClient(GlobalData.currentlyLoggedIN);
@@ -32,11 +35,12 @@ public class OrdersController {
                 // Load the ClientProductCard.fxml
                 FXMLLoader loader = new FXMLLoader(new java.io.File(GlobalData.path + "OrderCard.fxml").toURI().toURL());
                 Node orderCard = loader.load();
-
+                Integer index = orders.indexOf(order) + 1;
+                OrderNumber = "Order #" + index.toString();
                 GlobalData.setCurrentOrderId(order.getOrderID());
                 // Get the controller and set product data
                 OrderCardController controller = loader.getController();
-                controller.setOrderData(order.getOrderID(), order.getTotalPrice(), order.getDate(), order.getOrderID());
+                controller.setOrderData(OrderNumber, order.getTotalPrice(), order.getDate(), order.getOrderID());
 
                 // Add the product card to the VBox
                 orderContainer.getChildren().add(orderCard);

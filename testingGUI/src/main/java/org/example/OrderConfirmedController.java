@@ -2,11 +2,11 @@ package org.example;
 
 import javafx.event.ActionEvent;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
 public class OrderConfirmedController {
+
     @FXML
     private void handleCloseButton(ActionEvent event) {
         // Close the popup window

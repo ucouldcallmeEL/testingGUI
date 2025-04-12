@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox alignment="CENTER" prefHeight="205.0" prefWidth="353.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.CartProductCardController">
+    <children>
+        <ImageView fx:id="ProductImage" fitHeight="182.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" />
+        <VBox alignment="CENTER" prefHeight="206.0" prefWidth="126.0">
+            <children>
+                <Hyperlink fx:id="ProductNameHyperlink" onAction="#handleProductNameHyperlink" text="Product Name" />
+                <HBox alignment="CENTER" prefHeight="28.0" prefWidth="111.0">
+                    <children>
+                        <Label prefHeight="28.0" prefWidth="34.0" text="Price: " />
+                        <Label fx:id="ProductPriceLabel" prefHeight="28.0" text="Price" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="26.0" prefWidth="111.0">
+                    <children>
+                        <Label alignment="CENTER" text="Quantity: " />
+                        <Label fx:id="ProductQuantityLabel" alignment="CENTER" text="Quantity" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</HBox>

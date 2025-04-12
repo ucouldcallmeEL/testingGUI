@@ -3,12 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="188.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.OrderCardController">
+<VBox prefHeight="134.0" prefWidth="314.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.OrderCardController">
    <children>
-      <Hyperlink fx:id="OrderNumberHyperLink" onAction="#handleOrderNumberHyperLink" text="Order No.">
+      <Hyperlink fx:id="OrderNumberHyperLink" onAction="#handleOrderNumberHyperLink" prefWidth="80.0" text="Order No.">
          <font>
             <Font size="16.0" />
          </font>
@@ -16,15 +17,39 @@
             <Insets left="10.0" />
          </VBox.margin>
       </Hyperlink>
-      <Label fx:id="DateOfPurchaseLabel" prefHeight="30.0" prefWidth="115.0" text="Date Of Purchase..?">
+      <HBox prefHeight="25.0" prefWidth="294.0">
+         <children>
+            <Label text="Date Of Purchase: ">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="DateOfPurchaseLabel" prefHeight="18.0" prefWidth="174.0" text="Date Of Purchase..?">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
          <VBox.margin>
-            <Insets left="30.0" />
+            <Insets left="20.0" />
          </VBox.margin>
-      </Label>
-      <Label fx:id="TotalPrice" prefHeight="18.0" prefWidth="65.0" text="Total Price">
+      </HBox>
+      <HBox prefHeight="30.0" prefWidth="294.0">
+         <children>
+            <Label text="Total Price: ">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="TotalPrice" prefHeight="18.0" prefWidth="65.0" text="Total Price">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
          <VBox.margin>
-            <Insets left="30.0" />
+            <Insets left="20.0" />
          </VBox.margin>
-      </Label>
+      </HBox>
    </children>
 </VBox>
