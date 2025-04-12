@@ -86,6 +86,21 @@ public class Cart {
         System.out.println(quantity + " x item " + item.getItemID() + " removed to cart.");
 
     }
+    public int getItemQuantity(Item item){
+        if (itemsID.isEmpty()) {
+            System.out.println("Cart is empty");
+            return 0;
+        }
+        String itemID = item.getItemID();
+        // Count occurrences of this item in cart
+        int quantity = (int) itemsID.stream().filter(id -> id.equals(itemID)).count();
+        return quantity;
+        }
+    public String getItemPrice(Item item){
+        int quantity = getItemQuantity(item);
+        String itemPrice = item.getItemPrice();
+        return String.valueOf(quantity * Double.parseDouble(itemPrice));
+    }
 
     public void confirmOrder() throws ZeroStockException, UpdateException {
         if (itemsID.isEmpty()) {
