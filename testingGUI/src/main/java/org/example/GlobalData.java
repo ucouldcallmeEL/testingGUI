@@ -3,7 +3,7 @@ package org.example;
 public class GlobalData {
     public static String currentlyLoggedIN = null;
     public static String currentEditingProductId;
-    public static String path = "C:/Users/amrem/Desktop/Engineering Year 3/Semester 7/Testing Lab/testingGUI/testingGUI/src/main/resources/org/example/testinggui/";
+    public static String path = "D:/UNI/Junior Year/Semester 6/Software Testing/Project/GitVersion/testingGUI/src/main/resources/org/example/testinggui/";
 
     public static String getCurrentlyLoggedIN() {
         return currentlyLoggedIN;

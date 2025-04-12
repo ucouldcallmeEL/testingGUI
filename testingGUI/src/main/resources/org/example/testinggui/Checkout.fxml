@@ -2,105 +2,49 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <content>
-      <GridPane prefHeight="400.0" prefWidth="362.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="535.2" minWidth="10.0" prefWidth="203.4" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="535.2" minWidth="0.0" prefWidth="6.400000000000006" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.600015258789" minWidth="10.0" prefWidth="160.80000000000004" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="190.79999389648438" minHeight="10.0" prefHeight="44.8" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="367.0" minHeight="10.0" prefHeight="355.2" vgrow="SOMETIMES" />
-         </rowConstraints>
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.CheckoutController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="53.0" prefWidth="600.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="51.0" text="Cart">
-                     <HBox.margin>
-                        <Insets left="5.0" top="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Label alignment="CENTER" prefHeight="52.0" prefWidth="96.0" text="Checkout">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <ImageView fitHeight="120.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Hyperlink text="Product Name" />
-                              <Label alignment="CENTER" prefHeight="29.0" prefWidth="125.0" text="Price" />
-                              <Label text="Quantity" />
-                              <Button mnemonicParsing="false" text="Remove ">
-                                 <VBox.margin>
-                                    <Insets top="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="139.0" prefWidth="283.0">
-                     <children>
-                        <ImageView fitHeight="120.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Hyperlink text="Product Name" />
-                              <Label alignment="CENTER" prefHeight="29.0" prefWidth="125.0" text="Price" />
-                              <Label text="Quantity" />
-                              <Button mnemonicParsing="false" text="Remove ">
-                                 <VBox.margin>
-                                    <Insets top="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <children>
-                  <Label prefHeight="26.0" prefWidth="108.0" text="Payment Method:" />
-                  <RadioButton mnemonicParsing="false" text="COD (Cash On Delivery)" />
-                  <RadioButton mnemonicParsing="false" text="Credit/Debit Card">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </RadioButton>
-                  <Button mnemonicParsing="false" text="Proceed">
-                     <VBox.margin>
-                        <Insets left="42.0" top="10.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </VBox>
-            <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="CartButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleCartButton" prefWidth="51.0" text="Cart">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Button>
+            <Label alignment="CENTER" prefHeight="52.0" prefWidth="96.0" text="Checkout">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
-      </GridPane>
-   </content>
-</ScrollPane>
+      </HBox>
+      <ScrollPane prefHeight="361.0" prefWidth="424.0">
+         <content>
+            <VBox fx:id="productContainer" prefHeight="365.0" prefWidth="426.0" />
+         </content>
+      </ScrollPane>
+      <VBox alignment="CENTER" prefHeight="106.0" prefWidth="424.0">
+         <children>
+            <Label prefHeight="26.0" prefWidth="108.0" text="Payment Method:" />
+            <RadioButton fx:id="CODRadioButton" mnemonicParsing="false" text="COD (Cash On Delivery)" />
+            <RadioButton fx:id="CreditCardRadioButton" mnemonicParsing="false" text="Credit/Debit Card">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </RadioButton>
+            <Button fx:id="ProceedButton" mnemonicParsing="false" onAction="#handleProceedToPaymentButton" text="Proceed">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</VBox>

@@ -95,6 +95,7 @@ public class Cart {
 
         // First check all items for stock availability
         List<String> processed = new ArrayList<>();
+        Double totalPrice = 0.0;
         for (String itemID : itemsID) {
             if (processed.contains(itemID)) {
                 continue;
@@ -112,16 +113,24 @@ public class Cart {
             if (item.getStock() < quantity) {
                 throw new ZeroStockException("Item " + itemID + " has insufficient stock. Available: " + item.getStock() + ", Requested: " + quantity);
             }
+            try {
+                String rawPrice = item.getItemPrice().replaceAll("[^\\d.]", ""); // Remove anything that's not digit or dot
+                double price = Double.parseDouble(rawPrice);
+                totalPrice += price * quantity;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid price format for item " + itemID + ": " + item.getItemPrice());
+                continue;
+            }
 
             processed.add(itemID);
         }
 
+
         // If we get here, all items have sufficient stock
         // Step 1: Create a new Order
-        org.example.Order order = new Order(null, UserID, new ArrayList<>(itemsID), true);
+        org.example.Order order = new Order(null, UserID, new ArrayList<>(itemsID), true,totalPrice.toString());
         fm.addOrder(order);
 
-        // Step 2: Process each unique item to update stock
         // Step 2: Process each unique item to update stock
         processed.clear();
         for (String itemID : itemsID) {
@@ -149,11 +158,39 @@ public class Cart {
             processed.add(itemID);
         }
 
-
         // Step 3: Empty cart in Firebase and locally
         fm.emptyCart(UserID);
         itemsID.clear();
 
         System.out.println("Order confirmed and stock updated for user: " + UserID);
+
+
+    }
+
+    public void displayCartItems() throws CartException {
+        if (itemsID.isEmpty()) {
+            throw new CartException("No cart items found");
+        }
+
+        List<String> processed = new ArrayList<>();
+        for (String itemID : itemsID) {
+            if (processed.contains(itemID)) {
+                continue;
+            }
+
+            int quantity = (int) itemsID.stream().filter(id -> id.equals(itemID)).count();
+
+            Item item = fm.getItem(itemID);
+            if (item != null) {
+                System.out.println("Item: " + item.getItemName() +
+                        " | ID: " + item.getItemID() +
+                        " | Price: " + item.getItemPrice() +
+                        " | Quantity: " + quantity);
+            } else {
+                System.out.println("Item details not found for ID: " + itemID);
+            }
+
+            processed.add(itemID);
+        }
     }
 }

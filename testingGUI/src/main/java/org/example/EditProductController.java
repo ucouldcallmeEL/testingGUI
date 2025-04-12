@@ -1,6 +1,7 @@
 package org.example;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -93,5 +94,28 @@ public class EditProductController {
         } catch (Exception ex) {
             ProductUpdateError.setText(ex.getMessage());
         }
+    }
+
+    @FXML
+    public void handleHomeButton(ActionEvent event) throws IOException {
+        System.out.println("Home Button Clicked");
+        SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
+    }
+
+    @FXML
+    public void handleDeleteProductButton(ActionEvent event) throws IOException {
+        try{
+            GlobalData.setCurrentEditingProductId(this.itemID);
+            this.item = fm.getItem(this.itemID);
+            System.out.println("Delete Product Button Clicked");
+            fm.deleteItem(GlobalData.currentEditingProductId,GlobalData.currentlyLoggedIN);
+            SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
+        }
+        catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Cannot add to cart. Zero stock");
+
+        }
+
     }
 }

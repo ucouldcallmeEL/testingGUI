@@ -1,30 +1,30 @@
 package org.example;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartController {
+public class WishlistController {
     @FXML
     private VBox productContainer; // VBox where ProductCards will be added
 
     @FXML
     private ScrollPane scrollPane;
 
+    List<String> wishlist = new ArrayList<>();
     List<Item> products = new ArrayList<>();
-    Cart cart;
 
     public void initialize() {
         FireBaseManager fm = FireBaseManager.getInstance();
-        this.cart = fm.getClientCart(GlobalData.currentlyLoggedIN);
-        for (String itemID : cart.getItemsID()) {
+        this.wishlist = fm.getWishlist(GlobalData.currentlyLoggedIN);
+        for (String itemID : this.wishlist) {
             Item item = fm.getItem(itemID);
             products.add(item);
         }
@@ -37,12 +37,12 @@ public class CartController {
         for (Item product : products) {
             try {
                 // Load the ClientProductCard.fxml
-                FXMLLoader loader = new FXMLLoader(new java.io.File(GlobalData.path + "CartProductCard.fxml").toURI().toURL());
+                FXMLLoader loader = new FXMLLoader(new java.io.File(GlobalData.path + "WishlistProductCard.fxml").toURI().toURL());
                 Node productCard = loader.load();
 
                 GlobalData.setCurrentEditingProductId(product.getItemID());
                 // Get the controller and set product data
-                CartProductCardController controller = loader.getController();
+                ClientProductCardController controller = loader.getController();
                 controller.setProductData(product.getItemName(), product.getImageURL(), product.getItemPrice(), product.getStock(), product.getItemID());
 
                 // Add the product card to the VBox
@@ -63,11 +63,5 @@ public class CartController {
     public void handleHomeButton(ActionEvent event) throws IOException {
         System.out.println("Home Button Clicked");
         SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
-    }
-
-    @FXML
-    public void handleProceedToCheckoutButton(ActionEvent event) throws IOException {
-        System.out.println("Checkout Button Clicked");
-        SceneController.switchScene(event, "Checkout.fxml", "Checkout");
     }
 }

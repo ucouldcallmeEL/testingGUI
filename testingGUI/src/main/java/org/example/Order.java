@@ -1,7 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 public class Order {
     private String orderID;
@@ -9,26 +9,20 @@ public class Order {
     private ArrayList <String> itemsID;
     private boolean current;
     private String TotalPrice;
-    private Date Date;
+
+    static FireBaseManager fm = FireBaseManager.getInstance();
+
 
 
     public Order(){}
 
-    public Order(String orderID, String UserID, ArrayList<String> itemsID, boolean current){
+    public Order(String orderID, String UserID, ArrayList<String> itemsID, boolean current, String totalPrice){
         this.orderID = orderID;
         this.UserID = UserID;
         this.itemsID = itemsID;
         this.current = current;
-        this.Date = new Date();
+        this.TotalPrice = totalPrice;
     }
-    public void setDate(Date Date){
-        this.Date = Date;
-    }
-
-    public Date getDate() {
-        return Date;
-    }
-
     public String getTotalPrice(){
         return TotalPrice;
     }
@@ -67,8 +61,9 @@ public class Order {
         this.current = current;
     }
 
+
+
 //
-    static FireBaseManager fm = FireBaseManager.getInstance();
 
     public String GetOrderDetails() {
         return "Order ID: " + orderID + "\n" +

@@ -2,6 +2,7 @@ package org.example;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
@@ -18,6 +19,33 @@ public class SceneController {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.setTitle(title);
+        stage.show();
+    }
+
+    public static void Popup(ActionEvent event, String fileName, String title) throws IOException {
+        try {
+            String absolutePath = GlobalData.path + fileName;
+            FXMLLoader loader = new FXMLLoader(new java.io.File(absolutePath).toURI().toURL());
+            Parent root = loader.load();
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
+            popupStage.setTitle(title);
+            popupStage.setScene(new Scene(root));
+            popupStage.showAndWait(); // Wait until the popup is closed
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void refreshPage(ActionEvent event, String fileName) throws IOException {
+        // Refresh the page
+        String absolutePath = GlobalData.path + fileName;
+
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(new java.io.File(absolutePath).toURI().toURL());
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
         stage.show();
     }
 }

@@ -27,6 +27,7 @@ public class VendorProductCardController {
 
     public void setProductData(String name, String image, String price, Integer stock, String itemId) {
         this.itemID = itemId;
+        GlobalData.setCurrentEditingProductId(this.itemID);
         ProductNameHyperlink.setText(name);
         ProductPriceLabel.setText(price);
         ProductStockLabel.setText(stock.toString());
@@ -46,7 +47,8 @@ public class VendorProductCardController {
     @FXML
     public void handleProductNameHyperlink(ActionEvent event) throws IOException {
         System.out.println("Product Name Hyperlink Clicked");
-        SceneController.switchScene(event, "ProductDetails.fxml", "Product Details");
+        GlobalData.setCurrentEditingProductId(this.itemID);
+        SceneController.switchScene(event, "VendorProductDetails.fxml", "Product Details");
 
     }
 }

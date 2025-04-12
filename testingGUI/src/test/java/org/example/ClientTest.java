@@ -85,7 +85,7 @@ class ClientTest {
         Client dbClient = (Client) retrievedUser;
         List<String> wishlist = dbClient.getWishlist();
 
-        List<String> expected = List.of("ring001", "wedding ring","borsh");
+        List<String> expected = List.of("aRIDVZDogJyN6ks2NXQS");
         assertEquals(expected, wishlist, "Wishlist does not match expected items");
     }
 
@@ -169,11 +169,11 @@ class ClientTest {
         User user = new User();
         Client client = (Client) user.GetUserByID("hagar");
         assertNotNull(client, "Client should not be null");
-        String testItemID = "ring002"; // this should be a real existing item
+        String testItemID = "Q6yZqgHWoYiwT2GxWZE1"; // this should be a real existing item
         int rating = 4;
         String comment = "Great product!";
         assertDoesNotThrow(() -> client.addReview(testItemID, rating, comment));
-
+        //test will fail if item does not exist in DB
     }
 
     @Test
@@ -188,6 +188,65 @@ class ClientTest {
         assertTrue(cartItems instanceof List, "Cart should be a list");
     }
 
+    @Test
+    @Order(15)
+    @DisplayName("Fetch wishlist from DB using client method")
+    void getWishlistForClientFromDB_ReturnsList(){
+        User user = new User();
+        Client client = (Client) user.GetUserByID("hagar");
+        assertNotNull(client, "Client should not be null");
+
+        List<String> wishlist = client.getWishlistForClientFromDB();
+        assertNotNull(wishlist, "Wishlist should not be null");
+        assertTrue(wishlist.contains("aRIDVZDogJyN6ks2NXQS"), "Wishlist should contain expected item");
+
+    }
+
+    @Test //run when current orders and history is fixed
+    @Order(16)
+    @DisplayName("Fetch current orders from DB using client method")
+    void getCurrentOrdersForClientsFromDB_ReturnsOrders() {
+        User user = new User();
+        Client client = (Client) user.GetUserByID("hagar");
+        assertNotNull(client);
+
+        List<org.example.Order> currentOrders = client.getCurrentOrdersForClientsFromDB();
+
+        assertNotNull(currentOrders);
+        assertTrue(currentOrders.size() >= 0, "Current orders list should not be null and should be at least empty");
+
+        if (!currentOrders.isEmpty()) {
+            assertTrue(currentOrders.get(0).isCurrent(), "Orders should be marked as current");
+        }
+    }
+
+    @Test
+    @Order(17)
+    @DisplayName("Fetch order history from DB using client method")
+    void getHistoryForClientsFromDB_ReturnsHistory() {
+        User user = new User();
+        Client client = (Client) user.GetUserByID("hagar");
+        assertNotNull(client);
+
+        List<org.example.Order> historyOrders = client.getHistoryForClientsFromDB();
+
+        assertNotNull(historyOrders);
+        assertTrue(historyOrders instanceof List);
+    }
+
+    @Test
+    @Order(18)
+    @DisplayName("Retrieve client's submitted reviews")
+    void getMyReviews_ReturnsReviewList() {
+        User user = new User();
+        Client client = (Client) user.GetUserByID("hagar");
+        assertNotNull(client);
+
+        List<Review> reviews = client.getMyReviews();
+
+        assertNotNull(reviews);
+        assertTrue(reviews instanceof List);
+    }
 
 
 

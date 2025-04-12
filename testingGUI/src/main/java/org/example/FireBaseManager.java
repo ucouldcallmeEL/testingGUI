@@ -23,6 +23,7 @@ public class FireBaseManager {
 
     public FireBaseManager() {
         try {
+            FileInputStream serviceAccount = new FileInputStream("D:/UNI/Junior Year/Semester 6/Software Testing/Project/GitVersion/testingGUI/e-commerce-571fd-firebase-adminsdk-fbsvc-dceb8c23fe.json");
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirestoreOptions firestoreOptions = FirestoreOptions.newBuilder()
                     .setCredentials(credentials)
@@ -206,22 +207,44 @@ public class FireBaseManager {
         }
 
     }
+//    public void deleteItem(String itemId, String vendorId) {
+//        // Reference to the item in Firestore
+//        DocumentReference itemRef = db.collection("Items").document(itemId);
+//
+//        // Delete the document
+//        ApiFuture<WriteResult> deleteFuture = itemRef.delete();
+//
+//        // Remove the item ID from the Vendor's ItemsID array
+//        DocumentReference vendorRef = db.collection("Vendors").document(vendorId);
+//        ApiFuture<WriteResult> updateVendorFuture = vendorRef.update("ItemsID", FieldValue.arrayRemove(itemId));
+//
+//        try {
+//            deleteFuture.get();
+//            updateVendorFuture.get();
+//
+//            System.out.println("Item deleted and removed from vendor list.");
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//    }
     public void deleteItem(String itemId, String vendorId) {
-        // Reference to the item in Firestore
-        DocumentReference itemRef = db.collection("Items").document(itemId);
-
-        // Delete the document
-        ApiFuture<WriteResult> deleteFuture = itemRef.delete();
-
-        // Remove the item ID from the Vendor's ItemsID array
-        DocumentReference vendorRef = db.collection("Vendors").document(vendorId);
-        ApiFuture<WriteResult> updateVendorFuture = vendorRef.update("ItemsID", FieldValue.arrayRemove(itemId));
-
         try {
+            // First delete all reviews associated with this item
+            deleteItemReviews(itemId);
+
+            // Then delete the item document
+            DocumentReference itemRef = db.collection("Items").document(itemId);
+            ApiFuture<WriteResult> deleteFuture = itemRef.delete();
+
+            // Remove the item ID from the Vendor's ItemsID array
+            DocumentReference vendorRef = db.collection("Vendors").document(vendorId);
+            ApiFuture<WriteResult> updateVendorFuture = vendorRef.update("ItemsID", FieldValue.arrayRemove(itemId));
+
+            // Wait for both operations to complete
             deleteFuture.get();
             updateVendorFuture.get();
 
-            System.out.println("Item deleted and removed from vendor list.");
+            System.out.println("Item and all associated reviews deleted, and removed from vendor list.");
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -457,6 +480,75 @@ public class FireBaseManager {
 
         return reviews;
     }
+
+//    public void deleteItemReviews(String itemId, String UserId) {
+//        try {
+//            DocumentReference itemRef = db.collection("Items").document(itemId);
+//            DocumentSnapshot itemDoc = itemRef.get().get();
+//
+//            if (itemDoc.exists()) {
+//                List<String> reviewIds = (List<String>) itemDoc.get("ReviewsID");
+//
+//                if (reviewIds != null && !reviewIds.isEmpty()) {
+//                    for (String reviewId : reviewIds) {
+//                        db.collection("Reviews").document(reviewId).delete().get();
+//                    }
+//
+//                    DocumentReference userRef = db.collection("Clients").document(UserId);
+//                    for (String reviewId : reviewIds) {
+//                        userRef.update("reviewHistory", FieldValue.arrayRemove(reviewId)).get();
+//                    }
+//
+//
+//                    itemRef.update("ReviewsID", FieldValue.delete()).get();
+//                }
+//            }
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//    }
+    public void deleteItemReviews(String itemId) {
+        try {
+            DocumentReference itemRef = db.collection("Items").document(itemId);
+            DocumentSnapshot itemDoc = itemRef.get().get();
+
+            if (itemDoc.exists()) {
+                List<String> reviewIds = (List<String>) itemDoc.get("ReviewsID");
+
+                if (reviewIds != null && !reviewIds.isEmpty()) {
+                    // First get all reviews to find which clients wrote them
+                    List<DocumentSnapshot> reviewDocs = new ArrayList<>();
+                    for (String reviewId : reviewIds) {
+                        DocumentSnapshot reviewDoc = db.collection("Reviews").document(reviewId).get().get();
+                        if (reviewDoc.exists()) {
+                            reviewDocs.add(reviewDoc);
+                        }
+                    }
+
+                    // Remove reviews from each client's history
+                    for (DocumentSnapshot reviewDoc : reviewDocs) {
+                        String clientId = reviewDoc.getString("userID");
+                        if (clientId != null) {
+                            db.collection("Clients").document(clientId)
+                                    .update("reviewHistory", FieldValue.arrayRemove(reviewDoc.getId())).get();
+                        }
+                    }
+
+                    // Delete all review documents
+                    for (String reviewId : reviewIds) {
+                        db.collection("Reviews").document(reviewId).delete().get();
+                    }
+
+                    // Remove ReviewsID from item
+                    itemRef.update("ReviewsID", FieldValue.delete()).get();
+                }
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void addOrder(org.example.Order order) {
 
         // Create a new review document with auto-generated ID
@@ -749,25 +841,30 @@ public class FireBaseManager {
 
     public void addItemToCart(String userID, Item item, int quantity) {
         try {
-            // Get a reference to the user's cart document
             DocumentReference cartRef = db.collection("Carts").document(userID);
 
-            // Prepare a list of the item to add (repeating the itemID by quantity)
-            List<String> itemsToAdd = new ArrayList<>();
-            for (int i = 0; i < quantity; i++) {
-                itemsToAdd.add(item.getItemID());
+            // Fetch current itemsID array
+            DocumentSnapshot snapshot = cartRef.get().get();
+            List<String> existingItems = (List<String>) snapshot.get("itemsID");
+
+            if (existingItems == null) {
+                existingItems = new ArrayList<>();
             }
 
-            // Use arrayUnion to add the item(s) to the itemsID array without duplicates
-            ApiFuture<WriteResult> updateResult = cartRef.update("itemsID", FieldValue.arrayUnion(itemsToAdd.toArray()));
+            for (int i = 0; i < quantity; i++) {
+                existingItems.add(item.getItemID());
+            }
 
-            // Wait for the update to complete
-            updateResult.get(); // This will block until the write is finished
-            System.out.println("Item(s) added to cart.");
+            // Overwrite the array with the new list
+            ApiFuture<WriteResult> updateResult = cartRef.update("itemsID", existingItems);
+            updateResult.get();
+
+            System.out.println("Item(s) added to cart, duplicates included.");
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
+
 
     public void removeItemFromCart(String userID, Item item, int quantity) {
         try {
@@ -801,6 +898,52 @@ public class FireBaseManager {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public List<CartItem> getCartItemsWithQuantity(String userID) {
+        List<CartItem> cartItems = new ArrayList<>();
+
+        try {
+            DocumentReference cartRef = db.collection("Carts").document(userID);
+            DocumentSnapshot cartDoc = cartRef.get().get();
+
+            if (cartDoc.exists()) {
+                List<String> itemIds = (List<String>) cartDoc.get("itemsID");
+
+                if (itemIds != null && !itemIds.isEmpty()) {
+                    List<String> processedItemIds = new ArrayList<>();
+
+                    for (String itemId : itemIds) {
+                        if (processedItemIds.contains(itemId)) {
+                            continue;
+                        }
+
+                        int quantity = 0;
+                        for (String id : itemIds) {
+                            if (id.equals(itemId)) {
+                                quantity++;
+                            }
+                        }
+
+                        processedItemIds.add(itemId);
+
+                        DocumentSnapshot itemDoc = db.collection("Items").document(itemId).get().get();
+
+                        if (itemDoc.exists()) {
+                            Item item = itemDoc.toObject(Item.class);
+                            if (item != null) {
+                                item.setItemID(itemId); // Set the correct item ID
+                                cartItems.add(new CartItem(item, quantity));
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return cartItems;
     }
 
     public void changeVendorPassword(String vendorId, String newPassword) {
