@@ -88,16 +88,16 @@ public class Client extends User {
             System.out.println("Item not found in wishlist.");
         }
     }
-
-    public List<String> getWishlistForClientFromDB(){
+    @PropertyName("Wishlist")
+    public List<String> fetchWishlistForClientFromDB(){
         return fm.getWishlist(this.getUserID());
     }
-
-    public List<Order> getCurrentOrdersForClientsFromDB(){
+    @PropertyName("CurrentOrders")
+    public List<Order> fetchCurrentOrdersForClientsFromDB(){
         return fm.getCurrentOrdersForClient(this.getUserID());
     }
-
-    public List<Order> getHistoryForClientsFromDB(){
+    @PropertyName("reviewHistory")
+    public List<Order> fetchHistoryForClientsFromDB(){
         return fm.getHistoryForClient(this.getUserID());
     }
 
@@ -112,7 +112,7 @@ public class Client extends User {
 
     }
     public void AddToCart(Item item) {
-        fm.addItemToCart("hagar",item,1);
+        fm.addItemToCart(GlobalData.getCurrentlyLoggedIN(),item,1);
 
     }
     public void addReview(String itemID, int rating, String comment){
@@ -135,7 +135,7 @@ public class Client extends User {
 
 
 
-    public List<Review> getMyReviews(){
+    public List<Review> fetchMyReviews(){
         return fm.getReviewsByClient(this.getUserID());
     }
 

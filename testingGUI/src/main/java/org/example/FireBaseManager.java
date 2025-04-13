@@ -10,6 +10,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -856,7 +857,7 @@ public class FireBaseManager {
         try {
             DocumentReference cartRef = db.collection("Carts").document(userID);
 
-            // Fetch current itemsID array
+            // Fetch current cart snapshot
             DocumentSnapshot snapshot = cartRef.get().get();
             List<String> existingItems = (List<String>) snapshot.get("itemsID");
 
@@ -864,15 +865,41 @@ public class FireBaseManager {
                 existingItems = new ArrayList<>();
             }
 
+            // Add new items
             for (int i = 0; i < quantity; i++) {
                 existingItems.add(item.getItemID());
             }
 
-            // Overwrite the array with the new list
-            ApiFuture<WriteResult> updateResult = cartRef.update("itemsID", existingItems);
-            updateResult.get();
+            // 🔁 Recalculate total price using current + added items
+            double total = 0.0;
+            List<String> processed = new ArrayList<>();
 
-            System.out.println("Item(s) added to cart, duplicates included.");
+            for (String itemId : existingItems) {
+                if (processed.contains(itemId)) continue;
+
+                // Fetch item details from Firestore
+                Item fetchedItem = getItem(itemId); // Assuming getItem returns an Item object
+                if (fetchedItem != null) {
+                    int count = (int) existingItems.stream().filter(id -> id.equals(itemId)).count();
+                    try {
+                        double price = Double.parseDouble(fetchedItem.getItemPrice().replaceAll("[^\\d.]", ""));
+                        total += price * count;
+                    } catch (NumberFormatException e) {
+                        System.out.println("Skipping item " + itemId + " due to invalid price.");
+                    }
+                }
+
+                processed.add(itemId);
+            }
+
+            // Update both fields together
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("itemsID", existingItems);
+            updates.put("total_price", String.valueOf(total));
+
+            cartRef.update(updates).get();
+            System.out.println("Item(s) and recalculated total price updated in cart.");
+
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

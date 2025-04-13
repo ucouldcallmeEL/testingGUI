@@ -1,5 +1,7 @@
 package org.example;
 
+import com.google.cloud.firestore.annotation.PropertyName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +22,11 @@ public class Cart {
         this.itemsID = new ArrayList<>();
         this.total_price = "0.0";
     }
-
+    @PropertyName("total_price")
     public String getTotalPrice(){
         return total_price;
     }
-
+    @PropertyName("total_price")
     public void setTotalPrice(String total_price){
         this.total_price = total_price;
     }
@@ -61,8 +63,8 @@ public class Cart {
         for(int i = 0; i < quantity; i++){
             itemsID.add(item.getItemID());
         }
+        //recalculateTotalPrice();
 
-        recalculateTotalPrice();
         fm.addItemToCart(UserID, item, quantity);
         System.out.println(quantity + " x item " + item.getItemID() + " added to cart.");
     }
@@ -199,6 +201,6 @@ public class Cart {
             processed.add(itemID);
         }
 
-        total_price = String.valueOf(total);
+        this.total_price = String.valueOf(total);
     }
 }

@@ -196,7 +196,7 @@ class ClientTest {
         Client client = (Client) user.GetUserByID("hagar");
         assertNotNull(client, "Client should not be null");
 
-        List<String> wishlist = client.getWishlistForClientFromDB();
+        List<String> wishlist = client.fetchWishlistForClientFromDB();
         assertNotNull(wishlist, "Wishlist should not be null");
         assertTrue(wishlist.contains("aRIDVZDogJyN6ks2NXQS"), "Wishlist should contain expected item");
 
@@ -210,7 +210,7 @@ class ClientTest {
         Client client = (Client) user.GetUserByID("hagar");
         assertNotNull(client);
 
-        List<org.example.Order> currentOrders = client.getCurrentOrdersForClientsFromDB();
+        List<org.example.Order> currentOrders = client.fetchCurrentOrdersForClientsFromDB();
 
         assertNotNull(currentOrders);
         assertTrue(currentOrders.size() >= 0, "Current orders list should not be null and should be at least empty");
@@ -228,7 +228,7 @@ class ClientTest {
         Client client = (Client) user.GetUserByID("hagar");
         assertNotNull(client);
 
-        List<org.example.Order> historyOrders = client.getHistoryForClientsFromDB();
+        List<org.example.Order> historyOrders = client.fetchHistoryForClientsFromDB();
 
         assertNotNull(historyOrders);
         assertTrue(historyOrders instanceof List);
@@ -242,7 +242,7 @@ class ClientTest {
         Client client = (Client) user.GetUserByID("hagar");
         assertNotNull(client);
 
-        List<Review> reviews = client.getMyReviews();
+        List<Review> reviews = client.fetchMyReviews();
 
         assertNotNull(reviews);
         assertTrue(reviews instanceof List);
