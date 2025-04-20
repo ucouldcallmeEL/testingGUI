@@ -871,7 +871,7 @@ public class FireBaseManager {
             }
 
             // 🔁 Recalculate total price using current + added items
-            double total = 0.0;
+            int total = 0;
             List<String> processed = new ArrayList<>();
 
             for (String itemId : existingItems) {
@@ -882,14 +882,18 @@ public class FireBaseManager {
                 if (fetchedItem != null) {
                     int count = (int) existingItems.stream().filter(id -> id.equals(itemId)).count();
                     try {
-                        double price = Double.parseDouble(fetchedItem.getItemPrice().replaceAll("[^\\d.]", ""));
-                        total += price * count;
+                        // Extract only digits from the price string
+                        String cleaned = fetchedItem.getItemPrice().replaceAll("[^\\d]", "");
+                        if (!cleaned.isEmpty()) {
+                            int price = Integer.parseInt(cleaned);
+                            total += price * count;
+                        } else {
+                            System.out.println("Skipping item " + itemId + " due to empty price.");
+                        }
                     } catch (NumberFormatException e) {
                         System.out.println("Skipping item " + itemId + " due to invalid price.");
                     }
                 }
-
-                processed.add(itemId);
             }
 
             // Update both fields together

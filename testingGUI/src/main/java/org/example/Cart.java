@@ -88,10 +88,15 @@ public class Cart {
         return (int) itemsID.stream().filter(id -> id.equals(itemID)).count();
     }
 
-    public String getItemPrice(Item item){
+    public String getItemPrice(Item item) {
         int quantity = getItemQuantity(item);
-        String itemPrice = item.getItemPrice();
-        return String.valueOf(quantity * Double.parseDouble(itemPrice));
+        try {
+            int price = Integer.parseInt(item.getItemPrice());
+            return String.valueOf(quantity * price);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid price format: " + item.getItemPrice());
+            return "0";
+        }
     }
 
     public void confirmOrder() throws ZeroStockException, UpdateException {
@@ -157,10 +162,10 @@ public class Cart {
         System.out.println("Order confirmed and stock updated for user: " + UserID);
     }
 
-    
+
 
     public void recalculateTotalPrice() {
-        double total = 0.0;
+        int total = 0;
         List<String> processed = new ArrayList<>();
         for (String itemID : itemsID) {
             if (processed.contains(itemID)) continue;
@@ -169,8 +174,14 @@ public class Cart {
             if (item != null) {
                 int quantity = (int) itemsID.stream().filter(id -> id.equals(itemID)).count();
                 try {
-                    double price = Double.parseDouble(item.getItemPrice().replaceAll("[^\\d.]", ""));
-                    total += price * quantity;
+                    // Strip non-digit characters (e.g., "EGP 100" -> "100")
+                    String cleaned = item.getItemPrice().replaceAll("[^\\d]", "");
+                    if (!cleaned.isEmpty()) {
+                        int price = Integer.parseInt(cleaned);
+                        total += price * quantity;
+                    } else {
+                        System.out.println("Skipping price for item " + itemID + ": empty after cleanup.");
+                    }
                 } catch (NumberFormatException e) {
                     System.out.println("Skipping price for item " + itemID + ": invalid format.");
                 }
@@ -181,4 +192,5 @@ public class Cart {
 
         this.total_price = String.valueOf(total);
     }
+
 }
