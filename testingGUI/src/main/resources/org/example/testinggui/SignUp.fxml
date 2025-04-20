@@ -22,5 +22,6 @@
       <Label fx:id="SignUpError" textFill="#b40000" />
       <RadioButton fx:id="vendorRadio" text="Vendor" />
       <Button fx:id="RegisterButton" onAction="#handleRegisterButton" text="Register" />
+      <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
    </children>
 </VBox>
