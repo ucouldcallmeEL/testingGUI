@@ -162,21 +162,21 @@ public class FireBaseManager {
         }
     }
 
-    public Item getItem(String itemID) {
-        DocumentReference itemRef = db.collection("Items").document(itemID);
-        ApiFuture<DocumentSnapshot> result = itemRef.get();
-        try {
-            if (result.get().exists()) {
-                return result.get().toObject(Item.class);
-            } else {
-                return null; // User not found
+        public Item getItem(String itemID) {
+            DocumentReference itemRef = db.collection("Items").document(itemID);
+            ApiFuture<DocumentSnapshot> result = itemRef.get();
+            try {
+                if (result.get().exists()) {
+                    return result.get().toObject(Item.class);
+                } else {
+                    return null; // User not found
+                }
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                return null;
             }
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return null;
-        }
 
-    }
+        }
 
     //function changed from void to string
     public String addItem(Item item) {
@@ -355,8 +355,8 @@ public class FireBaseManager {
         try {
             DocumentSnapshot document = future.get(); // Wait for the async result
 
-            if (document.exists() && document.contains("stock")) {
-                Long stockLong = document.getLong("stock"); // Firestore stores numbers as Long
+            if (document.exists() && document.contains("Stock")) {
+                Long stockLong = document.getLong("Stock"); // Firestore stores numbers as Long
                 return stockLong != null ? stockLong.intValue() : 0;
             } else {
                 System.out.println("Item not found or stock field is missing.");
@@ -584,14 +584,14 @@ public class FireBaseManager {
         DocumentReference userRef = db.collection("Clients").document(userID);
 
         // Create update requests
-        ApiFuture<WriteResult> updateOrder = orderRef.update("current", 0);
+        ApiFuture<WriteResult> updateOrder = orderRef.update("current", false);
         ApiFuture<WriteResult> removeFromCurrentOrders = userRef.update("CurrentOrders", FieldValue.arrayRemove(orderID));
         ApiFuture<WriteResult> addToHistory = userRef.update("History", FieldValue.arrayUnion(orderID));
 
         try {
             // Wait for all operations to complete
             updateOrder.get();
-            System.out.println("Current field updated to 1 in Order at: " + updateOrder.get().getUpdateTime());
+            System.out.println("Current field updated to false in Order at: " + updateOrder.get().getUpdateTime());
 
             removeFromCurrentOrders.get();
             System.out.println("OrderID removed from CurrentOrders in Client at: " + removeFromCurrentOrders.get().getUpdateTime());

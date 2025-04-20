@@ -36,7 +36,7 @@ public class Item {
 
 
     public Item getItembyID(String ItemId) {
-        return fm.getItem(ItemID);
+        return fm.getItem(ItemId);
     }
     @PropertyName("ImageURL")
     public String getImageURL() {

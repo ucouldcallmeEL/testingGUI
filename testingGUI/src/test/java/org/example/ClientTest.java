@@ -20,8 +20,7 @@ class ClientTest {
         );
     }
 
-    @Test
-    @Order(1)
+
     @DisplayName("Set and get history")
     void setGetHistory() {
         List<String> history = List.of("order1", "order2");

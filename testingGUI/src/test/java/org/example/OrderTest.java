@@ -79,6 +79,7 @@ class OrderTest {
         String orderID = "3sFMtWpLpKsTJoHQyuq4"; // Must exist in your Firestore
         org.example.Order order = FireBaseManager.getInstance().getOrder(orderID);
 
+
         assertNotNull(order, "Order should be retrieved from Firestore");
 
         String details = order.GetOrderDetails();
