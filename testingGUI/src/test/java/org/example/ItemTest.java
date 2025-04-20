@@ -114,9 +114,9 @@ class ItemTest {
     void changeItemName_UpdatesCorrectly() {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
         Item retrievedItem = item.getItembyID(itemID);
-        retrievedItem.changeItemName(itemID, "Updated Laptop"); // Change item name
+        retrievedItem.changeItemName(itemID, "Cool Laptop"); // Change item name
         Item updatedItem = item.getItembyID(itemID); // Fetch updated item
-        assertEquals("Updated Laptop", updatedItem.getItemName());
+        assertEquals("Cool Laptop", updatedItem.getItemName());
     }
 
     @Test
@@ -158,4 +158,44 @@ class ItemTest {
         Item updatedItem = item.getItembyID(itemID); // Fetch updated item
         assertEquals(updatedURL, updatedItem.getImageURL(), "Image URL should match the updated value returned by the function");
     }
+
+    @Test
+    @Order(11)
+    @DisplayName("Change item description updates database correctly")
+    void changeDescription_UpdatesCorrectly() {
+        String itemID = "uiRV3bFyKjRpSlcD69kb";
+        Item retrievedItem = item.getItembyID(itemID);
+        retrievedItem.changeDescription(itemID, "Shit laptop tbh"); // Change description
+        Item updatedItem = item.getItembyID(itemID); // Fetch updated item
+        assertEquals("Shit laptop tbh", updatedItem.getItemDescription());
+    }
+
+    @Test
+    @Order(12)
+    @DisplayName("Change item category updates database correctly")
+    void changeCategory_UpdatesCorrectly() {
+        String itemID = "uiRV3bFyKjRpSlcD69kb";
+        Item retrievedItem = item.getItembyID(itemID);
+        retrievedItem.changeCategory(itemID, "Electronics"); // Change category
+        Item updatedItem = item.getItembyID(itemID); // Fetch updated item
+        assertEquals("Electronics", updatedItem.getItemCategory());
+    }
+
+    @Test
+    @Order(14)
+    @DisplayName("Change item name handles null input gracefully")
+    void changeItemName_HandlesNullInput() {
+        String itemID = "uiRV3bFyKjRpSlcD69kb";
+        assertThrows(IllegalArgumentException.class, () -> item.changeItemName(itemID, null));
+    }
+
+    @Test
+    @Order(15)
+    @DisplayName("Get items by category returns empty list for non-existent category")
+    void getItemsByCategory_ReturnsEmptyList_WhenCategoryNotFound() {
+        List<Item> items = item.getItemsByCategory("NonExistentCategory");
+        assertNotNull(items, "Items list should not be null");
+        assertEquals(0, items.size(), "Items list should be empty for a non-existent category");
+    }
+
 }

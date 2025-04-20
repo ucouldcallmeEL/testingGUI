@@ -930,7 +930,7 @@ public class FireBaseManager {
 
             // Set the itemsID field to an empty list
             ApiFuture<WriteResult> updateResult = cartRef.update("itemsID", new ArrayList<String>());
-            ApiFuture<WriteResult> updateResult1 = cartRef.update("totalPrice", null);
+            ApiFuture<WriteResult> updateResult1 = cartRef.update("total_price", null);
             // Wait for the update to complete
             updateResult.get(); // This will block until the write is finished
             updateResult1.get();
@@ -1147,7 +1147,7 @@ public class FireBaseManager {
         }
     }
 
-    public void changeItemPicture(String ItemID, String newImage) {
+    public String changeItemPicture(String ItemID, String newImage) {
         // Reference to the Item document
         String URL=this.uploadimage(newImage);
         Item item=getItem(ItemID);
@@ -1162,6 +1162,7 @@ public class FireBaseManager {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+        return URL;
     }
 
     public void close() throws Exception {

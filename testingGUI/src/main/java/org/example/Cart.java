@@ -12,7 +12,7 @@ public class Cart {
     private List<String> itemsID;
     private String total_price;
 
-    org.example.FireBaseManager fm = new FireBaseManager();
+    org.example.FireBaseManager fm = FireBaseManager.getInstance();
 
     public Cart() {}
 
@@ -159,7 +159,7 @@ public class Cart {
 
     
 
-    private void recalculateTotalPrice() {
+    public void recalculateTotalPrice() {
         double total = 0.0;
         List<String> processed = new ArrayList<>();
         for (String itemID : itemsID) {

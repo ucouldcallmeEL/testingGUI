@@ -73,6 +73,10 @@ public class Item {
     }
     @PropertyName("ItemName")
     public void changeItemName(String ItemID,String ItemName) {
+        if(ItemName == null){
+            throw new IllegalArgumentException("Item name cannot be null");
+        }
+
         Item item=fm.getItem(ItemID);
         item.setItemName(ItemName);
         fm.changeItemName(ItemID,ItemName);
