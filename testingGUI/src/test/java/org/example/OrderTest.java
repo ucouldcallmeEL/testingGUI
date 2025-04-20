@@ -107,4 +107,63 @@ class OrderTest {
         int qty = order.getItemQuantity(otherItem);
         assertEquals(0, qty);
     }
+
+    @Test
+    @Order(8)
+    @DisplayName("ItemsID allows empty list")
+    void itemsID_EmptyList_AllowsEmpty() {
+        ArrayList<String> emptyItems = new ArrayList<>();
+        order.setItemsID(emptyItems);
+        assertEquals(0, order.getItemsID().size());
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("Retrieve order from Firestore and validate fields")
+    void retrieveOrder_ValidateFields() {
+        // Use the orderID from the provided Firestore document
+        String orderID = "R71HslrfnK2uycCCRWLX";
+
+        // Retrieve the order from Firestore
+        org.example.Order retrievedOrder = FireBaseManager.getInstance().getOrder(orderID);
+
+        // Assertions to validate the retrieved order fields
+        assertNotNull(retrievedOrder, "Order should be retrieved from Firestore");
+        assertEquals(orderID, retrievedOrder.getOrderID());
+        assertEquals("hagar", retrievedOrder.getUserID());
+        assertEquals(2, retrievedOrder.getItemsID().size()); // Duplicate item IDs in the image
+        assertTrue(retrievedOrder.isCurrent());
+        assertEquals("2100.0", retrievedOrder.getTotalPrice());
+        assertNotNull(retrievedOrder.getDate());
+    }
+
+    @Test
+    @Order(9)
+    @DisplayName("Validate total price calculation for Firestore order")
+    void validateTotalPrice_Calculation() {
+        String orderID = "R71HslrfnK2uycCCRWLX";
+        org.example.Order retrievedOrder = FireBaseManager.getInstance().getOrder(orderID);
+
+        // Validate that totalPrice is calculated correctly (if applicable)
+        assertNotNull(retrievedOrder, "Order should be retrieved from Firestore");
+        assertEquals("2100.0", retrievedOrder.getTotalPrice(), "Total price should match the expected value");
+    }
+
+    @Test
+    @Order(10)
+    @DisplayName("Handle missing order gracefully")
+    void handleMissingOrder_Gracefully() {
+        // Use a non-existent orderID
+        String nonExistentOrderID = "NonExistentOrderID";
+
+        // Attempt to retrieve the order from Firestore
+        org.example.Order retrievedOrder = FireBaseManager.getInstance().getOrder(nonExistentOrderID);
+
+        // Validate that the result is null or handled appropriately
+        assertNull(retrievedOrder, "Non-existent order should return null");
+    }
+
+
+
+
 }
