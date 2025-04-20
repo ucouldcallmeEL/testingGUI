@@ -64,7 +64,7 @@ public class VendorTest {
     @DisplayName("Fail to add item with missing name")
     void addItem_MissingName_ThrowsException() {
         AddItemException exception = assertThrows(AddItemException.class, () ->
-                vendor.addItem(null, "desc", "cat", "10.0", "img", 5, "vendor123")
+                vendor.addItem(null, "desc", "cat", "10", "img", 5, "vendor123")
         );
         assertEquals("Please add a name for your item.", exception.getMessage());
     }

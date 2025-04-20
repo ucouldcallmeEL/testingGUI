@@ -20,7 +20,7 @@ class OrderTest {
 
         sampleItem = new Item();
         sampleItem.setItemID("item123");
-        sampleItem.setItemPrice("50.00");
+        sampleItem.setItemPrice("50");
     }
 
     @Test
@@ -31,7 +31,7 @@ class OrderTest {
         assertEquals("user001", order.getUserID());
         assertEquals(3, order.getItemsID().size());
         assertTrue(order.isCurrent());
-        assertEquals("150.00", order.getTotalPrice());
+        assertEquals("150", order.getTotalPrice());
         assertNotNull(order.getDate());
     }
 
@@ -45,14 +45,14 @@ class OrderTest {
         ArrayList<String> newItems = new ArrayList<>(List.of("item789"));
         order.setItemsID(newItems);
         order.setCurrent(false);
-        order.setTotalPrice("200.00");
+        order.setTotalPrice("200");
         order.setDate(now);
 
         assertEquals("order002", order.getOrderID());
         assertEquals("user002", order.getUserID());
         assertEquals(newItems, order.getItemsID());
         assertFalse(order.isCurrent());
-        assertEquals("200.00", order.getTotalPrice());
+        assertEquals("200", order.getTotalPrice());
         assertEquals(now, order.getDate());
     }
 
@@ -69,7 +69,7 @@ class OrderTest {
     @DisplayName("Get item price returns correct total")
     void getItemPrice_ReturnsCorrectTotal() {
         String totalItemPrice = order.getItemPrice(sampleItem);
-        assertEquals("100.0", totalItemPrice);
+        assertEquals("100", totalItemPrice);
     }
 
     @Test
@@ -134,7 +134,7 @@ class OrderTest {
         assertEquals("hagar", retrievedOrder.getUserID());
         assertEquals(2, retrievedOrder.getItemsID().size()); // Duplicate item IDs in the image
         assertTrue(retrievedOrder.isCurrent());
-        assertEquals("2100.0", retrievedOrder.getTotalPrice());
+        assertEquals("2100", retrievedOrder.getTotalPrice());
         assertNotNull(retrievedOrder.getDate());
     }
 
@@ -147,7 +147,7 @@ class OrderTest {
 
         // Validate that totalPrice is calculated correctly (if applicable)
         assertNotNull(retrievedOrder, "Order should be retrieved from Firestore");
-        assertEquals("2100.0", retrievedOrder.getTotalPrice(), "Total price should match the expected value");
+        assertEquals("2100", retrievedOrder.getTotalPrice(), "Total price should match the expected value");
     }
 
     @Test
