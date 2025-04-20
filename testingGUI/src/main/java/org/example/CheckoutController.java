@@ -153,6 +153,7 @@ public class CheckoutController {
                 // Get the controller and pass the cart
                 PaymentPageController controller = loader.getController();
                 controller.setCart(this.cart);
+                controller.setOriginalEvent(event); // Pass the ActionEvent
 
                 // Create a new stage for the pop-up
                 Stage popupStage = new Stage();

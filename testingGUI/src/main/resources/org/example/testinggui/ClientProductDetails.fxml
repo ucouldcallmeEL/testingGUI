@@ -12,7 +12,7 @@
     <children>
       <HBox prefHeight="22.0" prefWidth="337.0">
          <children>
-            <Button fx:id="BackButton" mnemonicParsing="false" onAction="#handleBackButton" text="Back">
+            <Button fx:id="BackButton" mnemonicParsing="false" onAction="#handleBackButton" text="Home">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>

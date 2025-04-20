@@ -50,7 +50,12 @@ public class SignUpController {
             PauseTransition delay = new PauseTransition(Duration.seconds(2));
             delay.setOnFinished(e -> {
                 try {
-                    SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
+                    System.out.println("Sign Up Button Clicked");
+                    if (isVendor) {
+                        SceneController.switchScene(event, "Login.fxml", "Login");
+                    } else {
+                        SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
+                    }
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -66,5 +71,10 @@ public class SignUpController {
 //            alert.showAndWait();
             SignUpError.setText(e.getMessage());
         }
+    }
+    @FXML
+    public void handleBackButton(ActionEvent event) throws IOException {
+        System.out.println("Back Button Clicked");
+        SceneController.switchScene(event, "Login.fxml", "Login");
     }
 }

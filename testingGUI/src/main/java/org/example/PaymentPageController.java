@@ -18,6 +18,12 @@ public class PaymentPageController {
 
     private Cart cart;
 
+    private ActionEvent originalEvent;
+
+    public void setOriginalEvent(ActionEvent event) {
+        this.originalEvent = event;
+    }
+
     public void setCart(Cart cart) {
         this.cart = cart;
     }
@@ -70,7 +76,10 @@ public class PaymentPageController {
 
             // Close the pop-up after successful payment
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
-        } catch (PaymentException e) {
+
+            SceneController.Popup(event, "OrderConfirmed.fxml", "Order Confirmed");
+            // Use the original stage to switch the scene
+            SceneController.switchScene(originalEvent, "MainPageClient.fxml", "Homepage");        } catch (PaymentException e) {
             PaymentErrorLabel.setText(e.getMessage());
         } catch (Exception e) {
             this.exception = e; // Store the exception to be retrieved later
