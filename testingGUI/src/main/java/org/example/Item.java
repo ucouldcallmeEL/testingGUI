@@ -50,15 +50,21 @@ public class Item {
     @PropertyName("rating")
     public int CalculateRating() {
         int sum = 0;
-        List<org.example.Review> reviews =fm.getReviewsByItem(this.ItemID);
-        for(Review review : reviews) {
+        List<org.example.Review> reviews = fm.getReviewsByItem(this.ItemID);
+
+
+        //If the list of reviews (reviews) is empty, the reviews.size() will be 0, which results in a java.lang.ArithmeticException: / by zero error.
+        if (reviews.isEmpty()) {
+            return 0; // Default rating when there are no reviews, fix added after failed test case
+        }
+
+        for (Review review : reviews) {
             int rating = review.getRating();
             sum += rating;
         }
         rating = sum / reviews.size();
-    return rating;
+        return rating;
     }
-
     public boolean CheckAvailability() {
         if(this.getStock()>0){
             return true;
@@ -109,8 +115,8 @@ public class Item {
     }
 
 
-    public void changeImageURL(String ItemID,String ImageURL) {
-        fm.changeItemPicture(ItemID,ImageURL);
+    public String changeImageURL(String ItemID, String ImageURL) {
+       return fm.changeItemPicture(ItemID, ImageURL);
     }
 
 

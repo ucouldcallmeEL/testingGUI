@@ -321,7 +321,7 @@ public class FireBaseManager {
         try {
             // Create a query on the "Items" collection where ItemCategory equals the given category
             CollectionReference itemsRef = db.collection("Items");
-            Query query = itemsRef.whereEqualTo("itemCategory", category);
+            Query query = itemsRef.whereEqualTo("ItemCategory", category);
             ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
             // Loop through the query results

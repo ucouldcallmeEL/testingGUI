@@ -142,18 +142,20 @@ class ItemTest {
     @Order(9)
     @DisplayName("Get items by category retrieves correct items")
     void getItemsByCategory_RetrievesCorrectItems() {
-        List<Item> items = item.getItemsByCategory("Electronics"); // Fetch items by category
+        List<Item> items = item.getItemsByCategory("beauty"); // Fetch items by category
         assertNotNull(items, "Items list should not be null");
         assertTrue(items.size() > 0, "Items list should contain at least one item");
-        assertEquals("Electronics", items.get(0).getItemCategory());
+        assertEquals("beauty", items.get(0).getItemCategory());
     }
 
     @Test
     @Order(10)
     @DisplayName("Change image URL updates database correctly")
     void changeImageURL_UpdatesCorrectly() {
-        item.changeImageURL("item001", "newImageURL"); // Change image URL
-        Item updatedItem = item.getItembyID("item001"); // Fetch updated item
-        assertEquals("newImageURL", updatedItem.getImageURL());
+        String itemID = "uiRV3bFyKjRpSlcD69kb";
+        Item retrievedItem = item.getItembyID(itemID);
+        String updatedURL = item.changeImageURL(itemID, "C:/Users/amrem/Downloads/photo-1618424181497-157f25b6ddd5.jpg"); // Change image URL
+        Item updatedItem = item.getItembyID(itemID); // Fetch updated item
+        assertEquals(updatedURL, updatedItem.getImageURL(), "Image URL should match the updated value returned by the function");
     }
 }
