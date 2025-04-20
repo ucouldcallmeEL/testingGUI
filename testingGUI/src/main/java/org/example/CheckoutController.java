@@ -10,6 +10,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -98,33 +99,80 @@ public class CheckoutController {
         SceneController.switchScene(event, "Cart.fxml", "Cart");
     }
 
+//    @FXML
+//    public void handleProceedToPaymentButton(ActionEvent event) throws IOException {
+//        if (CODRadioButton.isSelected()) {
+//            System.out.println("Cash on Delivery selected");
+//            try {
+//                this.cart.confirmOrder();
+//                SceneController.Popup(event, "OrderConfirmed.fxml", "Order Confirmed");
+//                SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
+//
+//            } catch (ZeroStockException | UpdateException e) {
+//                CheckoutErrorLabel.setText(e.getMessage());
+//            }
+//            // Handle Cash on Delivery logic here
+//        } else if (CreditCardRadioButton.isSelected()) {
+//            System.out.println("Credit Card selected");
+//            // Load the PaymentPage.fxml
+//            FXMLLoader loader = new FXMLLoader(new java.io.File(GlobalData.path + "PaymentPage.fxml").toURI().toURL());
+//            Parent root = loader.load();
+//            // Get the controller and pass the cart
+//            PaymentPageController controller = loader.getController();
+//            controller.setCart(this.cart);
+//            // Switch to the payment page
+//            Scene scene = new Scene(root);
+//            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//            stage.setScene(scene);
+//            stage.setTitle("Payment Processing");
+//            stage.show();
+//        } else {
+//            System.out.println("No payment method selected");
+//        }
+//        System.out.println("Proceed to Payment Button Clicked");
+//    }
+
     @FXML
-    public void handleProceedToPaymentButton(ActionEvent event) throws IOException {
+    public void handleProceedToPaymentButton(ActionEvent event) throws IOException{
         if (CODRadioButton.isSelected()) {
             System.out.println("Cash on Delivery selected");
             try {
                 this.cart.confirmOrder();
                 SceneController.Popup(event, "OrderConfirmed.fxml", "Order Confirmed");
                 SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
-
             } catch (ZeroStockException | UpdateException e) {
                 CheckoutErrorLabel.setText(e.getMessage());
             }
-            // Handle Cash on Delivery logic here
         } else if (CreditCardRadioButton.isSelected()) {
             System.out.println("Credit Card selected");
-            // Load the PaymentPage.fxml
-            FXMLLoader loader = new FXMLLoader(new java.io.File(GlobalData.path + "PaymentPage.fxml").toURI().toURL());
-            Parent root = loader.load();
-            // Get the controller and pass the cart
-            PaymentPageController controller = loader.getController();
-            controller.setCart(this.cart);
-            // Switch to the payment page
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("Payment Processing");
-            stage.show();
+            try {
+                // Load the PaymentPage.fxml
+                FXMLLoader loader = new FXMLLoader(new java.io.File(GlobalData.path + "PaymentPage.fxml").toURI().toURL());
+                Parent root = loader.load();
+
+                // Get the controller and pass the cart
+                PaymentPageController controller = loader.getController();
+                controller.setCart(this.cart);
+
+                // Create a new stage for the pop-up
+                Stage popupStage = new Stage();
+                popupStage.initModality(Modality.APPLICATION_MODAL);
+                popupStage.setTitle("Payment Processing");
+                popupStage.setScene(new Scene(root));
+                popupStage.showAndWait(); // Wait for the pop-up to close
+                // Check if an exception occurred in the PaymentPageController
+                if (controller.getException() != null) {
+                    throw controller.getException();
+                }
+            } catch (PaymentException | ZeroStockException | UpdateException e){
+            CheckoutErrorLabel.setText(e.getMessage());
+            } catch (IOException e) {
+                CheckoutErrorLabel.setText("Failed to load the payment page.");
+                e.printStackTrace();
+            } catch (Exception e) {
+                CheckoutErrorLabel.setText("An unexpected error occurred.");
+                e.printStackTrace();
+            }
         } else {
             System.out.println("No payment method selected");
         }
