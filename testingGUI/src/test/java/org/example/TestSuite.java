@@ -8,10 +8,13 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SuiteDisplayName("All Test Suite")
 @SelectClasses({
         ClientTest.class,
-        IntegrationTest.class,
         OrderTest.class,
         UserTest.class,
-        VendorTest.class
+        VendorTest.class,
+        ReviewTest.class,
+        ItemTest.class,
+        CartTest.class,
+        UserTest.class
 })
 public class TestSuite {
     // This class remains empty, it's just a holder for the suite annotations
