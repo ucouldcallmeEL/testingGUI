@@ -26,7 +26,7 @@ class ItemTest {
         assertEquals("Laptop", item.getItemName());
         assertEquals("High performance laptop", item.getItemDescription());
         assertEquals("Electronics", item.getItemCategory());
-        assertEquals("1500.00", item.getItemPrice());
+        assertEquals("1500", item.getItemPrice());
         assertEquals("imageURL", item.getImageURL());
         assertEquals(10, item.getStock());
         assertEquals("Vendor001", item.getVendor());
@@ -125,9 +125,9 @@ class ItemTest {
     void changePrice_UpdatesCorrectly() {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
         Item retrievedItem = item.getItembyID(itemID);
-        retrievedItem.changePrice(itemID, "2000.00"); // Change item price
+        retrievedItem.changePrice(itemID, "2000"); // Change item price
         Item updatedItem = item.getItembyID(itemID); // Fetch updated item
-        assertEquals("2000.00", updatedItem.getItemPrice());
+        assertEquals("2000", updatedItem.getItemPrice());
     }
 
     @Test
