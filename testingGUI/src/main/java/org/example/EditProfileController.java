@@ -105,9 +105,9 @@ public class EditProfileController {
     private void handleBackButton(ActionEvent event) throws IOException {
         System.out.println("Back Button Clicked");
         if (LogInController.isVendor) {
-            SceneController.switchScene(event, "VendorProfile.fxml", "Homepage");
+            SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
         } else {
-            SceneController.switchScene(event, "ClientProfile.fxml", "Homepage");
+            SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
         }
     }
 }

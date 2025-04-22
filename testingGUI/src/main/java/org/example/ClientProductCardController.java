@@ -72,6 +72,7 @@ public class ClientProductCardController {
     public void handleRemoveFromWishlistButton(ActionEvent event) throws IOException {
         System.out.println("Remove from Wishlist Button Clicked");
         fm.removeItemFromWishlist(GlobalData.currentlyLoggedIN, this.itemID);
+        SceneController.refreshPage(event, "Wishlist.fxml");
 //        SceneController.switchScene(event, "MainPageClient.fxml", "Product Card");
     }
 
@@ -80,6 +81,7 @@ public class ClientProductCardController {
         System.out.println("Move To Cart Button Clicked");
         fm.removeItemFromWishlist(GlobalData.currentlyLoggedIN, this.itemID);
         fm.addItemToCart(GlobalData.currentlyLoggedIN, this.item, 1);
+        SceneController.refreshPage(event, "Wishlist.fxml");
     }
 }
 
