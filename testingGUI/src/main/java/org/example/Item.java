@@ -82,13 +82,19 @@ public class Item {
         fm.changeItemName(ItemID,ItemName);
     }
     @PropertyName("ItemDescription")
-    public void changeDescription(String ItemID,String Description) {
+    public void changeDescription(String ItemID,String Description) throws ChangeException {
         Item item=fm.getItem(ItemID);
+        if(Description == null){
+            throw new ChangeException("Item description cannot be null");
+        }
         item.setItemDescription(Description);
         fm.changeItemDescription(ItemID,Description);
     }
     @PropertyName("ItemCategory")
-    public void changeCategory(String ItemID,String ItemCategory) {
+    public void changeCategory(String ItemID,String ItemCategory) throws ChangeException {
+        if(ItemCategory == null){
+            throw new ChangeException("Item Category cannot be null");
+        }
         Item item=fm.getItem(ItemID);
         item.setItemCategory(ItemCategory);
         fm.changeItemCategory(ItemID,ItemCategory);
@@ -100,7 +106,12 @@ public class Item {
     }
 
     @PropertyName("ItemPrice")
-    public void changePrice(String ItemID,String ItemPrice) {
+    public void changePrice(String ItemID,String ItemPrice) throws ChangeException {
+        if(ItemPrice == null){
+            throw new ChangeException("Item price cannot be null");
+        }else if(Double.parseDouble(ItemPrice) <=0 ){
+            throw new ChangeException("Invalid item price");
+        }
         Item item=fm.getItem(ItemID);
         item.setItemPrice(ItemPrice);
         fm.changeItemPrice(ItemID,ItemPrice);
@@ -108,6 +119,9 @@ public class Item {
 
     @PropertyName("Stock")
     public void updateStock(int newStock) {
+        if(newStock < 0){
+            throw new IllegalArgumentException("Stock cannot be negative");
+        }
         this.Stock = newStock; // update local object if needed
         // Assume 'fm' is an instance of FirestoreManager available in scope
         fm.updateStock(this.ItemID, newStock);
@@ -119,8 +133,11 @@ public class Item {
     }
 
 
-    public String changeImageURL(String ItemID, String ImageURL) {
-       return fm.changeItemPicture(ItemID, ImageURL);
+    public String changeImageURL(String ItemID, String ImageURL) throws ChangeException {
+        if(ImageURL == null){
+            throw new ChangeException("Add an image URL");
+        }
+        return fm.changeItemPicture(ItemID, ImageURL);
     }
 
 
@@ -198,4 +215,10 @@ public class Item {
         this.ReviewsID = ReviewsID;
     }
 }
+class ChangeException extends Exception {
+    public ChangeException(String message) {
+        super(message);
+    }
+}
+
 //

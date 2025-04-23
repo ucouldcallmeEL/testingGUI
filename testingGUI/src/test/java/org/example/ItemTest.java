@@ -122,7 +122,7 @@ class ItemTest {
     @Test
     @Order(7)
     @DisplayName("Change item price updates database correctly")
-    void changePrice_UpdatesCorrectly() {
+    void changePrice_UpdatesCorrectly()  throws ChangeException{
         String itemID = "uiRV3bFyKjRpSlcD69kb";
         Item retrievedItem = item.getItembyID(itemID);
         retrievedItem.changePrice(itemID, "2000"); // Change item price
@@ -151,7 +151,7 @@ class ItemTest {
     @Test
     @Order(10)
     @DisplayName("Change image URL updates database correctly")
-    void changeImageURL_UpdatesCorrectly() {
+    void changeImageURL_UpdatesCorrectly() throws ChangeException {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
         Item retrievedItem = item.getItembyID(itemID);
         String updatedURL = item.changeImageURL(itemID, "C:/Users/amrem/Downloads/photo-1618424181497-157f25b6ddd5.jpg"); // Change image URL
@@ -162,7 +162,7 @@ class ItemTest {
     @Test
     @Order(11)
     @DisplayName("Change item description updates database correctly")
-    void changeDescription_UpdatesCorrectly() {
+    void changeDescription_UpdatesCorrectly() throws ChangeException {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
         Item retrievedItem = item.getItembyID(itemID);
         retrievedItem.changeDescription(itemID, "Shit laptop tbh"); // Change description
@@ -173,7 +173,7 @@ class ItemTest {
     @Test
     @Order(12)
     @DisplayName("Change item category updates database correctly")
-    void changeCategory_UpdatesCorrectly() {
+    void changeCategory_UpdatesCorrectly() throws ChangeException {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
         Item retrievedItem = item.getItembyID(itemID);
         retrievedItem.changeCategory(itemID, "Electronics"); // Change category

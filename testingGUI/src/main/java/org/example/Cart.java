@@ -102,7 +102,7 @@ public class Cart {
         return fm.getClientCart(clientID);
     }
 
-    public void confirmOrder() throws ZeroStockException, UpdateException {
+    public void confirmOrder() throws ZeroStockException, UpdateException, NullPointerException {
         if (itemsID.isEmpty()) {
             System.out.println("Cart is empty. Cannot confirm order");
             return;
@@ -143,19 +143,23 @@ public class Cart {
         for (String itemID : itemsID) {
             if (processed.contains(itemID)) continue;
 
-            int quantity = (int) itemsID.stream().filter(id -> id.equals(itemID)).count();
             Item item = fm.getItem(itemID);
-            if (item != null) {
-                int newStock = item.getStock() - quantity;
-                if (newStock < 0) {
-                    throw new UpdateException("Calculated negative stock for item: " + itemID);
+            try {
+                if (item != null) {
+                    int quantity = (int) itemsID.stream().filter(id -> id.equals(itemID)).count();
+                    int newStock = item.getStock() - quantity;
+                    if (newStock < 0) {
+                        throw new UpdateException("Calculated negative stock for item: " + itemID);
+                    }
+                    item.updateStock(newStock);
+                } else {
+                    throw new NullPointerException("Item not found in database during stock update: " + itemID);
                 }
-                item.updateStock(newStock);
-            } else {
-                System.out.println("Item not found in database during stock update: " + itemID);
-            }
 
-            processed.add(itemID);
+                processed.add(itemID);
+            } catch (NullPointerException e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         fm.emptyCart(UserID);

@@ -51,7 +51,7 @@ public class Vendor extends User {
             }
         }
         if(!ValidPrice){
-            if(ItemPrice.length() == 0){
+            if(ItemPrice.length() <= 0 || ItemPrice == null){
                 throw new AddItemException("Please add a price for your item.");
             }else{
                 ValidPrice = true;
@@ -92,6 +92,7 @@ public class Vendor extends User {
         //String itemID = fm.addItem(item);
 
     }
+//    public void UpdateItem(String ItemID, String newName,  )
     public void removeItem(Item Item) {
         fm.deleteItemReviews(Item.getItemID());
         fm.deleteItem(Item.getItemID(),this.getUserID());
