@@ -87,8 +87,11 @@ public class EditProductController {
             ProductUpdateError.setStyle("-fx-text-fill: green;");
             ProductUpdateError.setText("Update Successful!");
             SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
-//        } catch (UpdateException e) {
-//            ProductUpdateError.setText(e.getMessage());
+
+        } catch (NumberFormatException e) {
+            ProductUpdateError.setText("Please enter a valid number for stock.");
+        } catch (ChangeException ex) {
+            ProductUpdateError.setText(ex.getMessage());
         } catch (IOException ex) {
             ProductUpdateError.setText(ex.getMessage());
         } catch (Exception ex) {

@@ -29,10 +29,10 @@ public class ProductAddController {
             Vendor vendor = fm.getVendor(GlobalData.getCurrentlyLoggedIN());
 
             try{
-//                  System.out.println("Adding item...");
+                  System.out.println("Adding item...");
                   vendor.addItem(name, description, category, price, imageURL, Integer.valueOf(stock), GlobalData.getCurrentlyLoggedIN());
                   ProductAddError.setStyle("-fx-text-fill: green;");
-                  ProductAddError.setText("Registration Successful!");
+                  ProductAddError.setText("Item Added Successfully!");
                   SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
 //                  // Create a PauseTransition with a delay of 2 seconds
 //                  PauseTransition delay = new PauseTransition(Duration.seconds(2));
