@@ -80,15 +80,18 @@ public class EditProductController {
             this.item.changeItemName(this.itemID, name);
             this.item.changePrice(this.itemID, price);
             this.item.changeImageURL(this.itemID, imageURL);
-            this.item.updateStock(Integer.valueOf(stock));
+            this.item.updateStock(Integer.parseInt(stock));
             this.item.changeCategory(this.itemID, category);
             this.item.changeDescription(this.itemID, description);
 
             ProductUpdateError.setStyle("-fx-text-fill: green;");
             ProductUpdateError.setText("Update Successful!");
             SceneController.switchScene(event, "MainVendorPage.fxml", "Homepage");
-//        } catch (UpdateException e) {
-//            ProductUpdateError.setText(e.getMessage());
+
+        } catch (NumberFormatException e) {
+            ProductUpdateError.setText("Please enter a valid number for stock.");
+        } catch (ChangeException ex) {
+            ProductUpdateError.setText(ex.getMessage());
         } catch (IOException ex) {
             ProductUpdateError.setText(ex.getMessage());
         } catch (Exception ex) {
