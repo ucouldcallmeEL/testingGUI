@@ -63,7 +63,7 @@ class ItemTest {
     @Test
     @Order(4)
     @DisplayName("CheckAvailability returns false for stock = 0")
-    void checkAvailability_ReturnsFalse_WhenStockIsZero() {
+    void checkAvailability_ReturnsFalse_WhenStockIsZero() throws ChangeException {
         // Use an existing ItemID from the database
         String itemID = "aRIDVZDogJyN6ks2NXQS"; //item with 0 stock in DB
         // Retrieve the item from the database
@@ -100,7 +100,7 @@ class ItemTest {
     @Test
     @Order(5)
     @DisplayName("Update stock updates stock in database correctly")
-    void updateStock_UpdatesCorrectly() {
+    void updateStock_UpdatesCorrectly() throws ChangeException {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
         Item retrievedItem = item.getItembyID(itemID);
         retrievedItem.updateStock(20); // Update stock to a new value
@@ -111,7 +111,7 @@ class ItemTest {
     @Test
     @Order(6)
     @DisplayName("Change item name updates database correctly")
-    void changeItemName_UpdatesCorrectly() {
+    void changeItemName_UpdatesCorrectly() throws ChangeException {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
         Item retrievedItem = item.getItembyID(itemID);
         retrievedItem.changeItemName(itemID, "Cool Laptop"); // Change item name

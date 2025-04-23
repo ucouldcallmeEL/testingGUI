@@ -102,7 +102,7 @@ public class Cart {
         return fm.getClientCart(clientID);
     }
 
-    public void confirmOrder() throws ZeroStockException, UpdateException, NullPointerException {
+    public void confirmOrder() throws ZeroStockException, UpdateException, NullPointerException, ChangeException {
         if (itemsID.isEmpty()) {
             System.out.println("Cart is empty. Cannot confirm order");
             return;

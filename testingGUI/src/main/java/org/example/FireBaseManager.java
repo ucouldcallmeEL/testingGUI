@@ -9,10 +9,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 public class FireBaseManager {
     private static FireBaseManager instance = new FireBaseManager();
@@ -342,7 +339,7 @@ public class FireBaseManager {
             e.printStackTrace();
         }
 
-        return items;
+        return items != null ? items : Collections.emptyList();
     }
 
     public List<Item> getItemsByCategory(String category) {

@@ -72,59 +72,104 @@ public class Item {
         else {return false;}
     }
     @PropertyName("ItemName")
-    public void changeItemName(String ItemID,String ItemName) {
-        if(ItemName == null){
-            throw new IllegalArgumentException("Item name cannot be null");
+    public void changeItemName(String ItemID, String ItemName) throws ChangeException {
+        if (ItemName == null || ItemName.trim().isEmpty()) {
+            throw new ChangeException("Item name cannot be null or empty.");
         }
 
-        Item item=fm.getItem(ItemID);
+        Item item = fm.getItem(ItemID);
+        if (item == null) {
+            throw new ChangeException("Item not found.");
+        }
+
         item.setItemName(ItemName);
-        fm.changeItemName(ItemID,ItemName);
+        fm.changeItemName(ItemID, ItemName);
+        System.out.println("Item name updated successfully.");
     }
     @PropertyName("ItemDescription")
-    public void changeDescription(String ItemID,String Description) throws ChangeException {
-        Item item=fm.getItem(ItemID);
-        if(Description == null){
-            throw new ChangeException("Item description cannot be null");
+    public void changeDescription(String ItemID, String Description) throws ChangeException {
+        if (Description == null || Description.trim().isEmpty()) {
+            throw new ChangeException("Item description cannot be null or empty.");
         }
+
+        Item item = fm.getItem(ItemID);
+        if (item == null) {
+            throw new ChangeException("Item not found.");
+        }
+
         item.setItemDescription(Description);
-        fm.changeItemDescription(ItemID,Description);
+        fm.changeItemDescription(ItemID, Description);
+        System.out.println("Item description updated successfully.");
     }
     @PropertyName("ItemCategory")
-    public void changeCategory(String ItemID,String ItemCategory) throws ChangeException {
-        if(ItemCategory == null){
-            throw new ChangeException("Item Category cannot be null");
+    public void changeCategory(String ItemID, String ItemCategory) throws ChangeException {
+        if (ItemCategory == null || ItemCategory.trim().isEmpty()) {
+            throw new ChangeException("Item category cannot be null or empty.");
         }
-        Item item=fm.getItem(ItemID);
-        item.setItemCategory(ItemCategory);
-        fm.changeItemCategory(ItemID,ItemCategory);
-    }
 
+        Item item = fm.getItem(ItemID);
+        if (item == null) {
+            throw new ChangeException("Item not found.");
+        }
+
+        item.setItemCategory(ItemCategory);
+        fm.changeItemCategory(ItemID, ItemCategory);
+        System.out.println("Item category updated successfully.");
+    }
     @PropertyName("ItemCategory")
     public List<Item> getItemsByCategory(String category){
         return fm.getItemsByCategory(category);
     }
 
     @PropertyName("ItemPrice")
-    public void changePrice(String ItemID,String ItemPrice) throws ChangeException {
-        if(ItemPrice == null){
-            throw new ChangeException("Item price cannot be null");
-        }else if(Double.parseDouble(ItemPrice) <=0 ){
-            throw new ChangeException("Invalid item price");
+    public void changePrice(String ItemID, String ItemPrice) throws ChangeException {
+        if (ItemPrice == null || ItemPrice.trim().isEmpty()) {
+            throw new ChangeException("Item price cannot be null or empty.");
         }
-        Item item=fm.getItem(ItemID);
+
+        try {
+            if (Double.parseDouble(ItemPrice) <= 0) {
+                throw new ChangeException("Invalid item price. Price must be greater than zero.");
+            }
+        } catch (NumberFormatException e) {
+            throw new ChangeException("Invalid item price. Price must be a valid number.");
+        }
+
+        Item item = fm.getItem(ItemID);
+        if (item == null) {
+            throw new ChangeException("Item not found.");
+        }
+
         item.setItemPrice(ItemPrice);
-        fm.changeItemPrice(ItemID,ItemPrice);
+        fm.changeItemPrice(ItemID, ItemPrice);
+        System.out.println("Item price updated successfully.");
     }
 
     @PropertyName("Stock")
-    public void updateStock(int newStock) {
-        if(newStock < 0){
-            throw new IllegalArgumentException("Stock cannot be negative");
+//    public void updateStock(int newStock) {
+//        if(newStock < 0){
+//            throw new IllegalArgumentException("Stock cannot be negative");
+//        }
+//        this.Stock = newStock; // update local object if needed
+//        // Assume 'fm' is an instance of FirestoreManager available in scope
+//        fm.updateStock(this.ItemID, newStock);
+//    }
+    public void updateStock (int newStock) throws ChangeException {
+        Item item = fm.getItem(ItemID);
+        Integer PlaceHolderStock = newStock;
+        if (newStock < 0) {
+            throw new ChangeException("Stock cannot be negative.");
+        }else if(PlaceHolderStock == null){
+            throw new ChangeException("Invalid Stock");
         }
-        this.Stock = newStock; // update local object if needed
-        // Assume 'fm' is an instance of FirestoreManager available in scope
-        fm.updateStock(this.ItemID, newStock);
+
+        if (item == null) {
+            throw new ChangeException("Item not found.");
+        }
+
+        item.setStock(newStock);
+        fm.updateStock(ItemID, newStock);
+        System.out.println("Item stock updated successfully.");
     }
 
     @PropertyName("Stock")
@@ -134,10 +179,19 @@ public class Item {
 
 
     public String changeImageURL(String ItemID, String ImageURL) throws ChangeException {
-        if(ImageURL == null){
-            throw new ChangeException("Add an image URL");
+        if (ImageURL == null || ImageURL.trim().isEmpty()) {
+            throw new ChangeException("Image URL cannot be null or empty.");
         }
-        return fm.changeItemPicture(ItemID, ImageURL);
+
+        Item item = fm.getItem(ItemID);
+        if (item == null) {
+            throw new ChangeException("Item not found.");
+        }
+
+        item.setImageURL(ImageURL);
+        fm.changeItemPicture(ItemID, ImageURL);
+        System.out.println("Item image URL updated successfully.");
+        return item.getImageURL();
     }
 
 

@@ -140,7 +140,7 @@ public class CheckoutController {
                 this.cart.confirmOrder();
                 SceneController.Popup(event, "OrderConfirmed.fxml", "Order Confirmed");
                 SceneController.switchScene(event, "MainPageClient.fxml", "Homepage");
-            } catch (ZeroStockException | UpdateException e) {
+            } catch (ZeroStockException | UpdateException | ChangeException e) {
                 CheckoutErrorLabel.setText(e.getMessage());
             }
         } else if (CreditCardRadioButton.isSelected()) {

@@ -111,10 +111,17 @@ public class Client extends User {
                    continue;
 
                 }else{
-                    int quantity = (int) itemsID.stream().filter(id -> id.equals(itemID)).count();
-                    Item item =fm.getItem(itemID);
-                    item.updateStock(item.getStock() + quantity);
-
+                    try {
+                        int quantity = (int) itemsID.stream().filter(id -> id.equals(itemID)).count();
+                        Item item = fm.getItem(itemID);
+                        if (item == null) {
+                            throw new ChangeException("Item not found");
+                        }
+                        item.updateStock(item.getStock() + quantity);
+                    }
+                    catch(ChangeException e){
+                        System.out.println("Failed to update stock");
+                    }
                 }
             }
             System.out.println("Order " + order.getOrderID() + " has been cancelled.");
