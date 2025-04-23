@@ -80,7 +80,7 @@ public class EditProductController {
             this.item.changeItemName(this.itemID, name);
             this.item.changePrice(this.itemID, price);
             this.item.changeImageURL(this.itemID, imageURL);
-            this.item.updateStock(Integer.valueOf(stock));
+            this.item.updateStock(Integer.parseInt(stock));
             this.item.changeCategory(this.itemID, category);
             this.item.changeDescription(this.itemID, description);
 
