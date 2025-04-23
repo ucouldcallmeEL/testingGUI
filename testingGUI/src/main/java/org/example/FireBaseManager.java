@@ -34,8 +34,8 @@ public class FireBaseManager {
             throw new RuntimeException("Failed to initialize Firebase", e);
         }
     }
-    Dotenv dotenv = Dotenv.load();
-    Cloudinary cloudinary = new Cloudinary(dotenv.get("CLOUDINARY_URL"));
+
+    Cloudinary cloudinary = new Cloudinary("cloudinary://127663788581227:34ot_H2SqHKDIZGJhMRQNi7ZbY4@diehzljjz");
     public static synchronized FireBaseManager getInstance() {
         if (instance == null) {
             instance = new FireBaseManager();
@@ -161,6 +161,21 @@ public class FireBaseManager {
             return null;
         }
     }
+//    public Cart getCart(String cartID) {
+//        DocumentReference itemRef = db.collection("Carts").document(cartID);
+//        ApiFuture<DocumentSnapshot> result = itemRef.get();
+//        try {
+//            if (result.get().exists()) {
+//                return result.get().toObject(Cart.class);
+//            } else {
+//                return null; // User not found
+//            }
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//
+//    }
 
         public Item getItem(String itemID) {
             DocumentReference itemRef = db.collection("Items").document(itemID);
@@ -272,6 +287,21 @@ public class FireBaseManager {
 
         return items;
     }
+//    public Order getOrder(String OrderID) {
+//        DocumentReference itemRef = db.collection("Orders").document(OrderID);
+//        ApiFuture<DocumentSnapshot> result = itemRef.get();
+//        try {
+//            if (result.get().exists()) {
+//                return result.get().toObject(Order.class);
+//            } else {
+//                return null; // User not found
+//            }
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//
+//    }
 
 
     public List<Item> getItemsForVendor(String vendorId) {
@@ -720,7 +750,7 @@ public class FireBaseManager {
 
             if (clientDoc.exists()) {
                 // Get the list of order IDs for this client
-                List<String> orderIds = (List<String>) clientDoc.get("CurrentOrders");
+                List<String> orderIds = (List<String>) clientDoc.get("History");
 
                 if (orderIds != null && !orderIds.isEmpty()) {
                     // Fetch the orders where current = 0
@@ -736,7 +766,7 @@ public class FireBaseManager {
                     for (ApiFuture<DocumentSnapshot> future : futures) {
                         DocumentSnapshot orderDoc = future.get();
                         if (orderDoc.exists() && orderDoc.getBoolean("current") == false) {
-                            org.example.Order order = orderDoc.toObject(Order.class);
+                            org.example.Order order = orderDoc.toObject(org.example.Order.class);
                             if (order != null) {
                                 order.setOrderID(orderDoc.getId());  // Set OrderID manually
                                 orders.add(order);

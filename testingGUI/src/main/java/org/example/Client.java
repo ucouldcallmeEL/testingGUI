@@ -103,14 +103,25 @@ public class Client extends User {
 
 
     public void CancelOrder(Order order, String userID) {
-        if(CurrentOrders.remove(order.getOrderID())){
+        if (CurrentOrders.remove(order.getOrderID())) {
+            ArrayList<String> itemsID = order.getItemsID();
+            for (int i = 0; i < itemsID.size(); i++) {
+                String itemID = itemsID.get(i);
+                if (i > 0 && itemID.equals(itemsID.get(i - 1))) {
+                   continue;
+
+                }else{
+                    int quantity = (int) itemsID.stream().filter(id -> id.equals(itemID)).count();
+                    Item item =fm.getItem(itemID);
+                    item.updateStock(item.getStock() + quantity);
+
+                }
+            }
             System.out.println("Order " + order.getOrderID() + " has been cancelled.");
             fm.makeHistory(order.getOrderID(), userID);
-        } else {
-            System.out.println("Order " + order.getOrderID() + " not found in current orders.");
+            }else{System.out.println("Order " + order.getOrderID() + " not found in current orders.");}
         }
 
-    }
     public void AddToCart(Item item) {
         fm.addItemToCart(GlobalData.getCurrentlyLoggedIN(),item,1);
 

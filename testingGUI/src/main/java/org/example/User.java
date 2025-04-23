@@ -216,6 +216,9 @@ public class User {
         String Username= fm.getUser(UserID).getName();
         return Username;
     }
+    public User getUser(String username){
+        return fm.getUser(username);
+    }
     public User GetUserByID(String UserID){
         User user = fm.getUser(UserID);
         return user;

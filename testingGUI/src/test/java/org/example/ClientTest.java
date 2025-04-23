@@ -71,7 +71,6 @@ class ClientTest {
 
 
 
-
     @Test
     @Order(6)
     @DisplayName("Get wishlist from existing DB user")
@@ -85,8 +84,11 @@ class ClientTest {
         Client dbClient = (Client) retrievedUser;
         List<String> wishlist = dbClient.getWishlist();
 
-        List<String> expected = List.of("YHyYfEwWBhRoV3UHw42p, ZXk4VJJ162RZnymhP4yY");
-        assertEquals(expected, wishlist, "Wishlist does not match expected items");
+        // Convert both lists to ArrayList for comparison
+        List<String> expected = new ArrayList<>(List.of("YHyYfEwWBhRoV3UHw42p", "ZXk4VJJ162RZnymhP4yY"));
+        List<String> actual = new ArrayList<>(wishlist);
+
+        assertEquals(expected, actual, "Wishlist does not match expected items");
     }
 
     @Test

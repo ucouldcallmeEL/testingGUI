@@ -98,6 +98,9 @@ public class Cart {
             return "0";
         }
     }
+    public Cart getCartbyID(String clientID){
+        return fm.getClientCart(clientID);
+    }
 
     public void confirmOrder() throws ZeroStockException, UpdateException {
         if (itemsID.isEmpty()) {

@@ -3,6 +3,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.Objects;
 
 public class Order {
     private String orderID;
@@ -26,7 +27,14 @@ public class Order {
         this.TotalPrice = totalPrice;
         this.Date = new Date();
     }
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Order order = (Order) obj;
+        return Objects.equals(orderID, order.orderID) &&
+                Objects.equals(itemsID, order.itemsID); // Add other fields as needed
+    }
     public void setDate(Date Date){
         this.Date = Date;
     }
