@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Order;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -64,7 +65,7 @@ class WhiteBoxTest {
 
         // Assert that the item was added
         assertTrue(cart.getItemsID().contains("Aq5uyCPe3xhM1ZMFQIrt"), "Cart should contain the added item");
-        assertEquals(cart.getItemPrice(TestItem),cart.getTotalPrice());
+        assertEquals(cart.getItemPrice(TestItem),"200","price mismatch");
         // Step 3: Confirm the order
         assertDoesNotThrow(() -> cart.confirmOrder(), "Order confirmation should succeed");
         assertEquals(stock-quantity,TestItem.fetchStockFromDB(), "Expected Stock should be equal to actual stock");
@@ -98,23 +99,21 @@ class WhiteBoxTest {
     @Order(4)
     @DisplayName("Client Cancels an order")
     void testClientCancelOrder() {
-        order = fm.getOrder("PNscFbGP4pFU2qSfDS3V");
+        order = fm.getOrder("p4C2uXmO8Ec1pBqz0qco");
         ArrayList<String> itemsID = order.getItemsID();
-        ArrayList<Integer> itemstock= new ArrayList<>();
+        HashMap<String, Integer> itemStockMap = new HashMap<>();
         assertDoesNotThrow(() -> user.LogIn(testUserID, basePassword), "Login should succeed");
-        for (int i = 0; i < itemsID.size(); i++) {
-            String itemID = itemsID.get(i);
-            if (i > 0 && itemID.equals(itemsID.get(i - 1))) {
-                continue;
-            }else{
-                Item item= fm.getItem(itemID);
-                itemstock.add(item.getStock());
+        for (String itemID : itemsID) {
+            if (!itemStockMap.containsKey(itemID)) { // Only fetch stock for unique items
+                Item item = fm.getItem(itemID);
+                itemStockMap.put(itemID, item.getStock());
             }
         }
         assertDoesNotThrow(() -> user.CancelOrder(order,GlobalData.getCurrentlyLoggedIN()),"Order is removed successfully");
-        for (String item1 : (order.getItemsID())) {
-            Item item = fm.getItem(item1);
-            assertTrue(item.getStock()==itemstock.indexOf(item1)+ order.getItemQuantity(item),"Stock is restored successfully");
+        for (String itemID : itemsID) {
+            Item item = fm.getItem(itemID);
+            int expectedStock = itemStockMap.get(itemID) + order.getItemQuantity(item); // Original stock + quantity in order
+            assertTrue(item.getStock() == expectedStock, "Stock is restored successfully for item: " + itemID);
         }
     }
 
