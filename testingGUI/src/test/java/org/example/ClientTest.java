@@ -85,7 +85,7 @@ class ClientTest {
         Client dbClient = (Client) retrievedUser;
         List<String> wishlist = dbClient.getWishlist();
 
-        List<String> expected = List.of("aRIDVZDogJyN6ks2NXQS");
+        List<String> expected = List.of("YHyYfEwWBhRoV3UHw42p, ZXk4VJJ162RZnymhP4yY");
         assertEquals(expected, wishlist, "Wishlist does not match expected items");
     }
 
@@ -142,7 +142,7 @@ class ClientTest {
         assertInstanceOf(Client.class, retrievedUser, "User must be a Client");
         Client dbClient = (Client) retrievedUser;
         List<String> history = dbClient.getHistory();
-        List<String> expectedHistory = List.of("Yunis", "Othman","Andrea","Wa7ed Shish Tawook");
+        List<String> expectedHistory = List.of("Yunis", "Othman","Andrea","Wa7ed Shish Tawook, R71HslrfnK2uycCCRWL, 0KwTUNUDACq9uvuRZoFL, XAfHa8dwgoQANXzzn4Ue, 3sFMtWpLpKsTJoHQyuq4, XQy6bwUMcrxtD4jNzM8C");
         assertNotNull(history, "History should not be null");
         assertEquals(expectedHistory.size(), history.size(), "History size should match expected");
         assertTrue(history.containsAll(expectedHistory), "History should contain all expected orders");
