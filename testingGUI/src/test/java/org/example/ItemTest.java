@@ -15,7 +15,7 @@ class ItemTest {
 
     @BeforeEach
     void setUp() {
-        item = new Item("Laptop", "High performance laptop", "Electronics", "1500.00", "imageURL", 10, "Vendor001");
+        item = new Item("Laptop", "High performance laptop", "Electronics", "1500", "imageURL", 10, "Vendor001");
         item.setItemID("item001"); // Set a sample ItemID for testing
     }
 
