@@ -35,7 +35,7 @@ class IntegrationTest {
         ClientItem = fm.getItem("Aq5uyCPe3xhM1ZMFQIrt");
         vendor = fm.getVendor(testVendorID);
         vendorItem=new Item("amazing laptop","black laptop","Electronics","1200","C:/Users/OMEN/Desktop/download.jpeg/",9999,testVendorID);
-        fm.addItem(vendorItem);
+
 
 
     }
@@ -144,7 +144,7 @@ class IntegrationTest {
     @DisplayName("Vendor Logs In , check's his Items , add a new Item")
     void testVendorLoginAddNewItem() {
         // Step 1: Log in as a Vendor
-        assertDoesNotThrow(() -> vendor.LogIn(testClientID, basePassword), "Login should succeed");
+        assertDoesNotThrow(() -> vendor.LogIn(testVendorID, basePassword), "Login should succeed");
         // Step 2: Fetch and Check all Items for Sale
         List<Item> VendorItems=fm.getItemsForVendor(testVendorID);
         ArrayList<String> VendorItemsID =new ArrayList<>();
@@ -153,7 +153,7 @@ class IntegrationTest {
         }
         assertEquals(VendorItemsID, vendor.getItemsID(),"Items Match Database");
         // Step 3: Add a new Item for sale
-        assertDoesNotThrow(() -> vendor.addItem(vendorItem.getItemName(),vendorItem.getItemDescription(),vendorItem.getItemCategory(),vendorItem.getItemPrice(),vendorItem.getImageURL(),vendorItem.getStock(),vendorItem.getVendor()),"Item added successfully");
+        assertDoesNotThrow(() -> vendor.addItem(vendorItem.getItemName(),vendorItem.getItemDescription(),vendorItem.getItemCategory(),vendorItem.getItemPrice(),vendorItem.getImageURL(),vendorItem.getStock(),testVendorID),"Item added successfully");
         assertTrue(vendor.getItemsID().contains(vendorItem.getItemID()),"Item is in Vendor's List");
 
     }
