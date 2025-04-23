@@ -22,6 +22,7 @@ class ClientTest {
 
 
     @DisplayName("Set and get history")
+    @Order(1)
     void setGetHistory() {
         List<String> history = List.of("order1", "order2");
         client.setHistory(history);
@@ -95,7 +96,7 @@ class ClientTest {
         User user = new User();
         Client client = (Client) user.GetUserByID("hagar");
         assertNotNull(client, "Client should not be null");
-        String testItemID = "ring002"; // use a real itemID that exists in your Items collection
+        String testItemID = "aRIDVZDogJyN6ks2NXQS"; // use a real itemID that exists in your Items collection
         assertDoesNotThrow(() -> client.addItemToWishlist(testItemID));
         assertTrue(client.getWishlist().contains(testItemID),
                 "Wishlist should contain the newly added item.");
@@ -109,7 +110,7 @@ class ClientTest {
         User user = new User();
         Client client = (Client) user.GetUserByID("hagar");
         assertNotNull(client, "Client should not be null");
-        String testItemID = "ring002"; // use a real itemID that exists in your Items collection
+        String testItemID = "aRIDVZDogJyN6ks2NXQS"; // use a real itemID that exists in your Items collection
         assertDoesNotThrow(() -> client.removeItemFromWishlist(testItemID));
         assertFalse(client.getWishlist().contains(testItemID), "Item should be removed from wishlist");
     }

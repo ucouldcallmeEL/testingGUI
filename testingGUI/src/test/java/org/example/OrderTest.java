@@ -16,7 +16,7 @@ class OrderTest {
     @BeforeEach
     void setUp() {
         ArrayList<String> itemIDs = new ArrayList<>(Arrays.asList("item123", "item123", "item456"));
-        order = new org.example.Order("order001", "user001", itemIDs, true, "150.00");
+        order = new org.example.Order("order001", "user001", itemIDs, true, "150");
 
         sampleItem = new Item();
         sampleItem.setItemID("item123");
@@ -69,7 +69,7 @@ class OrderTest {
     @DisplayName("Get item price returns correct total")
     void getItemPrice_ReturnsCorrectTotal() {
         String totalItemPrice = order.getItemPrice(sampleItem);
-        assertEquals("100", totalItemPrice);
+        assertEquals("100.0", totalItemPrice);
     }
 
     @Test
