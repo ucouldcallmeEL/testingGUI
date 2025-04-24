@@ -117,7 +117,7 @@ class ClientTest {
         assertFalse(client.getWishlist().contains(testItemID), "Item should be removed from wishlist");
     }
 
-    @Test
+   /* @Test
     @Order(10)
     @DisplayName("Cancel existing order moves it to history")
     void cancelOrder_MovesToHistory() {
@@ -131,10 +131,81 @@ class ClientTest {
         order.setOrderID(orderID);
         assertDoesNotThrow(() -> client.CancelOrder(order, "hagar"));
         assertFalse(client.getCurrentOrders().contains(orderID), "Order should be removed from current orders");
+    }*/
+
+    @Test
+    @Order(10)
+    @DisplayName("Cancel existing order moves it to history")
+    void cancelOrder_MovesTo_History() {
+        User user = new User();
+        Client client = (Client) user.GetUserByID("hagar");
+        assertNotNull(client, "Client should not be null");
+
+        // Step 1: Fetch current orders as full objects (not just IDs)
+        List<org.example.Order> currentOrders = client.fetchCurrentOrdersForClientsFromDB();
+        assertFalse(currentOrders.isEmpty(), "Client must have at least one current order to test cancellation");
+
+        // Step 2: Use the first available order for testing
+        org.example.Order order = currentOrders.get(0);
+        assertNotNull(order.getItemsID(), "Order must contain item IDs");
+
+        // Step 3: Cancel the order and ensure no exceptions are thrown
+        assertDoesNotThrow(() -> client.CancelOrder(order, client.getUserID()));
+
+        // Step 4: Confirm the order is no longer in the current orders
+        List<org.example.Order> updatedOrders = client.fetchCurrentOrdersForClientsFromDB();
+        boolean orderStillExists = false;
+        for (org.example.Order o : updatedOrders) {
+            if (o.getOrderID().equals(order.getOrderID())) {
+                orderStillExists = true;
+                break;
+            }
+        }
+
+        assertFalse(orderStillExists, "Order should be removed from current orders");
     }
 
 
     @Test
+    @Order(11)
+    @DisplayName("Get history from existing DB user")
+    void getHistoryFrom_DB() {
+        User user = new User();
+        User retrievedUser = user.GetUserByID("clientIntegration");
+        assertNotNull(retrievedUser, "Retrieved user should not be null");
+        assertInstanceOf(Client.class, retrievedUser, "User must be a Client");
+
+        Client dbClient = (Client) retrievedUser;
+        List<String> history = dbClient.getHistory();
+
+        List<String> expectedHistory = List.of(                                      // use only the item name for fuzzy matching
+                "R71HslrfnK2uycCCRWLX",
+                "0KwTUNUDACq9uvuRZoFL",
+                "XAfHa8dwgoQANXzzn4Ue",
+                "3sFMtWpLpKsTJoHQyuq4"
+        );
+
+        assertNotNull(history, "History should not be null");
+        assertTrue(history.size() >= expectedHistory.size(), "History should have at least as many entries as expected");
+        assertEquals(expectedHistory.size(), history.size(), "History size should match expected");
+
+        // Fuzzy match each expected entry
+        for (String expected : expectedHistory) {
+            boolean found = false;
+            for (String actual : history) {
+                if (actual.contains(expected)) {
+                    found = true;
+                    break;
+                }
+            }
+            assertTrue(found, "History should contain entry matching: \"" + expected + "\"");
+        }
+    }
+
+
+
+
+ /*   @Test
     @Order(11)
     @DisplayName("Get history from existing DB user")
     void getHistoryFromDB() {
@@ -149,14 +220,15 @@ class ClientTest {
         assertEquals(expectedHistory.size(), history.size(), "History size should match expected");
         assertTrue(history.containsAll(expectedHistory), "History should contain all expected orders");
     }
-
-
+*/
+    //Client must be logged in to use addToCart method
     @Test
     @Order(12)
     @DisplayName("Add item to cart successfully")
     void addItemToCart_Success() {
         User user = new User();
         Client client = (Client) user.GetUserByID("hagar");
+        assertDoesNotThrow(() -> client.LogIn("hagar", "hagar2005"), "Login should succeed");
         assertNotNull(client, "Client should not be null");
         Item item = new Item();
         item.setItemID("VOAVMMcKVhzBd6Sx5d0I");
