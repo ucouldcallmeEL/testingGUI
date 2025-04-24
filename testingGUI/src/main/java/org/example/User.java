@@ -255,6 +255,9 @@ public class User {
             }
             fm.changeVendorPassword(UserID, Password);
         }
+        if(!ValidUserID){
+            throw new PasswordChangeException("User not found.");
+        }
     }
 
     public void updateEmail(String UserID, String newEmail, String currentPassword) throws EmailAuthenticationException {
@@ -358,6 +361,12 @@ public class User {
             ValidPhoneNumber = true;
             fm.changeVendorPhoneNumber(userID, newPhoneNumber);
         }
+        if(!ValidUserID){
+            throw new AuthException("User not found.");
+        }
+//        if(!ValidPhoneNumber){
+//            throw new PhoneNumberException("Invalid phone number.");
+//        }
     }
 
 
