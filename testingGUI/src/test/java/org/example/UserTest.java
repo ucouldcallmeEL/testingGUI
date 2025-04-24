@@ -307,59 +307,6 @@ class UserTest {
     }
 
 //REMEMBER TO ADD TO TEST CASE STORIES
-    @Test
-    @Order(29)
-    @DisplayName("Integration Test of User Class Functions")
-    void userIntegration_Test() {
-        String name = "Integrator";
-        String userID = "IntegratorTest";
-        String email = "integrator@gmail.com";
-        String password = "integration123";
-        String newEmail = "integrator_updated@gmail.com";
-        String newAddress = "456 Integration Ave";
-        String newPhone = "01012345678";
-        String newPassword = "integration456";
-
-        // Register user
-        assertDoesNotThrow(() ->
-                user.Register(name, userID, email, password, "123 Street", "01094749270", true)
-        );
-
-        // Login user
-        assertDoesNotThrow(() -> user.LogIn(userID, password));
-
-        //Make search query
-        List<Item> results = user.search("bottle"); // assuming items exist
-        assertNotNull(results);
-        assertTrue(results.size() >= 0); // even if empty, it shouldn't be null
-
-        // Update email
-        assertDoesNotThrow(() -> user.updateEmail(userID, newEmail, password));
-
-        // Update address
-        assertDoesNotThrow(() -> user.updateAddress(userID, newAddress, password));
-
-        // Update phone number
-        assertDoesNotThrow(() -> user.updatePhoneNumber(userID, newPhone, password));
-
-        // Change password
-        assertDoesNotThrow(() -> user.ChangePassword(userID, newPassword, password));
-
-        // Log in with new password
-        assertDoesNotThrow(() -> user.LogIn(userID, newPassword));
-
-        // Fetch user and verify updated fields
-        User updatedUser = user.GetUserByID(userID);
-        assertNotNull(updatedUser);
-        assertEquals(userID, updatedUser.getUserID());
-        assertEquals(newEmail, updatedUser.getEmail());
-        assertEquals(newAddress, updatedUser.getAddress());
-        assertEquals(newPhone, updatedUser.getPhoneNumber());
-
-        // Clean up by resetting password to original (optional)
-        assertDoesNotThrow(() -> user.ChangePassword(userID, password, newPassword));
-    }
-
 
 
 

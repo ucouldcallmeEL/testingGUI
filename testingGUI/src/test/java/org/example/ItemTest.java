@@ -134,8 +134,8 @@ class ItemTest {
     @Order(8)
     @DisplayName("CalculateRating calculates the average rating correctly")
     void calculateRating_CalculatesAverageRating() {
-        int rating = item.CalculateRating(); // Calculate average rating
-        assertTrue(rating >= 0, "Average rating should be a non-negative integer");
+         item.CalculateRating(); // Calculate average rating
+        assertTrue(item.getRating() >= 0, "Average rating should be a non-negative integer");
     }
 
     @Test

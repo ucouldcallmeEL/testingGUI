@@ -48,22 +48,24 @@ public class Item {
     }
 
     @PropertyName("rating")
-    public int CalculateRating() {
+    public void CalculateRating() {
         int sum = 0;
         List<org.example.Review> reviews = fm.getReviewsByItem(this.ItemID);
 
 
         //If the list of reviews (reviews) is empty, the reviews.size() will be 0, which results in a java.lang.ArithmeticException: / by zero error.
         if (reviews.isEmpty()) {
-            return 0; // Default rating when there are no reviews, fix added after failed test case
+            this.rating = 0;
+            return;
         }
 
         for (Review review : reviews) {
-            int rating = review.getRating();
-            sum += rating;
+            int rating1 = review.getRating();
+            sum += rating1;
         }
-        rating = sum / reviews.size();
-        return rating;
+        int rating2  = sum / reviews.size();
+        this.rating = rating2;
+        fm.changeItemRating(this.ItemID, rating2);
     }
     public boolean CheckAvailability() {
         if(this.getStock()>0){
