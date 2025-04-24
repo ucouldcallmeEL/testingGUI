@@ -34,7 +34,7 @@ class IntegrationTest {
         cart = fm.getClientCart(testClientID);
         ClientItem = fm.getItem("Aq5uyCPe3xhM1ZMFQIrt");
         vendor = fm.getVendor(testVendorID);
-        vendorItem=new Item("amazing laptop","black laptop","Electronics","1200","C:/Users/OMEN/Desktop/download.jpeg/",9999,testVendorID);
+        vendorItem=new Item("amazing laptop","black laptop","Electronics","1200","C:/Users/amrem/Downloads/73894ea1b21b4b73671f8f63de514302573be39d-16x9-x0y152w4000h2250.jpg",9999,testVendorID);
 
 
 
@@ -78,8 +78,6 @@ class IntegrationTest {
         assertDoesNotThrow(() -> Client.LogIn(testClientID, basePassword), "Login should succeed");
 
         // Step 2: Add ClientItems to the cart
-
-
         Item TestItem = ClientItem.getItembyID("Aq5uyCPe3xhM1ZMFQIrt");
         int stock=TestItem.getStock();
         int quantity=1;
@@ -139,6 +137,62 @@ class IntegrationTest {
         }
     }
 
+
+    @Test
+    @Order(6)
+    @DisplayName("Vendor Logs In, checks items, adds a new item, and verifies it's listed")
+    void testVendorLoginAddNew_Item() {
+        // Step 1: Log in as a Vendor
+        assertDoesNotThrow(() -> vendor.LogIn(testVendorID, basePassword), "Login should succeed");
+
+        // Step 2: Fetch current vendor items from DB and extract their IDs
+        List<Item> vendorItemsBefore = fm.getItemsForVendor(testVendorID);
+        ArrayList<String> vendorItemIDsBefore = new ArrayList<>();
+        for (Item item : vendorItemsBefore) {
+            vendorItemIDsBefore.add(item.getItemID());
+        }
+
+        // Step 3: Ensure vendor's internal item list matches DB
+        assertEquals(vendorItemIDsBefore, vendor.getItemsID(), "Items match database before addition");
+
+        // Step 4: Add new item (note: vendorItem will still have null ID after this)
+        assertDoesNotThrow(() -> vendor.addItem(
+                vendorItem.getItemName(),
+                vendorItem.getItemDescription(),
+                vendorItem.getItemCategory(),
+                vendorItem.getItemPrice(),
+                vendorItem.getImageURL(),
+                vendorItem.getStock(),
+                testVendorID
+        ), "Item added successfully");
+
+        // Step 5: Re-fetch vendor's items after addition
+        List<Item> vendorItemsAfter = fm.getItemsForVendor(testVendorID);
+
+        // Step 6: Search for the newly added item (by name and vendor ID)
+        Item addedItem = null;
+        for (Item item : vendorItemsAfter) {
+            if (item.getItemName().equals(vendorItem.getItemName()) &&
+                    item.getVendor().equals(testVendorID)) {
+                addedItem = item;
+                break;
+            }
+        }
+
+        // Step 7: Assert item was added and is found
+        assertNotNull(addedItem, "Added item should exist in vendor's item list");
+
+        // Step 8: Build updated list of item IDs and check if added item's ID is in the list
+        ArrayList<String> vendorItemIDsAfter = new ArrayList<>();
+        for (Item item : vendorItemsAfter) {
+            vendorItemIDsAfter.add(item.getItemID());
+        }
+
+        assertTrue(vendorItemIDsAfter.contains(addedItem.getItemID()), "Added item is in vendor's item list");
+        System.out.println("Added item: " + addedItem.getItemID());
+    }
+
+
     @Test
     @Order(6)
     @DisplayName("Vendor Logs In , check's his Items , add a new Item")
@@ -154,6 +208,8 @@ class IntegrationTest {
         assertEquals(VendorItemsID, vendor.getItemsID(),"Items Match Database");
         // Step 3: Add a new Item for sale
         assertDoesNotThrow(() -> vendor.addItem(vendorItem.getItemName(),vendorItem.getItemDescription(),vendorItem.getItemCategory(),vendorItem.getItemPrice(),vendorItem.getImageURL(),vendorItem.getStock(),testVendorID),"Item added successfully");
+        System.out.println("Expected Item ID: " + vendorItem.getItemID());
+        System.out.println("Vendor's Item List: " + vendor.getItemsID());
         assertTrue(vendor.getItemsID().contains(vendorItem.getItemID()),"Item is in Vendor's List");
 
     }
