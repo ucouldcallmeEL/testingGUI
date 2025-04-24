@@ -851,4 +851,128 @@ class UserWhiteBoxxing {
                 () -> user.updatePhoneNumber(userID, newPhoneNumber, currentPassword));
         assertEquals("Phone number must be exactly 11 characters.", exception.getMessage());
     }
+
+    @Test
+    @Order(43)
+    @DisplayName("Test getter and setter for name")
+    void testGetAndSetName() {
+        // Arrange
+        String name = "John Doe";
+
+        // Act
+        user.setName(name);
+
+        // Assert
+        assertEquals(name, user.getName(), "The name should be correctly set and retrieved.");
+    }
+
+    @Test
+    @Order(44)
+    @DisplayName("Test getter and setter for UserID")
+    void testGetAndSetUserID() {
+        // Arrange
+        String userID = "john123";
+
+        // Act
+        user.setUserID(userID);
+
+        // Assert
+        assertEquals(userID, user.getUserID(), "The UserID should be correctly set and retrieved.");
+    }
+
+    @Test
+    @Order(45)
+    @DisplayName("Test getter and setter for email")
+    void testGetAndSetEmail() {
+        // Arrange
+        String email = "john.doe@example.com";
+
+        // Act
+        user.setEmail(email);
+
+        // Assert
+        assertEquals(email, user.getEmail(), "The email should be correctly set and retrieved.");
+    }
+
+    @Test
+    @Order(46)
+    @DisplayName("Test getter and setter for password")
+    void testGetAndSetPassword() {
+        // Arrange
+        String password = "securePassword123";
+
+        // Act
+        user.setPassword(password);
+
+        // Assert
+        assertEquals(password, user.getPassword(), "The password should be correctly set and retrieved.");
+    }
+
+    @Test
+    @Order(47)
+    @DisplayName("Test getter and setter for address")
+    void testGetAndSetAddress() {
+        // Arrange
+        String address = "123 Main Street";
+
+        // Act
+        user.setAddress(address);
+
+        // Assert
+        assertEquals(address, user.getAddress(), "The address should be correctly set and retrieved.");
+    }
+
+    @Test
+    @Order(48)
+    @DisplayName("Test getter and setter for phone number")
+    void testGetAndSetPhoneNumber() {
+        // Arrange
+        String phoneNumber = "01234567890";
+
+        // Act
+        user.setPhoneNumber(phoneNumber);
+
+        // Assert
+        assertEquals(phoneNumber, user.getPhoneNumber(), "The phone number should be correctly set and retrieved.");
+    }
+
+    @Test
+    @Order(49)
+    @DisplayName("Test parameterized constructor")
+    void testParameterizedConstructor() {
+        // Arrange
+        String name = "Jane Doe";
+        String userID = "jane123";
+        String email = "jane.doe@example.com";
+        String password = "password456";
+        String address = "456 Elm Street";
+        String phoneNumber = "09876543210";
+
+        // Act
+        User testUser = new User(name, userID, email, password, address, phoneNumber);
+
+        // Assert
+        assertEquals(name, testUser.getName(), "The name should be correctly set and retrieved through the constructor.");
+        assertEquals(userID, testUser.getUserID(), "The UserID should be correctly set and retrieved through the constructor.");
+        assertEquals(email, testUser.getEmail(), "The email should be correctly set and retrieved through the constructor.");
+        assertEquals(password, testUser.getPassword(), "The password should be correctly set and retrieved through the constructor.");
+        assertEquals(address, testUser.getAddress(), "The address should be correctly set and retrieved through the constructor.");
+        assertEquals(phoneNumber, testUser.getPhoneNumber(), "The phone number should be correctly set and retrieved through the constructor.");
+    }
+
+    @Test
+    @Order(50)
+    @DisplayName("Test default constructor")
+    void testDefaultConstructor() {
+        // Act
+        User testUser = new User();
+
+        // Assert
+        assertNull(testUser.getName(), "The default constructor should initialize name to null.");
+        assertNull(testUser.getUserID(), "The default constructor should initialize UserID to null.");
+        assertNull(testUser.getEmail(), "The default constructor should initialize email to null.");
+        assertNull(testUser.getPassword(), "The default constructor should initialize password to null.");
+        assertNull(testUser.getAddress(), "The default constructor should initialize address to null.");
+        assertNull(testUser.getPhoneNumber(), "The default constructor should initialize phone number to null.");
+    }
 }

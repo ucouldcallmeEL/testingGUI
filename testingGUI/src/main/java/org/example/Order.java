@@ -83,7 +83,7 @@ public class Order {
 
 
     public int getItemQuantity(Item item){
-        if (itemsID.isEmpty()) {
+        if (itemsID == null || itemsID.isEmpty()) {
             System.out.println("Cart is empty");
             return 0;
         }
@@ -103,10 +103,10 @@ public class Order {
 //
 
     public String GetOrderDetails() {
-        return "Order ID: " + orderID + "\n" +
-                "User ID: " + UserID + "\n" +
-                "Items ID: " + itemsID.toString() + "\n" +
-                "Current: " + (current? "Yes" : "No");
+        return "Order ID: " + (orderID != null ? orderID : "null") + "\n" +
+                "User ID: " + (UserID != null ? UserID : "null") + "\n" +
+                "Items ID: " + (itemsID != null ? itemsID.toString() : "null") + "\n" +
+                "Current: " + (current ? "Yes" : "No");
     }
     public void ConfirmOrder(String OrderID, String UserID){
         fm.makeHistory(OrderID, UserID);

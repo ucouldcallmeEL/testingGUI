@@ -51,21 +51,21 @@ public class Vendor extends User {
             }
         }
         if(!ValidPrice){
-            if(ItemPrice.length() <= 0 || ItemPrice == null){
+            if(ItemPrice == null || ItemPrice.length() <= 0){
                 throw new AddItemException("Please add a price for your item.");
             }else{
                 ValidPrice = true;
             }
         }
         if(!ValidCategory){
-            if(ItemCategory.length() == 0){
+            if(ItemCategory == null || ItemCategory.length() == 0){
                 throw new AddItemException("Please add a category for your item.");
             }else{
                 ValidCategory = true;
             }
         }
         if(!ValidImageURL){
-            if(ImageURL.length() == 0){
+            if(ImageURL == null || ImageURL.length() == 0){
                 throw new AddItemException("Please add an image for your item.");
             }else{
                 ValidImageURL = true;
