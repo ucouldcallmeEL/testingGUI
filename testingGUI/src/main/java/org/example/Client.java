@@ -138,16 +138,17 @@ public class Client extends User {
         //check if item exists in the database
         if(fm.getItem(itemID) == null){
             throw new IllegalArgumentException("Cannot add review to item "+ itemID + " does not exist");
+        }else {
+            Item item = fm.getItem(itemID);
+            //create review object
+            org.example.Review review = new Review(this.getUserID(), itemID, rating, comment);
+            item.CalculateRating();
+
+            //send review to firebase
+            fm.addReview(review);
+            System.out.println("Review submitted for item " + itemID);
+
         }
-
-        //create review object
-        org.example.Review review = new Review(this.getUserID(), itemID, rating, comment);
-
-        //send review to firebase
-        fm.addReview(review);
-        System.out.println("Review submitted for item " + itemID);
-
-
     }
 
 

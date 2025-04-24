@@ -21,6 +21,7 @@ public class FireBaseManager {
 
     public FireBaseManager() {
         try {
+
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirestoreOptions firestoreOptions = FirestoreOptions.newBuilder()
                     .setCredentials(credentials)
@@ -1173,6 +1174,19 @@ public class FireBaseManager {
             ApiFuture<WriteResult> future = vendorRef.update("ItemPrice", newPrice);
             WriteResult result = future.get();
             System.out.println("Item Price updated at: " + result.getUpdateTime());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+    public void changeItemRating(String ItemID, int newRating) {
+        // Reference to the Item document
+        DocumentReference vendorRef = db.collection("Items").document(ItemID);
+
+        try {
+            // Update the Item's Price field directly
+            ApiFuture<WriteResult> future = vendorRef.update("rating", newRating);
+            WriteResult result = future.get();
+            System.out.println("Item Rating updated at: " + result.getUpdateTime());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

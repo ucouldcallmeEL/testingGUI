@@ -34,7 +34,7 @@ class IntegrationTest {
         cart = fm.getClientCart(testClientID);
         ClientItem = fm.getItem("Aq5uyCPe3xhM1ZMFQIrt");
         vendor = fm.getVendor(testVendorID);
-        vendorItem=new Item("amazing laptop","black laptop","Electronics","1200","C:/Users/amrem/Downloads/73894ea1b21b4b73671f8f63de514302573be39d-16x9-x0y152w4000h2250.jpg",9999,testVendorID);
+        vendorItem=fm.getItem("HCVeQqGzQfI03uqnLZCv");
 
 
 
@@ -194,7 +194,7 @@ class IntegrationTest {
 
 
     @Test
-    @Order(6)
+    @Order(7)
     @DisplayName("Vendor Logs In , check's his Items , add a new Item")
     void testVendorLoginAddNewItem() {
         // Step 1: Log in as a Vendor
@@ -213,65 +213,158 @@ class IntegrationTest {
         assertTrue(vendor.getItemsID().contains(vendorItem.getItemID()),"Item is in Vendor's List");
 
     }
+    @Test
+    @Order(8)
+    @DisplayName("Client Logs in, Adds Review on Item, Check item reviews and rating")
+    void testClientLoginAddNewReview() {
+        assertDoesNotThrow(() -> vendor.LogIn(testClientID, basePassword), "Login should succeed");
+        ArrayList<String>Reviews =ClientItem.getReviewsID();
+        Client.addReview(ClientItem.getItemID(),5,"amazing");
+        ClientItem=fm.getItem(ClientItem.getItemID());
+        assertTrue(Reviews.size()<ClientItem.getReviewsID().size(),"Reviews list should increase in size");
+        int rating= ClientItem.getRating();
+        ClientItem=fm.getItem(ClientItem.getItemID());
+        assertEquals(rating,ClientItem.getRating(),"Rating in object should match Database");
+        ClientItem.CalculateRating();
+        assertEquals(rating,ClientItem.getRating(),"New rating should be correct");
 
+    }
 
     //IntegratorTest must not exist in the DB for this test tp pass
-    private static User user;
     @Test
-    @Order(7)
-    @DisplayName("Integration Test of User Class Functions")
+    @Order(9)
+    @DisplayName("Integration Test of User Class Functions with database")
     void userIntegration_Test() {
+        String newEmail = testVendorID+"@gmail.com";
+        String newAddress = testVendorID+"@gmail.com";
+        String newPassword = testVendorID+"@gmail.com";
+        String newPhone ="01148855498";
 
-
-        String name = "Integrator";
-        String userID = "IntegratorTest";
-        String email = "integrator@gmail.com";
-        String password = "integration123";
-        String newEmail = "integrator_updated@gmail.com";
-        String newAddress = "456 Integration Ave";
-        String newPhone = "01012345678";
-        String newPassword = "integration456";
 
         // Register user
-        assertDoesNotThrow(() ->
-                user.Register(name, userID, email, password, "123 Street", "01094749270", true)
-        );
+        registerClient_NewUser_Success();
 
         // Login user
-        assertDoesNotThrow(() -> user.LogIn(userID, password));
+        assertDoesNotThrow(() -> Client.LogIn(testClientID, basePassword), "Login should succeed");
 
         //Make search query
-        List<Item> results = user.search("bottle"); // assuming items exist
+        List<Item> results = Client.search("bottle"); // assuming items exist
         assertNotNull(results);
         assertTrue(results.size() >= 0); // even if empty, it shouldn't be null
 
         // Update email
-        assertDoesNotThrow(() -> user.updateEmail(userID, newEmail, password));
+        assertDoesNotThrow(() -> Client.updateEmail(testClientID, newEmail, basePassword),"change email");
 
         // Update address
-        assertDoesNotThrow(() -> user.updateAddress(userID, newAddress, password));
+        assertDoesNotThrow(() -> Client.updateAddress(testClientID, newAddress, basePassword),"change address");
 
         // Update phone number
-        assertDoesNotThrow(() -> user.updatePhoneNumber(userID, newPhone, password));
+        assertDoesNotThrow(() -> Client.updatePhoneNumber(testClientID, newPhone, basePassword),"change phone number");
 
         // Change password
-        assertDoesNotThrow(() -> user.ChangePassword(userID, newPassword, password));
+        assertDoesNotThrow(() -> Client.ChangePassword(testClientID, newPassword, basePassword),"change password");
 
         // Log in with new password
-        assertDoesNotThrow(() -> user.LogIn(userID, newPassword));
+        assertDoesNotThrow(() -> Client.LogIn(testClientID, newPassword));
 
         // Fetch user and verify updated fields
-        User updatedUser = user.GetUserByID(userID);
+        Client updatedUser = fm.getClient(testClientID);
         assertNotNull(updatedUser);
-        assertEquals(userID, updatedUser.getUserID());
+        assertEquals(testClientID, updatedUser.getUserID());
         assertEquals(newEmail, updatedUser.getEmail());
         assertEquals(newAddress, updatedUser.getAddress());
         assertEquals(newPhone, updatedUser.getPhoneNumber());
 
         // Clean up by resetting password to original (optional)
-        assertDoesNotThrow(() -> user.ChangePassword(userID, password, newPassword));
+        assertDoesNotThrow(() -> Client.ChangePassword(testClientID, basePassword, newPassword));
     }
+    @Test
+    @Order(10)
+    @DisplayName("Test Multi-Vendor Cart Operation and Order Processing")
+    void testMultiVendorCartOperation() {
+        // Step 1: Log in as Client
+        assertDoesNotThrow(() -> Client.LogIn(testClientID, basePassword), "Login should succeed");
 
+        // Step 2: Add items from different vendors to cart
+        Item firstVendorItem = ClientItem; // Using existing item
+        Item secondVendorItem = vendorItem; // Using the vendor item from setup
 
+        int firstItemStock = firstVendorItem.getStock();
+        int secondItemStock = secondVendorItem.getStock();
+        int firstItemQuantity = 2;
+        int secondItemQuantity = 3;
 
+        // Add items from different vendors
+        assertDoesNotThrow(() ->
+                        cart.addItem(GlobalData.getCurrentlyLoggedIN(), firstVendorItem, firstItemQuantity),
+                "First vendor item should be added to cart"
+        );
+
+        assertDoesNotThrow(() ->
+                        cart.addItem(GlobalData.getCurrentlyLoggedIN(), secondVendorItem, secondItemQuantity),
+                "Second vendor item should be added to cart"
+        );
+
+        // Step 3: Verify cart contents
+        assertTrue(cart.getItemsID().contains(firstVendorItem.getItemID()),
+                "Cart should contain first vendor item");
+        assertTrue(cart.getItemsID().contains(secondVendorItem.getItemID()),
+                "Cart should contain second vendor item");
+
+        // Step 4: Verify total price calculation
+        String expectedFirstItemTotal = String.valueOf(
+                Integer.parseInt(firstVendorItem.getItemPrice()) * firstItemQuantity
+        );
+        String expectedSecondItemTotal = String.valueOf(
+                Integer.parseInt(secondVendorItem.getItemPrice()) * secondItemQuantity
+        );
+
+        assertEquals(expectedFirstItemTotal,
+                cart.getItemPrice(firstVendorItem),
+                "First item total price should match"
+        );
+        assertEquals(expectedSecondItemTotal,
+                cart.getItemPrice(secondVendorItem),
+                "Second item total price should match"
+        );
+
+        // Step 5: Confirm order with multiple vendors
+        assertDoesNotThrow(() -> cart.confirmOrder(),
+                "Order confirmation should succeed with multiple vendors"
+        );
+
+        // Step 6: Verify stock updates for both items
+        assertEquals(firstItemStock - firstItemQuantity,
+                firstVendorItem.fetchStockFromDB(),
+                "First item stock should be updated correctly"
+        );
+        assertEquals(secondItemStock - secondItemQuantity,
+                secondVendorItem.fetchStockFromDB(),
+                "Second item stock should be updated correctly"
+        );
+
+        // Step 7: Verify order creation in database
+        // Get latest order for the client
+        List<org.example.Order> clientOrders = fm.getCurrentOrdersForClient(testClientID);
+        assertFalse(clientOrders.isEmpty(), "Client should have at least one order");
+
+        // Get most recent order
+        org.example.Order latestOrder = clientOrders.get(clientOrders.size() - 1);
+
+        // Verify order contains both items
+        assertTrue(latestOrder.getItemsID().contains(firstVendorItem.getItemID()),
+                "Order should contain first vendor item");
+        assertTrue(latestOrder.getItemsID().contains(secondVendorItem.getItemID()),
+                "Order should contain second vendor item");
+
+        // Verify quantities in order
+        assertEquals(firstItemQuantity,
+                latestOrder.getItemQuantity(firstVendorItem),
+                "First item quantity should match in order"
+        );
+        assertEquals(secondItemQuantity,
+                latestOrder.getItemQuantity(secondVendorItem),
+                "Second item quantity should match in order"
+        );
+    }
 }
