@@ -66,35 +66,42 @@ class CartTest {
 
     @Test
     @Order(6)
-    @DisplayName("Remove item from Cart")
-    void removeItem(){
-        Item Item=sampleItem.getItembyID("Aq5uyCPe3xhM1ZMFQIrt");
-        TestCart.removeItem("hagar",Item,1);
-        assertFalse(TestCart.getItemsID().contains("Aq5uyCPe3xhM1ZMFQIrt"));
-    }
-    @Test
-    @Order(7)
     @DisplayName("Get Item Quantity")
     void getQuantity(){
-        Item Item=sampleItem.getItembyID("VOAVMMcKVhzBd6Sx5d0I");
+        Item Item=sampleItem.getItembyID("Aq5uyCPe3xhM1ZMFQIrt");
         int x=TestCart.getItemQuantity(Item);
         assertEquals(1,x);
     }
+
     @Test
-    @Order(8)
+    @Order(7)
     @DisplayName("Get Item TotalPrice")
     void getItemPrice(){
-        Item item=sampleItem.getItembyID("VOAVMMcKVhzBd6Sx5d0I");
+        Item item=sampleItem.getItembyID("Aq5uyCPe3xhM1ZMFQIrt");
         String x=TestCart.getItemPrice(item);
-        assertEquals("1050.0",x);
+        assertEquals("200",x);
     }
+
     @Test
-    @Order(9)
+    @Order(8)
     @DisplayName("Recalculate Total Price")
     void recalculate(){
+        Item Item=sampleItem.getItembyID("Aq5uyCPe3xhM1ZMFQIrt");
+        assertDoesNotThrow(() ->TestCart.addItem("hagar",Item,1), "Item should have stock");
         TestCart.recalculateTotalPrice();
-        assertEquals("1050.0",TestCart.getTotalPrice());
+        assertEquals("400",TestCart.getTotalPrice());
     }
+
+    @Test
+    @Order(9)
+    @DisplayName("Remove item from Cart")
+    void removeItem(){
+        Item Item=sampleItem.getItembyID("Aq5uyCPe3xhM1ZMFQIrt");
+        TestCart.removeItem("hagar",Item,2);
+        assertFalse(TestCart.getItemsID().contains("Aq5uyCPe3xhM1ZMFQIrt"));
+    }
+
+
     @Test
     @Order(10)
     @DisplayName("Confirm Order")
