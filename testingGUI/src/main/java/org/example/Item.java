@@ -76,7 +76,7 @@ public class Item {
     @PropertyName("ItemName")
     public void changeItemName(String ItemID, String ItemName) throws ChangeException {
         if (ItemName == null || ItemName.trim().isEmpty()) {
-            throw new ChangeException("Item name cannot be null or empty.");
+            throw new IllegalArgumentException("Item name cannot be null or empty.");
         }
 
         Item item = fm.getItem(ItemID);

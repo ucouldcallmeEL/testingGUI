@@ -79,7 +79,7 @@ class ItemTest {
         assertFalse(retrievedItem.CheckAvailability(), "Item should not be available when stock = 0");
     }
     @Test
-    @Order(4)
+    @Order(5)
     @DisplayName("Fetch stock from database returns correct stock")
     void fetchStockFromDB_ReturnsCorrectValue() {
         // Retrieve item by ID from the database
@@ -98,7 +98,7 @@ class ItemTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     @DisplayName("Update stock updates stock in database correctly")
     void updateStock_UpdatesCorrectly() throws ChangeException {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
@@ -109,7 +109,7 @@ class ItemTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     @DisplayName("Change item name updates database correctly")
     void changeItemName_UpdatesCorrectly() throws ChangeException {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
@@ -120,7 +120,7 @@ class ItemTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     @DisplayName("Change item price updates database correctly")
     void changePrice_UpdatesCorrectly()  throws ChangeException{
         String itemID = "uiRV3bFyKjRpSlcD69kb";
@@ -131,7 +131,7 @@ class ItemTest {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     @DisplayName("CalculateRating calculates the average rating correctly")
     void calculateRating_CalculatesAverageRating() {
          item.CalculateRating(); // Calculate average rating
@@ -139,7 +139,7 @@ class ItemTest {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     @DisplayName("Get items by category retrieves correct items")
     void getItemsByCategory_RetrievesCorrectItems() {
         List<Item> items = item.getItemsByCategory("beauty"); // Fetch items by category
@@ -149,18 +149,24 @@ class ItemTest {
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     @DisplayName("Change image URL updates database correctly")
     void changeImageURL_UpdatesCorrectly() throws ChangeException {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
         Item retrievedItem = item.getItembyID(itemID);
-        String updatedURL = item.changeImageURL(itemID, "C:/Users/amrem/Downloads/photo-1618424181497-157f25b6ddd5.jpg"); // Change image URL
-        Item updatedItem = item.getItembyID(itemID); // Fetch updated item
-        assertEquals(updatedURL, updatedItem.getImageURL(), "Image URL should match the updated value returned by the function");
+        String updatedURL = item.changeImageURL(itemID, "C:/Users/amrem/Downloads/photo-1618424181497-157f25b6ddd5.jpg");
+
+        Item updatedItem = item.getItembyID(itemID);
+        String newURL = updatedItem.getImageURL();
+
+        assertNotNull(newURL, "Image URL should not be null");
+        assertTrue(newURL.startsWith("https://res.cloudinary.com"), "Image URL should point to cloud storage");
+        assertNotEquals("C:/Users/amrem/Downloads/photo-1618424181497-157f25b6ddd5.jpg", newURL, "Image URL in DB should not be the local file path");
     }
 
+
     @Test
-    @Order(11)
+    @Order(12)
     @DisplayName("Change item description updates database correctly")
     void changeDescription_UpdatesCorrectly() throws ChangeException {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
@@ -171,7 +177,7 @@ class ItemTest {
     }
 
     @Test
-    @Order(12)
+    @Order(13)
     @DisplayName("Change item category updates database correctly")
     void changeCategory_UpdatesCorrectly() throws ChangeException {
         String itemID = "uiRV3bFyKjRpSlcD69kb";
