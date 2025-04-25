@@ -51,12 +51,23 @@ public class VendorTest {
     @DisplayName("Add item successfully adds to vendor list")
     void addItem_Success() {
         assertDoesNotThrow(() -> vendor.addItem(
-                "Sample Item", "Great item", "Category A", "100.00",
+                "Sample Item", "Great item", "Category A", "100",
                 "C:/Users/amrem/Downloads/Screenshot 2025-04-09 232452.png", 10, "vendor123"
         ));
 
         assertNotNull(vendor.getItemsID(), "ItemsID list should be initialized");
         assertTrue(vendor.getItemsID().size() > 0, "ItemsID list should contain the new item");
+
+        List<Item> itemsFromDB = Vendor.getItemsForVendor("vendor123");
+        assertTrue(itemsFromDB.stream().anyMatch(item -> item.getItemName().equals("Sample Item")));
+
+        Item addedItem = itemsFromDB.stream().filter(item -> item.getItemName().equals("Sample Item")).findFirst().orElse(null);
+        assertNotNull(addedItem, "Item should exist in the list of items from the database");
+        assertEquals("Sample Item", addedItem.getItemName(), "Item name should match");
+        assertEquals("Great item", addedItem.getItemDescription(), "Item description should match");
+        assertEquals("Category A", addedItem.getItemCategory(), "Item category should match");
+        assertEquals("100", addedItem.getItemPrice(), "Item price should match");
+        assertEquals(10, addedItem.getStock(), "Item stock should match");
     }
 
     @Test
@@ -123,27 +134,17 @@ public class VendorTest {
         }
     }
 
+
     @Test
     @Order(10)
-    @DisplayName("Remove item from vendor (no error)")
-    void removeItem_Success() {
-        Item item = new Item();
-        item.setItemID("itemToRemove");
-        item.setVendor("vendor123");
-
-        assertDoesNotThrow(() -> vendor.removeItem(item));
-    }
-
-
-    @Test
-    @Order(11)
     @DisplayName("Remove item from vendor DB (no error)")
     void removeItemFromDB_Success() {
         List<Item> itemsBefore = Vendor.getItemsForVendor("vendor123");
         assertFalse(itemsBefore.isEmpty(), "Vendor must have at least one item to remove");
 
-        Item itemToRemove = itemsBefore.get(itemsBefore.size() - 1); // Remove the most recently added item
-
+        Item itemToRemove = itemsBefore.stream()
+                .filter(item -> item.getItemName().equals("Sample Item"))
+                .findFirst().orElse(null);
         assertDoesNotThrow(() -> vendor.removeItem(itemToRemove), "Removing item should not throw");
 
         List<Item> itemsAfter = Vendor.getItemsForVendor("vendor123");
