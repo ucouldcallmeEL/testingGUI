@@ -149,7 +149,7 @@ public class User {
             }
 
             while (!acceptedPhoneNum) {
-                if (PhoneNumber.length() < 11) {
+                if (PhoneNumber == null || PhoneNumber.length() < 11) {
                     throw new RegistrationException("Phone number is too short.");
                 } else if (PhoneNumber.length() == 11 && PhoneNumber.charAt(0) != '0') {
                     throw new RegistrationException("Phone number is invalid.");
@@ -180,6 +180,9 @@ public class User {
     public void LogIn(String UserID, String Password) throws LogInException {
         boolean ValidUserID = false;
         boolean ValidPassword = false;
+        if(UserID == null ){
+            throw new LogInException("Username is incorrect.");
+        }
         User user = fm.getVendor(UserID);
 
         if (user == null) {
@@ -271,7 +274,7 @@ public class User {
                 if (!user.getPassword().equals(currentPassword)) {
                     throw new EmailAuthenticationException("Incorrect current password.");
                 }
-                if (!newEmail.contains("@") || !newEmail.contains(".")) {
+                if (newEmail == null ||!newEmail.contains("@") || !newEmail.contains(".")) {
                     throw new EmailAuthenticationException("Invalid email format.");
                 }
                 this.email = newEmail;
@@ -344,7 +347,7 @@ public class User {
                 if (!user.getPassword().equals(currentPassword)) {
                     throw new AuthException("The entered Password doesn't match with the user's.");
                 }
-                if (newPhoneNumber.length() != 11) {
+                if (newPhoneNumber == null ||newPhoneNumber.length() != 11) {
                     throw new PhoneNumberException("Phone number must be exactly 11 characters.");
                 }
                 ValidPhoneNumber = true;

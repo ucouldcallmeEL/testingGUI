@@ -94,6 +94,14 @@ public class Vendor extends User {
     }
 //    public void UpdateItem(String ItemID, String newName,  )
     public void removeItem(Item Item) {
+        if (Item.getItemID() == null) {
+            throw new IllegalArgumentException("ItemID cannot be null.");
+        }
+        if (this.getUserID() == null) {
+            throw new IllegalArgumentException("UserID cannot be null.");
+        }
+
+
         fm.deleteItemReviews(Item.getItemID());
         fm.deleteItem(Item.getItemID(),this.getUserID());
     }

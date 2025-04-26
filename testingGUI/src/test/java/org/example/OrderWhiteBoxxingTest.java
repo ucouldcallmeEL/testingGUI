@@ -16,13 +16,9 @@ class OrderWhiteBoxxingTest {
 
     @BeforeEach
     void setUp() {
-        // Mock FireBaseManager
         mockFireBaseManager = mock(FireBaseManager.class);
 
-        // Inject the mock FireBaseManager into the static field of Order
         Order.fm = mockFireBaseManager;
-
-        // Create a new Order instance for testing
         order = new Order();
     }
 
@@ -38,10 +34,7 @@ class OrderWhiteBoxxingTest {
         boolean current = true;
         String totalPrice = "100.50";
 
-        // Act
         Order testOrder = new Order(orderID, userID, itemsID, current, totalPrice);
-
-        // Assert
         assertEquals(orderID, testOrder.getOrderID());
         assertEquals(userID, testOrder.getUserID());
         assertEquals(itemsID, testOrder.getItemsID());
@@ -164,8 +157,6 @@ class OrderWhiteBoxxingTest {
 
         // Act
         int quantity = order.getItemQuantity(mockItem);
-
-        // Assert
         assertEquals(2, quantity);
     }
 
@@ -181,12 +172,10 @@ class OrderWhiteBoxxingTest {
         itemsID.add("item123");
         order.setItemsID(itemsID);
 
-        // Act
         String totalPrice = order.getItemPrice(mockItem);
-
-        // Assert
         assertEquals("100.0", totalPrice);
     }
+
     @Test
     @DisplayName("Test equals method for same object")
     void testEquals_SameObject() {
@@ -206,8 +195,6 @@ class OrderWhiteBoxxingTest {
     void testEquals_DifferentClass() {
         // Arrange
         String otherObject = "NotAnOrder";
-
-        // Act & Assert
         assertFalse(order.equals(otherObject));
     }
 
@@ -218,8 +205,6 @@ class OrderWhiteBoxxingTest {
         Order otherOrder = new Order();
         otherOrder.setOrderID("differentID");
         order.setOrderID("order123");
-
-        // Act & Assert
         assertFalse(order.equals(otherOrder));
     }
 
@@ -235,8 +220,6 @@ class OrderWhiteBoxxingTest {
 
         order.setItemsID(itemsID1);
         otherOrder.setItemsID(itemsID2);
-
-        // Act & Assert
         assertFalse(order.equals(otherOrder));
     }
 
@@ -252,8 +235,6 @@ class OrderWhiteBoxxingTest {
         itemsID.add("item1");
         order.setItemsID(itemsID);
         otherOrder.setItemsID(itemsID);
-
-        // Act & Assert
         assertTrue(order.equals(otherOrder));
     }
 
@@ -322,7 +303,6 @@ class OrderWhiteBoxxingTest {
         itemsID.add("item1");
         order.setItemsID(itemsID);
 
-        // Act & Assert
         assertFalse(order.equals(otherOrder));
     }
 
@@ -335,8 +315,6 @@ class OrderWhiteBoxxingTest {
         otherOrder.setOrderID(null);
         order.setItemsID(null);
         otherOrder.setItemsID(null);
-
-        // Act & Assert
         assertTrue(order.equals(otherOrder));
     }
 
@@ -351,8 +329,6 @@ class OrderWhiteBoxxingTest {
         ArrayList<String> itemsID = new ArrayList<>();
         itemsID.add("item123");
         order.setItemsID(itemsID);
-
-        // Act & Assert
         assertThrows(NullPointerException.class, () -> order.getItemPrice(mockItem));
     }
 
@@ -367,8 +343,6 @@ class OrderWhiteBoxxingTest {
         ArrayList<String> itemsID = new ArrayList<>();
         itemsID.add("item123");
         order.setItemsID(itemsID);
-
-        // Act & Assert
         assertThrows(NumberFormatException.class, () -> order.getItemPrice(mockItem));
     }
 
@@ -380,14 +354,12 @@ class OrderWhiteBoxxingTest {
         order.setUserID(null);
         order.setItemsID(null);
 
-        // Act
         String details = order.GetOrderDetails();
-
-        // Assert
         assertTrue(details.contains("Order ID: null"));
         assertTrue(details.contains("User ID: null"));
         assertTrue(details.contains("Items ID: null"));
     }
+
     @Test
     @DisplayName("Test ConfirmOrder with exception")
     void testConfirmOrder_Exception() {
