@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //for commit
 
 class CartTest {
-    private Cart TestCart=FireBaseManager.getInstance().getClientCart("hagar");
+    private Cart TestCart=FireBaseManager.getInstance().getClientCart("john123");
     private Item sampleItem=new Item();
 
     //commit test
@@ -60,7 +60,7 @@ class CartTest {
     @DisplayName("Add item to Cart")
     void addItem(){
         Item Item=sampleItem.getItembyID("Aq5uyCPe3xhM1ZMFQIrt");
-        assertDoesNotThrow(() ->TestCart.addItem("hagar",Item,1), "Item should have stock");
+        assertDoesNotThrow(() ->TestCart.addItem("john123",Item,1), "Item should have stock");
         assertTrue(TestCart.getItemsID().contains("Aq5uyCPe3xhM1ZMFQIrt"));
     }
 
@@ -87,7 +87,7 @@ class CartTest {
     @DisplayName("Recalculate Total Price")
     void recalculate(){
         Item Item=sampleItem.getItembyID("Aq5uyCPe3xhM1ZMFQIrt");
-        assertDoesNotThrow(() ->TestCart.addItem("hagar",Item,1), "Item should have stock");
+        assertDoesNotThrow(() ->TestCart.addItem("john123",Item,1), "Item should have stock");
         TestCart.recalculateTotalPrice();
         assertEquals("400",TestCart.getTotalPrice());
     }
@@ -97,7 +97,7 @@ class CartTest {
     @DisplayName("Remove item from Cart")
     void removeItem(){
         Item Item=sampleItem.getItembyID("Aq5uyCPe3xhM1ZMFQIrt");
-        TestCart.removeItem("hagar",Item,2);
+        TestCart.removeItem("john123",Item,2);
         assertFalse(TestCart.getItemsID().contains("Aq5uyCPe3xhM1ZMFQIrt"));
     }
 
